@@ -1,1 +1,1 @@
-web: concurrently --kill-others "npm run react-dev" "npm run server-dev"
+web: node server/index.js; webpack -d --watch;
