@@ -192,7 +192,7 @@ app.all( '*', ( req, res ) => {
 } )
 
 app.listen( process.env.PORT, function () {
-  console.log( 'listening on enviroment port!' );
+  console.log( 'listening on environment port!' );
 } );
 
 module.exports = app;
