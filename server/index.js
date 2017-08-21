@@ -191,8 +191,8 @@ app.all( '*', ( req, res ) => {
   res.redirect( '/' )
 } )
 
-app.listen( process.env.PORT, function () {
-  console.log( 'listening on environment port ' + JSON.stringify( process.env.PORT ) + '!' );
+app.listen( process.env.PORT || 8080, function () {
+  console.log( 'listening on environment port ' + JSON.stringify( process.env.PORT || 8080 ) + '!' );
 } );
 
 module.exports = app;
