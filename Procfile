@@ -1,1 +1,1 @@
-web: node server/index.js
+web: concurrently --kill-others "npm run react-dev" "npm run server-dev"
