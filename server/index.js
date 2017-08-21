@@ -6,7 +6,7 @@ var express = require( 'express' );
 
 var app = express();
 
-app.use( express.static( __dirname + '/../react-client/dist/index.html' ) );
+app.use( express.static( __dirname + '/../react-client/dist' ) );
 app.use( bodyParser.urlencoded( { extended: true } ) );
 app.use( bodyParser.json() );
 app.use( cookies.parseCookies );
