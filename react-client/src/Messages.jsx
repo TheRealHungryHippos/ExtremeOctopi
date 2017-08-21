@@ -1,5 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
+import MessagesList from './components/MessagesList.jsx';
 
 class Messages extends React.Component {
   constructor( props ) {
@@ -99,15 +100,16 @@ class Messages extends React.Component {
   render() {
     return (
       <div>
-        <h1>{this.user}</h1>
-
+        <h1>Messages</h1>
+        <br/>
+        <br/>
         <input onChange={ this.changeMessage.bind( this ) }></input>
         <button onClick={ this.onClick.bind( this ) }>Submit</button>
         <br></br>
         <br></br>
-        { this.state.messages.map( ( message, index ) => {
-          return <div key={ index }>{ message.sender + ': ' + message.message }</div>;
-        } ) }
+        { this.state.messages.map( ( message, index ) => (
+          <MessagesList key={ index } message={message}/>
+        ) ) }
       </div>
     );
   }

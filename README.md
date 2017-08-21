@@ -6,7 +6,6 @@
 
   - Andy Lien
   - Fiona Wong
-  - Lara Ismael
   - Marc Perry
 
 ## Table of Contents
@@ -45,7 +44,7 @@ npm install
 
 ### Roadmap
 
-View the project roadmap [here](LINK_TO_DOC)
+View the project roadmap [https://docs.google.com/spreadsheets/d/1j_pTorvB3U_RwMeLpOi65vuH7-59Bj4j_q5Y0ZDlm9Q/edit?usp=sharing](LINK_TO_DOC)
 
 
 ## Contributing

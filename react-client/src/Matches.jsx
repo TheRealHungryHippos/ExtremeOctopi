@@ -77,7 +77,7 @@ class Matches extends React.Component {
     return (
       <div>
         <div className="row">
-          <div className="col-md-4 col-md-offset-1">
+          <div className="col-md-2 col-md-offset-1">
             <ImageUpload/>
           </div>
           <div className="col-md-7">
@@ -89,8 +89,11 @@ class Matches extends React.Component {
             <MatchesList matches={ this.state.matches } lookupProfile={this.lookupProfile}/>
           </div>
         </div>
+        <br/>
+        <br/>
+        <br/>
         <div className="row get-messages">
-          <button>Click for Messages!</button>
+          <button className="messages-button">Messages Inbox</button>
         </div>
       </div>
     )

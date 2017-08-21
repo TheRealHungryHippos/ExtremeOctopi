@@ -123,7 +123,6 @@ var mostCompatible = {
 app.post( '/test', ( req, res ) => {
   db.postTestResults( req.session.username, req.body.testResults, allUsers => {
     var matchesList = [];
-
     if (allUsers.length > 0) {
       allUsers.forEach(user => {
         if (user.username !== req.session.username && mostCompatible[req.body.testResults].includes(user.testResults)) {
