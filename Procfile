@@ -1,1 +1,1 @@
-web: node server/index.js; webpack -d --watch;
+web: node server/index.js
