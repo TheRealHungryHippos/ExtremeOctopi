@@ -2,7 +2,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var async = require('async');
 
-mongoose.connect('mongodb://localhost/test');
+var mongoUrl = 'mongodb://heroku_s23dmvd8:@ds153113.mlab.com:53113/heroku_s23dmvd8';
+
+mongoose.connect( mongoUrl /*'mongodb://localhost/test'*/);
 
 var db = mongoose.connection;
 
