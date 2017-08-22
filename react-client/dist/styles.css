@@ -1,22 +1,4 @@
-body {
-    background: #FFF3E3;
-    color: #262B53;
-    position: relative;
-    /*	background-image: url("logo.png");
-      background-repeat: no-repeat;*/
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
-h1 {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
-.wrapper {
-    margin-top: 80px;
-    margin-bottom: 80px;
-}
-
-.form-signin {
+/*.form-signin {
     max-width: 380px;
     padding: 15px 35px 45px;
     margin: 0 auto;
@@ -36,13 +18,20 @@ h1 {
     font-size: 16px;
     height: auto;
     padding: 10px;
-@include box-sizing(border-box);
+@include box-sizing(border-box);*/
 
 /*&*/
 /*:focus {*/
     /*z-index: 2;*/
 /*}*/
 
+/*}*/
+
+.login {
+  padding-top: 76px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 input[type="text"] {
@@ -67,7 +56,7 @@ input[type="password"] {
     background-color: #6D5A7F;
 }
 
-.navbar {
+/*.navbar {
     background-color: rgba(38, 43, 83, .80);
     color: #FFB985;
     height: 15px;
@@ -86,7 +75,7 @@ input[type="password"] {
 .navbar-nav > li {
     color: #AE7182;
     font-size: 16px;
-}
+}*/
 
 h3 {
     margin-left: 15px
