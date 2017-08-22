@@ -4,9 +4,9 @@
 
 ## Team
 
-  - Andy Lien
-  - Fiona Wong
-  - Marc Perry
+  - [Cody](https://github.com/cody-unger)
+  - [Kelly](https://github.com/whithang)
+  - [Martin](https://github.com/mkchang)
 
 ## Table of Contents
 
@@ -20,7 +20,8 @@
 
 ## Usage
 
-> Some usage instructions
+### App
+https://friendzone2.herokuapp.com/
 
 ## Requirements
 
@@ -41,10 +42,30 @@ From within the root directory:
 ```sh
 npm install
 ```
+### Running a local server
+
+1. In one terminal window, run `npm run react-dev` to launch webpack
+1. In a different terminal window, launch your local MongoDB server (usually `mongod`)
+1. In a different terminal window, run `npm run server-dev` to launch the server, go to http://127.0.0.1:8080/ to view the app
+
+### Testing
+
+Tests are done with [Jest](https://facebook.github.io/jest) and [Enzyme](http://airbnb.io/enzyme/index.html). Other packages used:
+- [supertest](https://www.npmjs.com/package/supertest)
+- [React Test Utilities](https://facebook.github.io/react/docs/test-utils.html)
+
+Run tests in repo root folder with
+```sh
+npm test
+```
+
+Test results will be displayed in a browser at http://127.0.0.1:8081/.
+
+Tests are named as `<module/stack tested>Spec.js`.
 
 ### Roadmap
 
-View the project roadmap [https://docs.google.com/spreadsheets/d/1j_pTorvB3U_RwMeLpOi65vuH7-59Bj4j_q5Y0ZDlm9Q/edit?usp=sharing](LINK_TO_DOC)
+View the project roadmap on Trello [here](https://trello.com/b/yYWfCOE8/friendzone-2).
 
 
 ## Contributing
