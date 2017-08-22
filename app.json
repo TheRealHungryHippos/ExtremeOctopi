@@ -1,8 +1,12 @@
 {
-  "name": "ExtremeOctopi",
+  "name": "friendzone-2",
   "scripts": {
   },
   "env": {
+    "MONGODB_URI": {
+      "description": "connecting to MongoDB Heroku Addon server",
+      "required": true
+    }
   },
   "formation": {
   },

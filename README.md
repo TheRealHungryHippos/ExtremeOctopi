@@ -21,7 +21,7 @@
 ## Usage
 
 ### App
-https://friendzone2.herokuapp.com/
+https://friendzone-2.herokuapp.com/
 
 ## Requirements
 
@@ -63,10 +63,15 @@ Test results will be displayed in a browser at http://127.0.0.1:8081/.
 
 Tests are named as `<module/stack tested>Spec.js`.
 
+## Deployment
+
+Deployment for this app was done on [Heroku](https://www.heroku.com). 
+
+Provision a MongoDB addon for each app in your pipeline (mLab was used for this app).
+
 ### Roadmap
 
 View the project roadmap on Trello [here](https://trello.com/b/yYWfCOE8/friendzone-2).
-
 
 ## Contributing
 
