@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var async = require('async');
 
-mongoose.connect( process.env.MONGODB_URI || 'mongodb://localhost/test' );
+mongoose.connect( process.env.MONGODB_URI || 'mongodb://localhost/friendzone2' );
 
 var db = mongoose.connection;
 
