@@ -3,6 +3,7 @@ var cookies = require( './authentication/cookies.js' );
 var bodyParser = require( 'body-parser' );
 var db = require( '../database-mongo' );
 var express = require( 'express' );
+var path = require('path');
 
 var app = express();
 
@@ -12,7 +13,9 @@ app.use( bodyParser.json() );
 app.use( cookies.parseCookies );
 app.use( cookies.createSession );
 
-app.get( '/profile', ( req, res ) => {
+app.use(express.static(__dirname + '/../react-client/dist'));
+
+app.get('/profile', ( req, res ) => {
   cookies.verifySession( req, res, ( valid ) => {
     if ( valid ) {
       db.getProfile( req.session.username, ( profile ) => {
@@ -24,7 +27,7 @@ app.get( '/profile', ( req, res ) => {
   } );
 } );
 
-app.post( '/friendProfile', ( req, res ) => {
+app.post('/friendProfile', ( req, res ) => {
   db.getProfile( req.body.username, ( profile ) => {
     res.status( 200 ).send( JSON.stringify( profile ) );
   } );
@@ -42,7 +45,7 @@ app.post( '/friendProfile', ( req, res ) => {
 //   } );
 // } );
 
-app.get( '/matches', ( req, res ) => {
+app.get('/matches', ( req, res ) => {
   cookies.verifySession( req, res, ( valid ) => {
     if ( valid ) {
       db.getFriends( req.session.username, ( matches ) => {
@@ -54,7 +57,7 @@ app.get( '/matches', ( req, res ) => {
   } );
 } );
 
-app.get( '/messages', ( req, res ) => {
+app.get('/messages', ( req, res ) => {
   cookies.verifySession( req, res, ( valid ) => {
     if ( valid ) {
       db.getMessages( req.session.username, ( messages ) => {
@@ -73,7 +76,7 @@ app.post('/friendMessages', (req, res) => {
   });
 });
 
-app.post( '/signup', ( req, res ) => {
+app.post('/signup', ( req, res ) => {
   var newUser = {
     username: req.body.username,
     password: authentication.generateHash(req.body.password),
@@ -90,7 +93,7 @@ app.post( '/signup', ( req, res ) => {
   } );
 } );
 
-app.post( '/login', ( req, res ) => {
+app.post('/login', ( req, res ) => {
   db.getHash( req.body.username, ( password ) => {
     if ( authentication.authenticate( req.body.password, password ) ) {
       db.getProfile( req.body.username, ( user ) => {
@@ -120,7 +123,7 @@ var mostCompatible = {
   estj: ['enfj', 'intp', 'esfp', 'estp']
 };
 
-app.post( '/test', ( req, res ) => {
+app.post('/test', ( req, res ) => {
   db.postTestResults( req.session.username, req.body.testResults, allUsers => {
     var matchesList = [];
     allUsers.forEach(user => {
@@ -143,13 +146,13 @@ app.post( '/test', ( req, res ) => {
   })
 });
 
-app.post( '/matches', ( req, res ) => {
+app.post('/matches', ( req, res ) => {
   db.postGetMatches( req.session.username, req.body.numberToReturn, req.body.maxFriends, ( results ) => {
     res.status( 201 ).send( results );
   } );
 } );
 
-app.post( '/updateUser', ( req, res ) => {
+app.post('/updateUser', ( req, res ) => {
   cookies.verifySession( req, res, ( valid ) => {
     if ( valid ) {
       db.postUpdateUser( {
@@ -167,7 +170,7 @@ app.post( '/updateUser', ( req, res ) => {
   } );
 } );
 
-app.post( '/message', ( req, res ) => {
+app.post('/message', ( req, res ) => {
   cookies.verifySession( req, res, ( valid ) => {
     if ( valid ) {
       console.log('valid', req.session.username, req.body.message);
@@ -178,7 +181,7 @@ app.post( '/message', ( req, res ) => {
   } )
 } );
 
-app.post( '/messageFriend', ( req, res ) => {
+app.post('/messageFriend', ( req, res ) => {
   cookies.verifySession( req, res, ( valid ) => {
 
     db.postMessage( req.session.username, req.body.username, req.body.message, () => {
@@ -187,13 +190,12 @@ app.post( '/messageFriend', ( req, res ) => {
   })
 } );
 
-app.all( '*', ( req, res ) => {
-  res.redirect( '/' )
-} )
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../react-client/dist/index.html'));
+});
 
 app.listen( process.env.PORT || 8080, function () {
   console.log( 'listening on environment port ' + JSON.stringify( process.env.PORT || 8080 ) + '!' );
 } );
 
 module.exports = app;
-

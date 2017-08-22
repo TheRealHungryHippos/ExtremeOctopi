@@ -10,6 +10,7 @@ import Test from './Test.jsx';
 const Main = () => (
   <main>
     <Switch>
+      <Route exact path='/' component={Login}/>
       <Route path='/signup' component={Signup}/>
       <Route path='/test' component={Test}/>
       <Route path='/login' component={Login}/>
