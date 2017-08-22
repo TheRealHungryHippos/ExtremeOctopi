@@ -9,19 +9,27 @@ const toPathMessages = compile(MY_ROUTE_MESSAGES)
 
 const HeaderLoggedOut = () => (
 
-
-  <nav className="navbar navbar-inverse">
-  <div className="container-fluid">
-  <div className="navbar-header">
-  <a className="navbar-brand" href="#"><img src="logo.png" width="70" height="70" className="d-inline-block align-top" alt=""/></a>
-
-  </div>
-  <ul className="nav navbar-nav">
-    <li className="nav-item"><Link to='/signup'>Signup</Link></li>
-    <li className="nav-item"><Link to='/test'>Test</Link></li>
-    <li className="nav-item"><Link to='/login'>Login</Link></li>
-  </ul>
-  </div>
+  <nav className="navbar navbar-toggleable-md navbar-light bg-faded fixed-top">
+    <button className="navbar-toggler navbar-toggler-right collapsed"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+      <span className="navbar-toggler-icon"></span>
+    </button>
+    <h1>
+      <div>
+        <Link to="/login" className="navbar-brand">FriendZone</Link>
+      </div>
+    </h1>
+    <div className="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul className="navbar-nav mr-auto">
+        <li className="nav-item"><Link to='/signup'>Sign Up</Link></li>
+        <li className="nav-item"><Link to='/login'>Sign In</Link></li>
+      </ul>
+    </div>
   </nav>
 
 );

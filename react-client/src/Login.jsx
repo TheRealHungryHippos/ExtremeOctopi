@@ -47,36 +47,33 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div className="wrapper">
+      <div className="login">
         <form className="form-signin" onSubmit={ this.handleSubmit.bind( this ) }>
-        <br/>
-        <label>
-          Username:
-          <input
-            size="35"
-            className="form-control"
-            required=""
-            autoFocus=""
-            name="username"
-            type="text"
-            onChange={ this.handleInputChange.bind( this ) }>
-          </input>
-        </label>
-        <br />
-        <label>
-          Password: 
-          <input
-            size="35"
-            className="form-control"
-            required=""
-            name="password"
-            type="password"
-            onChange={ this.handleInputChange.bind( this ) }>
-          </input>
-        </label>
-        <br />
-        <button className="button btn btn-lg btn-primary btn-block" type="submit">Login</button>
-      </form>
+          <label>
+            Username:
+            <input
+              size="35"
+              className="form-control"
+              required=""
+              autoFocus=""
+              name="username"
+              type="text"
+              onChange={ this.handleInputChange.bind( this ) }>
+            </input>
+          </label>
+          <label>
+            Password: 
+            <input
+              size="35"
+              className="form-control"
+              required=""
+              name="password"
+              type="password"
+              onChange={ this.handleInputChange.bind( this ) }>
+            </input>
+          </label>
+          <button className="button btn btn-lg btn-primary btn-block" type="submit">Login</button>
+        </form>
       </div>
     )
   }
