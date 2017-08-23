@@ -29,3 +29,6 @@ node_modules/
 bower_components/
 
 testOrganizationObjects.js
+
+# config files
+server/config/*.config.js
