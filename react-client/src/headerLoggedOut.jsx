@@ -9,7 +9,7 @@ const toPathMessages = compile(MY_ROUTE_MESSAGES)
 
 const HeaderLoggedOut = () => (
 
-  <nav className="navbar navbar-toggleable-md navbar-light bg-faded fixed-top">
+  <nav className="navbar navbar-toggleable-md navbar-light bg-faded fixed-top navbar-custom">
     <button className="navbar-toggler navbar-toggler-right collapsed"
             type="button"
             data-toggle="collapse"
@@ -26,8 +26,8 @@ const HeaderLoggedOut = () => (
     </h1>
     <div className="collapse navbar-collapse" id="navbarSupportedContent">
       <ul className="navbar-nav mr-auto">
-        <li className="nav-item"><Link to='/signup'>Sign Up</Link></li>
-        <li className="nav-item"><Link to='/login'>Sign In</Link></li>
+        <li className="nav-item"><Link to='/login' className="nav-link">Sign In</Link></li>
+        <li className="nav-item"><Link to='/signup' className="nav-link">Sign Up</Link></li>
       </ul>
     </div>
   </nav>

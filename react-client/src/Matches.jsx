@@ -75,29 +75,17 @@ class Matches extends React.Component {
 
   render() {
     return (
-      <div>
-        <div className="row">
-          <div className="col-md-2 col-md-offset-1">
-            <ImageUpload/>
-          </div>
-          <div className="col-md-7">
-            <EditProfile n={this.state.name} l={this.state.location} h={this.state.hobbies} a={this.state.aboutme} handleChange={this.handleChange} handleEditProfile={this.handleEditProfile}/>
-          </div>
-        </div>
-        <div className="row">
-          <div className="matches-list col-lg-offset-1">
-            <MatchesList matches={ this.state.matches } lookupProfile={this.lookupProfile}/>
-          </div>
-        </div>
-        <br/>
-        <br/>
-        <br/>
-        <div className="row get-messages">
-          <button className="messages-button">Messages Inbox</button>
-        </div>
+      <div className="matches">
+        <MatchesList matches={ this.state.matches } lookupProfile={this.lookupProfile}/>
       </div>
     )
   }
 }
 
 export default Matches
+
+
+
+// <div className="row get-messages">
+//           <button className="messages-button">Messages Inbox</button>
+//         </div>

@@ -6,8 +6,8 @@ class Profile extends React.Component {
 
   	console.log(props);
 
-  	var regexp = /^\/Profile\/(.*)\/$/;
-    this.user = props.history.location.pathname.match( regexp )[ 1 ];
+  	// var regexp = /^\/Profile\/(.*)\/$/;
+    // this.user = props.history.location.pathname.match( regexp )[ 1 ];
 
   	this.state = {
   		profilePic: 'https://s-media-cache-ak0.pinimg.com/originals/36/43/e7/3643e7e8dab9b88b3972ee1c9f909dea.jpg',
@@ -18,7 +18,7 @@ class Profile extends React.Component {
   		aboutme: '(ノ°Д°）ノ︵ ┻━┻ | Please log in',
   	};
 
-  	this.loadProfile(this.user);
+  	// this.loadProfile(this.user);
 
   	this.handleClick = this.handleClick.bind(this);
 
@@ -70,24 +70,23 @@ class Profile extends React.Component {
 
   render () {
     return (
-      <div className="container">
-  			  <img className="img-circle" src={ this.state.profilePic }></img>
-          <div className="col-xs-10 center-text">
-      	    <h1>{ this.state.fullname }'s Zone</h1>
-            <br/>
-            <strong>Username:&nbsp;</strong>{ this.state.username }
-      	    <br/>
-      			<strong>Location:&nbsp;</strong>{ this.state.location }
-  					<br/>
-            <strong>Hobbies:&nbsp;</strong>{ this.state.hobbies }
-            <br/>
-            <strong>About Me:&nbsp;</strong>{ this.state.aboutme }
-            <br/>
-            <button className="message-button" onClick={() => this.handleClick()}><img src="logo.png" width="30" height="30" className="d-inline-block align-top" alt=""/>Send { this.state.fullname } a message!</button>
+      <div className="profile">
+        <div className="profileRow row">
+  		    <div className="col"><img className="profilePic img-fluid img-thumbnail" src={ this.state.profilePic } /></div>
+          <div className="col">
+      	    <h1 className="profileInfo">{ this.state.fullname }'s Zone</h1>
+            <div className="profileInfo">Username:&nbsp;{ this.state.username }</div>
+      			<div className="profileInfo">Location:&nbsp;</div>{ this.state.location }
+            <div className="profileInfo">Hobbies:&nbsp;</div>{ this.state.hobbies }
+            <div className="profileInfo">About Me:&nbsp;</div>{ this.state.aboutme }
           </div>
+        </div>
       </div>
     );
   }
 }
 
 export default Profile
+
+
+// <button className="message-button" onClick={() => this.handleClick()}><img src="logo.png" width="30" height="30" className="d-inline-block align-top" alt=""/>Send { this.state.fullname } a message!</button>

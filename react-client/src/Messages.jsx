@@ -6,8 +6,8 @@ class Messages extends React.Component {
   constructor( props ) {
     super( props );
 
-    var regexp = /^\/Messages\/(.*)\/$/;
-    this.user = props.history.location.pathname.match( regexp )[ 1 ];
+    // var regexp = /^\/Messages\/(.*)\/$/;
+    // this.user = props.history.location.pathname.match( regexp )[ 1 ];
 
     this.state = {
       match: '',
@@ -15,7 +15,7 @@ class Messages extends React.Component {
       messages: []
     };
 
-    this.updateMessages(this.user);
+    // this.updateMessages(this.user);
   }
 
   updateMessages(user) {

@@ -51,9 +51,8 @@ class Signup extends React.Component {
 
   render() {
     return (
-      <div className="wrapper">
+      <div className="signUpIn">
         <form className="form-signin" onSubmit={this.handleSubmit}>
-          <br />
           <label>
             Full Name:
             <input
@@ -65,7 +64,6 @@ class Signup extends React.Component {
               type="text"
               onChange={this.handleInputChange}/>
           </label>
-          <br />
           <label>
             E-mail:
             <input
@@ -77,7 +75,6 @@ class Signup extends React.Component {
               type="text"
               onChange={this.handleInputChange}/>
           </label>
-          <br />
           <label>
             Username:
             <input
@@ -89,7 +86,6 @@ class Signup extends React.Component {
               type="text"
               onChange={this.handleInputChange}/>
           </label>
-          <br />
           <label>
             Password:
             <input
@@ -101,9 +97,6 @@ class Signup extends React.Component {
               type="password"
               onChange={this.handleInputChange}/>
           </label>
-          <br />
-          <br />
-          <br />
           <button className="button btn btn-lg btn-primary btn-block" type="submit">Sign Me Up!</button>
         </form>
       </div>
