@@ -9,7 +9,7 @@ const toPathMessages = compile(MY_ROUTE_MESSAGES)
 
 const HeaderLoggedIn = () => (
 
-  <nav className="navbar navbar-toggleable-md navbar-light bg-faded fixed-top">
+  <nav className="navbar navbar-toggleable-md navbar-light bg-faded fixed-top navbar-custom">
     <button className="navbar-toggler navbar-toggler-right collapsed"
             type="button"
             data-toggle="collapse"
@@ -21,15 +21,14 @@ const HeaderLoggedIn = () => (
     </button>
     <h1>
       <div>
-        <Link to="/test" className="navbar-brand">FriendZone</Link>
+        <Link to="/profile" className="navbar-brand">FriendZone</Link>
       </div>
     </h1>
     <div className="collapse navbar-collapse" id="navbarSupportedContent">
       <ul className="navbar-nav mr-auto">
-        <li className="nav-item"><Link to='/test'>Test</Link></li>
-        <li className="nav-item"><Link to={toPath({ userId: 'home'})}>Profile</Link></li>
-        <li className="nav-item"><Link to='/matches'>Matches</Link></li>
-        <li className="nav-item"><Link to={toPathMessages({ userId: 'home'})}>Messages</Link></li>
+        <li className="nav-item"><Link to="/profile" className="nav-link">Profile</Link></li>
+        <li className="nav-item"><Link to="/matches" className="nav-link">Matches</Link></li>
+        <li className="nav-item"><Link to="/messages" className="nav-link">Messages</Link></li>
       </ul>
     </div>
   </nav>

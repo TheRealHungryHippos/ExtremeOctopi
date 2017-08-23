@@ -20,7 +20,7 @@ class Test extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="test">
         <div className="row">
           <h1 className="center">Personality Quiz
           </h1>
