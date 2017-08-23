@@ -8,13 +8,36 @@ var request = require('request');
 
 var app = express();
 
-app.use( express.static( __dirname + '/../react-client/dist' ) );
+// var session_secret;
+var twitterOptions;
+if (process.env.NODE_ENV === 'production') {
+  twitterOptions = {
+    consumerKey: process.env.TWITTER_CONSUMER_KEY,
+    consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
+    callbackURL: process.env.TWITTER_CALLBACK_URL
+  };
+  // session_secret = process.env.SESSION_SECRET;
+} else {
+  twitterOptions = require('./config/twitter.config.js');
+  // session_secret = require('../session.config.js');
+}
+
+passport.use(new TwitterStrategy(
+  twitterOptions,
+  function(token, tokenSecret, profile, done) {
+    User.findOrCreate(..., function(err, user) {
+      if (err) { return done(err); }
+      done(null, user);
+    });
+  }
+));
+
 app.use( bodyParser.urlencoded( { extended: true } ) );
 app.use( bodyParser.json() );
 app.use( cookies.parseCookies );
 app.use( cookies.createSession );
 
-app.use(express.static(__dirname + '/../react-client/dist'));
+app.use(express.static(path.join(__dirname, '../react-client/dist')));
 
 app.get('/profile', ( req, res ) => {
   cookies.verifySession( req, res, ( valid ) => {
