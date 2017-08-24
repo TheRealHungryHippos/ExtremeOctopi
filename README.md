@@ -42,11 +42,18 @@ From within the root directory:
 ```sh
 npm install
 ```
+
+### Database data
+Database data is populated on-load when you start the server
+This is executed in database-mongo/index.js
+If you don't want the database to be dropped and reloaded with the test data,
+then comment out the last group of code
+
 ### Running a local server
 
 1. In one terminal window, run `npm run react-dev` to launch webpack
 1. In a different terminal window, launch your local MongoDB server (usually `mongod`)
-1. In a different terminal window, run `npm run server-dev` to launch the server, go to http://127.0.0.1:8080/ to view the app
+1. In a different terminal window, run `npm run server-dev` to launch the server, go to http://127.0.0.1:8080/ or http://localhost:8080/ to view the app
 
 ### Testing
 
@@ -65,7 +72,7 @@ Tests are named as `<module/stack tested>Spec.js`.
 
 ## Deployment
 
-Deployment for this app was done on [Heroku](https://www.heroku.com). 
+Deployment for this app was done on [Heroku](https://www.heroku.com).
 
 Provision a MongoDB addon for each app in your pipeline (mLab was used for this app).
 
