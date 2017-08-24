@@ -141,3 +141,46 @@ module.exports.clear = function(callback) {
     });
   });
 };
+
+module.exports.findUserById = function(id, callback) {
+  db.User.find({twitter_id: id}, function(err, result) {
+    if (err || !result) {
+      console.log('*********** database find user by id error ', err);
+      return callback(err);
+    }
+    return callback(null, result);
+  });
+};
+
+module.exports.findOneAndUpdate = function(profile, callback) {
+  var user = profile._json;
+
+  module.exports.findUserById(user.id_str, function(err, results) {
+    if (err) {
+      console.log('*********** database findOneAndUpdate error ', err);
+      callback(err);
+    }
+    if (results.length > 0) {
+      console.log('*********** database findOrCreateUser user already exists ', err);
+      callback(err, results[0]);
+    } else {
+      db.User.create({
+        twitter_id: user.id_str,
+        username: user.screen_name,
+        twitter_url: user.url,
+        fullname: user.name,
+        location: user.location,
+        profile_img: user.profile_image_url.replace(/normal/i, '400x400'),
+        about_me: user.description
+      }, function(err, user) {
+        if (err) {
+          console.log('*********** database findOrCreateUser error in creating User ', err);
+          callback(err);
+        } else {
+          console.log('*********** New user created ');
+          callback(null, user);
+        }
+      });
+    }
+  });
+};
