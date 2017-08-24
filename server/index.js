@@ -108,14 +108,13 @@ app.get('/matches', ( req, res ) => {
 
 app.get('/messages', ( req, res ) => {
   // cookies.verifySession( req, res, ( valid ) => {
-    if ( req.body.user ) {
-      db.getMessages( req.session.username, ( messages ) => {
-        res.status( 200 ).send( JSON.stringify( messages ) );
-      } );
-    } else {
+    // if ( req.body.user ) {
+    //   db.getMessages( req.session.username, ( messages ) => {
+    //     res.status( 200 ).send( JSON.stringify( messages ) );
+    //   } );
+    // } else {
       // res.status( 200 ).end( JSON.stringify( false ) );
-      res.status(200);
-    }
+res.sendFile(path.join(__dirname, '../react-client/dist/index.html'));    // }
   // } );
 } );
 

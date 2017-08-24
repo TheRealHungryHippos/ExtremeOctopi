@@ -2,6 +2,7 @@ import React from 'react';
 import $ from 'jquery';
 import MessagesList from './MessagesList.jsx';
 import FriendList from './FriendList.jsx';
+import FriendSelected from './FriendSelected.jsx';
 
 class Messages extends React.Component {
   constructor(props) {
@@ -102,25 +103,29 @@ class Messages extends React.Component {
   render() {
     return (
       <div className="messages container">
-        <div className="row">
-        <div className="col-sm-6">
-        <h1>Friends</h1>
-        <br/>
-        <br/>
-        <FriendList />
-        </div>
-        <div className="col-sm-6">
-        <h1>Messages</h1>
-        <br/>
-        <br/>
-        <input onChange={ this.changeMessage.bind( this ) }></input>
-        <button onClick={ this.onClick.bind( this ) }>Submit</button>
-        <br></br>
-        <br></br>
-        { this.state.messages.map( ( message, index ) => (
-          <MessagesList key={ index } message={message}/>
-        ) ) }
-        </div>
+        <div className="row justify-content-center">
+          <div className="col-4">
+            <h1>Friends</h1>
+            <br/>
+            <FriendList />
+          </div>
+          <div className="col-8">
+              <h1>Messages</h1>
+              <br/>
+              <input onChange={ this.changeMessage.bind( this ) }></input>
+              <button onClick={ this.onClick.bind( this ) }>Submit</button>
+              <br></br>
+              { this.state.messages.map( ( message, index ) => (
+                <MessagesList key={ index } message={message}/>
+              ) ) }
+            <div className="row align-self-end">
+              <div className="col-8">
+                <h1>Friend Selected</h1>
+                <br></br>
+                <FriendSelected />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
