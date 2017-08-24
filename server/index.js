@@ -1,4 +1,3 @@
-// var auth = require('./middleware/auth');
 var authentication = require( './authentication/authentication.js' );
 var cookies = require( './authentication/cookies.js' );
 var bodyParser = require( 'body-parser' );
@@ -36,14 +35,12 @@ passport.use(new TwitterStrategy(
 ));
 
 passport.serializeUser(function(user, done) {
-  console.log('****** SERIALIZE USER ');
   done(null, user.twitter_id);
   // result of this is req.session.passport.user = user.twitter_id
 });
 
 passport.deserializeUser(function(id, done) {
   db.findUserById(id, (err, user) => {
-    console.log('****** DESERIALIZE USER ');
     done(err, user[0]);
   });
   // Attaches the loaded user object to the request as req.user
@@ -65,25 +62,22 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, '../react-client/dist')));
-//to hardcode to TRUE add 'valid=true' on line 21
-//to hardcode to FALSE remove '=true' on line 21
-app.get('/auth', ( req, res ) => {
-  cookies.verifySession( req, res, ( valid ) => {
-    if ( valid=true ) {
-      res.status( 200 ).send( JSON.stringify( true ) );
-    } else {
-      res.status( 200 ).send( JSON.stringify( false ) );
-    }
-  } );
-} );
+
+app.get('/auth', (req, res) => {
+  if (req.session.passport) {
+    res.status(200).send(JSON.stringify(true));
+  } else {
+    res.status(200).send(JSON.stringify(false));
+  }
+});
 
 app.get('/auth/twitter', passport.authenticate('twitter'));
 
 app.get('/auth/twitter/callback', passport.authenticate('twitter', 
-{
-  successRedirect: '/profile',
-  failureRedirect: '/login'
-}
+  {
+    successRedirect: '/profile',
+    failureRedirect: '/login'
+  }
 ));
 
 app.get('/logout', function(req, res) {
@@ -92,17 +86,6 @@ app.get('/logout', function(req, res) {
   res.redirect('/login');
 });
 
-app.get('/user', ( req, res ) => {
-  cookies.verifySession( req, res, ( valid ) => {
-    if ( valid ) {
-      db.getProfile( req.session.username, ( profile ) => {
-        res.status( 200 ).send( JSON.stringify( profile ) );
-      } );
-    } else {
-      res.status( 200 ).send( JSON.stringify( false ) );
-    }
-  } );
-} );
 app.get('/user', ( req, res ) => {
   if (req.session.passport) {
     res.status(200).send(JSON.stringify(req.user));
