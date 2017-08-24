@@ -32,3 +32,6 @@ testOrganizationObjects.js
 
 # config files
 server/config/*.config.js
+
+# MacOS files
+.DS_Store
