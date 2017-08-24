@@ -1,56 +1,69 @@
+// var auth = require('./middleware/auth');
 var authentication = require( './authentication/authentication.js' );
 var cookies = require( './authentication/cookies.js' );
 var bodyParser = require( 'body-parser' );
-var db = require( '../database-mongo/queries.js' );
+var db = require('../database-mongo/queries');
 var express = require( 'express' );
 var path = require('path');
 var request = require('request');
 var passport = require('passport');
+var session = require('express-session');
+var MongoDBStore = require('connect-mongodb-session')(session);
 var TwitterStrategy = require('passport-twitter').Strategy;
 
-var app = express();
-
-// var session_secret;
 var twitterOptions;
+var sessionSecret;
 if (process.env.NODE_ENV === 'production') {
   twitterOptions = {
     consumerKey: process.env.TWITTER_CONSUMER_KEY,
     consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
     callbackURL: process.env.TWITTER_CALLBACK_URL
   };
-  // session_secret = process.env.SESSION_SECRET;
+  sessionSecret = process.env.SESSION_SECRET;
 } else {
   twitterOptions = require('./config/twitter.config.js');
-  // session_secret = require('../session.config.js');
+  sessionSecret = require('./config/session.config.js');
 }
 
-<<<<<<< HEAD
-// passport.use(new TwitterStrategy(
-//   twitterOptions,
-//   function(token, tokenSecret, profile, done) {
-//     User.findOrCreate(..., function(err, user) {
-//       if (err) { return done(err); }
-//       done(null, user);
-//     });
-//   }
-// ));
-=======
 passport.use(new TwitterStrategy(
   twitterOptions,
   function(token, tokenSecret, profile, done) {
-    User.findOrCreate(..., function(err, user) {
+    db.findOneAndUpdate(profile, function(err, user) {
       if (err) { return done(err); }
-      done(null, user);
+      return done(null, user);
     });
   }
 ));
->>>>>>> Ignore config files
 
-app.use( bodyParser.urlencoded( { extended: true } ) );
-app.use( bodyParser.json() );
-app.use( cookies.parseCookies );
-app.use( cookies.createSession );
+passport.serializeUser(function(user, done) {
+  console.log('****** SERIALIZE USER ');
+  done(null, user.twitter_id);
+  // result of this is req.session.passport.user = user.twitter_id
+});
 
+passport.deserializeUser(function(id, done) {
+  db.findUserById(id, (err, user) => {
+    console.log('****** DESERIALIZE USER ');
+    done(err, user[0]);
+  });
+  // Attaches the loaded user object to the request as req.user
+});
+
+var app = express();
+
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+app.use(session({
+  secret: sessionSecret,
+  store: new MongoDBStore({
+    uri: process.env.MONGODB_URI || 'mongodb://localhost/friendzone2',
+    collection: 'sessions'
+  }),
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(path.join(__dirname, '../react-client/dist')));
 //to hardcode to TRUE add 'valid=true' on line 21
 //to hardcode to FALSE remove '=true' on line 21
@@ -64,6 +77,21 @@ app.get('/auth', ( req, res ) => {
   } );
 } );
 
+app.get('/auth/twitter', passport.authenticate('twitter'));
+
+app.get('/auth/twitter/callback', passport.authenticate('twitter', 
+{
+  successRedirect: '/profile',
+  failureRedirect: '/login'
+}
+));
+
+app.get('/logout', function(req, res) {
+  req.logout();
+  console.log('****** User logged out');
+  res.redirect('/login');
+});
+
 app.get('/user', ( req, res ) => {
   cookies.verifySession( req, res, ( valid ) => {
     if ( valid ) {
@@ -75,6 +103,13 @@ app.get('/user', ( req, res ) => {
     }
   } );
 } );
+app.get('/user', ( req, res ) => {
+  if (req.session.passport) {
+    res.status(200).send(JSON.stringify(req.user));
+  } else {
+    res.status(200).send(JSON.stringify(false));
+  }
+});
 
 app.post('/friendProfile', ( req, res ) => {
   db.getProfile( req.body.username, ( profile ) => {

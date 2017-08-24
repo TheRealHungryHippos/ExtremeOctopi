@@ -48,6 +48,7 @@ class Login extends React.Component {
   render() {
     return (
       <div className="signUpIn">
+        <a href="/auth/twitter" className="button btn btn-lg btn-primary btn-block">Twitter signin</a>
         <form className="form-signin" onSubmit={ this.handleSubmit.bind( this ) }>
           <label>
             Username:
