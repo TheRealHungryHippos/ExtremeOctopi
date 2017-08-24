@@ -122,9 +122,10 @@ app.get('/matches', ( req, res ) => {
   //     res.status( 200 ).end( JSON.stringify( false ) );
   //   }
   // } );
-  var user_id = 893651977338368000;
+  var twitter_id = 893651977338368000;
+  var followingCount = 24;
   var options = {
-    url: 'https://api.twitter.com/1.1/friends/ids.json?cursor=-1&user_id=' + user_id + '&count=5000',
+    url: 'https://api.twitter.com/1.1/friends/ids.json?cursor=-1&user_id=' + twitter_id + '&count=5000',
     headers: {
       'User-Agent': 'request'
     },
@@ -135,18 +136,37 @@ app.get('/matches', ( req, res ) => {
       token_secret: 'AjVJvPMmhXVC3do1XznwKdHTKInCTKrxvDKzl1XQe0C8n'
     }
   };
-  var resSend = (error, response) => {
-    if (response) {
-      var body = JSON.parse(response.body);
-      console.log(body.ids);
-      // var parsedResBody = JSON.parse(response.body);
-      // var usernames = parsedResBody.length ? parsedResBody.map((userObj) => {
-      //   return userObj.screen_name;
-      // }) : [];
-      // res.send({usernames});
+  
+  db.getFollowing(twitter_id, (err, doc) => {
+    err && console.log(err);
+    if (doc) {
+      if (doc.length === followingCount) {
+
+        db.getMatches(twitter_id, doc, (error, matches) => {
+          console.log(matches);
+        });
+
+      } else {
+
+        request(options, (error, response) => {
+          error && console.log(error);
+          if (response) {
+            var body = JSON.parse(response.body);
+            db.updateFollowing(twitter_id, body.ids, (err, doc) => {
+              err && console.log(err);
+              console.log(doc);
+              doc && getMatches(twitter_id, doc, (error, matches) => {
+                console.log(matches);
+              });
+            });
+          }
+        });
+
+      }
+
     }
-  };
-  request(options, resSend);
+  });
+
 } );
 
 app.get('/messages', ( req, res ) => {

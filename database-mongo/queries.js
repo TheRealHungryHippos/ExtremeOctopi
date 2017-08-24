@@ -132,6 +132,27 @@ module.exports.postMatches = function(user, matchesList, callback) {
   });
 };
 
+module.exports.getFollowing = function(twitter_id, callback) {
+  db.userSchema.findOne({twitter_id: twitter_id}, 'following', callback);
+};
+
+module.exports.updateFollowing = function(twitter_id, newFollowing, callback) {
+  db.userSchema.update({twitter_id: twitter_id}, {$set: {following: newFollowing}}, callback);
+};
+
+module.exports.getMatches = function(twitter_id, doc) {
+  db.userSchema.aggregate(
+   {$unwind: '$following'},
+   {$match: {following: {$in: doc} } },
+   {$group: {_id: {username: "$username", twitter_url: "$twitter_url", location: "$location", profile_img: "$profile_img", about_me: "$about_me"}, nb: {"$sum":1} } },
+   {$sort: {nb:-1}},
+   {$limit:10},
+   function(err, results) {
+
+   }
+ );
+};
+
 module.exports.clear = function(callback) {
   db.User.remove({}, () => {
     db.Message.remove({}, () => {
