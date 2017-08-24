@@ -19,7 +19,7 @@ class Profile extends React.Component {
 	loadProfile(userId) {
       $.ajax({
         method: 'GET',
-        url: '/profile',
+        url: '/user',
         success: (data) => {
           data = JSON.parse(data);
           this.setState ( {
