@@ -1,4 +1,5 @@
 import React from 'react';
+import $ from 'jquery';
 
 class Profile extends React.Component {
 	constructor( props ) {
@@ -15,44 +16,28 @@ class Profile extends React.Component {
 
 	}
 
-	loadProfile(user) {
-    if(user === 'home') {
-      $.ajax( {
+	loadProfile(userId) {
+      $.ajax({
         method: 'GET',
         url: '/profile',
-        success: ( data ) => {
-          var data = JSON.parse( data );
+        success: (data) => {
+          data = JSON.parse(data);
           this.setState ( {
             profile_img: data.profile_img || 'https://s-media-cache-ak0.pinimg.com/originals/36/43/e7/3643e7e8dab9b88b3972ee1c9f909dea.jpg',
             username: data.username || '~(>_<~)',
             location: data.location || '~(>_<~)',
-            about_me: data.about_me || '~(>_<~)'
+            about_me: data.about_me || '~(>_<~)',
+            twitterUrl: data.twitter_url || '~(>_<~)'
           } );
         },
-        error: ( error ) => {
-          console.log( 'ERROR:', error );
+        error: (error) => {
+          console.log('********** Load Profile Error: ', error );
         }
-      } );
-    } else {
-      $.post( '/friendProfile', {username: user}, (data) =>
-      {
-        var data = JSON.parse( data );
-        this.setState ( {
-          profile_img: data.profile_img || 'https://s-media-cache-ak0.pinimg.com/originals/36/43/e7/3643e7e8dab9b88b3972ee1c9f909dea.jpg',
-          username: data.username || '~(>_<~)',
-          location: data.location || '~(>_<~)',
-          about_me: data.about_me || '~(>_<~)'
-        } );
       });
-    }
-  }
-
-  handleClick() {
-    this.props.history.push( '/Messages/' + this.user + '/' );
   }
 
   componentDidMount () {
-
+    this.loadProfile(this.props.user);
   }
 
   render () {
@@ -71,5 +56,4 @@ class Profile extends React.Component {
   }
 }
 
-export default Profile
-
+export default Profile;
