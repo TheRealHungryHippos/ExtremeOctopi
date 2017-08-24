@@ -103,11 +103,10 @@ module.exports.postTestResults = function (user, results, callback) {
 // senderName = sender, receiverName = receiver, messageText = message
 module.exports.postMessage = function (senderName, receiverName, messageText, callback){
   console.log('db', senderName, receiverName, messageText);
-  var message = new Message({
+  var message = new db.Message({
     sender: senderName,
     receiver: receiverName,
-    message: messageText,
-    time: Date.now()
+    message: messageText
   });
 
   message.save(function (err) {

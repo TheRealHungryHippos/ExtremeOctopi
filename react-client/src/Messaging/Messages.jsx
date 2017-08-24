@@ -1,16 +1,18 @@
 import React from 'react';
 import $ from 'jquery';
-import MessagesList from './components/MessagesList.jsx';
+import MessagesList from './MessagesList.jsx';
+import FriendList from './FriendList.jsx';
 
 class Messages extends React.Component {
-  constructor( props ) {
-    super( props );
+  constructor(props) {
+    super(props);
 
     // var regexp = /^\/Messages\/(.*)\/$/;
     // this.user = props.history.location.pathname.match( regexp )[ 1 ];
 
     this.state = {
       match: '',
+      friend: '',
       message: '',
       messages: []
     };
@@ -18,7 +20,7 @@ class Messages extends React.Component {
     // this.updateMessages(this.user);
   }
 
-  updateMessages(user) {
+  updateMessages(user, friend) {
     if(user === 'home') {
       $.ajax({
         method: 'GET',
@@ -39,12 +41,12 @@ class Messages extends React.Component {
         }
       });
     } else {
-      $.post('/friendMessages', {username: user}, (data) => {
+      $.post('/friendMessages', {username: user, friend: friend}, (data) => {
         if(data) {
           var data = JSON.parse(data);
-          console.log(data.received);
+          // console.log(data.received);
           this.setState ({
-            messages: data.received
+            // messages: data.received
           })
         }
       })
@@ -71,7 +73,7 @@ class Messages extends React.Component {
             message: ''
           });
 
-          this.updateMessages(this.user);
+          this.updateMessages(this.user, this.state.friend);
         },
         error: (error) => {
           console.log('ERROR:', error);
@@ -99,7 +101,15 @@ class Messages extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="messages container">
+        <div className="row">
+        <div className="col-sm-6">
+        <h1>Friends</h1>
+        <br/>
+        <br/>
+        <FriendList />
+        </div>
+        <div className="col-sm-6">
         <h1>Messages</h1>
         <br/>
         <br/>
@@ -110,9 +120,11 @@ class Messages extends React.Component {
         { this.state.messages.map( ( message, index ) => (
           <MessagesList key={ index } message={message}/>
         ) ) }
+        </div>
+        </div>
       </div>
     );
   }
 }
 
-export default Messages
+export default Messages;
