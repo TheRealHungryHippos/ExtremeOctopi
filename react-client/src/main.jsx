@@ -1,7 +1,7 @@
 import { Switch, Route } from 'react-router-dom';
 import Profile from './Profile.jsx';
 import Matches from './Matches.jsx';
-import Messages from './Messages.jsx';
+import Messages from './Messaging/Messages.jsx';
 import React from 'react';
 import $ from 'jquery';
 

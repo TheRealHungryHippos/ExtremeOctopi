@@ -1,7 +1,7 @@
 var authentication = require( './authentication/authentication.js' );
 var cookies = require( './authentication/cookies.js' );
 var bodyParser = require( 'body-parser' );
-var db = require( '../database-mongo' );
+var db = require( '../database-mongo/queries.js' );
 var express = require( 'express' );
 var path = require('path');
 var request = require('request');
@@ -107,20 +107,21 @@ app.get('/matches', ( req, res ) => {
 } );
 
 app.get('/messages', ( req, res ) => {
-  cookies.verifySession( req, res, ( valid ) => {
-    if ( valid ) {
+  // cookies.verifySession( req, res, ( valid ) => {
+    if ( req.body.user ) {
       db.getMessages( req.session.username, ( messages ) => {
         res.status( 200 ).send( JSON.stringify( messages ) );
       } );
     } else {
-      res.status( 200 ).end( JSON.stringify( false ) );
+      // res.status( 200 ).end( JSON.stringify( false ) );
+      res.status(200);
     }
-  } );
+  // } );
 } );
 
 app.post('/friendMessages', (req, res) => {
   console.log('In friend Messages')
-  db.getMessages( req.body.username, ( messages ) => {
+  db.getMessages( req.body.username, req.body.friend, ( messages ) => {
     res.status( 200 ).send( JSON.stringify( messages ) );
   });
 });
@@ -153,24 +154,6 @@ app.post('/login', ( req, res ) => {
     }
   } );
 } );
-
-var mostCompatible = {
-  infp: ['enfj', 'entj'],
-  enfp: ['infj', 'intj'],
-  infj: ['enfp', 'entp'],
-  enfj: ['infp', 'isfp'],
-  intj: ['enfp', 'entp'],
-  entj: ['infp', 'intp'],
-  intp: ['entj', 'estj'],
-  isfp: ['enfj', 'esfj', 'estj'],
-  esfp: ['isfj', 'istj'],
-  istp: ['enfj', 'esfj', 'estj'],
-  estp: ['enfj', 'isfj', 'istj'],
-  isfj: ['enfj', 'esfp', 'estp'],
-  esfj: ['enfj', 'isfp', 'istp'],
-  istj: ['enfj', 'esfp', 'estp'],
-  estj: ['enfj', 'intp', 'esfp', 'estp']
-};
 
 app.post('/test', ( req, res ) => {
   db.postTestResults( req.session.username, req.body.testResults, allUsers => {
@@ -231,12 +214,12 @@ app.post('/message', ( req, res ) => {
 } );
 
 app.post('/messageFriend', ( req, res ) => {
-  cookies.verifySession( req, res, ( valid ) => {
+  // cookies.verifySession( req, res, ( valid ) => {
 
     db.postMessage( req.session.username, req.body.username, req.body.message, () => {
       res.status( 201 ).end( JSON.stringify( true ) );
     });
-  })
+  // })
 } );
 
 app.get('/*', (req, res) => {
