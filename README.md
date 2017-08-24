@@ -43,6 +43,12 @@ From within the root directory:
 npm install
 ```
 
+### Obtaining required config information
+
+For local development, configuration files are required:
+`server/config/session.config.js` and `server/config/twitter.config.js`
+Use the example files to fill in the necessary information. A Twitter account is required to [register a Twitter App](https://apps.twitter.com/app/new).
+
 ### Database data
 Database data is populated on-load when you start the server
 This is executed in database-mongo/index.js
@@ -75,6 +81,8 @@ Tests are named as `<module/stack tested>Spec.js`.
 Deployment for this app was done on [Heroku](https://www.heroku.com).
 
 Provision a MongoDB addon for each app in your pipeline (mLab was used for this app).
+
+Config variables will have to be set that match the `*.config.js` files listed under [Installing Dependencies](#installing-dependencies).
 
 ### Roadmap
 
