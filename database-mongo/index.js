@@ -49,7 +49,7 @@ var sessionSchema = mongoose.Schema({
   user_id: Number
 }, {timestamps: true}); //built in timestamps for createdAt and updatedAt
 
-module.exports.User = mongoose.model('User', userSchema, 'User');
+module.exports.User = mongoose.model('User', userSchema);
 module.exports.Message = mongoose.model('Message', messageSchema);
 module.exports.Session = mongoose.model('Session', sessionSchema);
 
