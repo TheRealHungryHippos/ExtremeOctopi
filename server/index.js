@@ -4,6 +4,7 @@ var bodyParser = require( 'body-parser' );
 var db = require( '../database-mongo' );
 var express = require( 'express' );
 var path = require('path');
+var request = require('request');
 
 var app = express();
 
@@ -46,15 +47,40 @@ app.post('/friendProfile', ( req, res ) => {
 // } );
 
 app.get('/matches', ( req, res ) => {
-  cookies.verifySession( req, res, ( valid ) => {
-    if ( valid ) {
-      db.getFriends( req.session.username, ( matches ) => {
-        res.status( 200 ).send( JSON.stringify( matches ) );
-      } );
-    } else {
-      res.status( 200 ).end( JSON.stringify( false ) );
+  // cookies.verifySession( req, res, ( valid ) => {
+  //   if ( valid ) {
+  //     db.getFriends( req.session.username, ( matches ) => {
+  //       res.status( 200 ).send( JSON.stringify( matches ) );
+  //     } );
+  //   } else {
+  //     res.status( 200 ).end( JSON.stringify( false ) );
+  //   }
+  // } );
+  var user_id = 893651977338368000;
+  var options = {
+    url: 'https://api.twitter.com/1.1/friends/ids.json?cursor=-1&user_id=' + user_id + '&count=5000',
+    headers: {
+      'User-Agent': 'request'
+    },
+    oauth: {
+      consumer_key: 'ihlnJQ6b0BYrVY2Kk9T89Uq5W', 
+      consumer_secret: 'eNQifh5ar7UkOWH34YIiw9c8x7EQuWHWCzPc5iWzip1kH9N7uW',
+      token: '893651977338368000-h6GVhlnZyv6XhUH9FBLCntRrDuBEoAv',
+      token_secret: 'AjVJvPMmhXVC3do1XznwKdHTKInCTKrxvDKzl1XQe0C8n'
     }
-  } );
+  };
+  var resSend = (error, response) => {
+    if (response) {
+      var body = JSON.parse(response.body);
+      console.log(body.ids);
+      // var parsedResBody = JSON.parse(response.body);
+      // var usernames = parsedResBody.length ? parsedResBody.map((userObj) => {
+      //   return userObj.screen_name;
+      // }) : [];
+      // res.send({usernames});
+    }
+  };
+  request(options, resSend);
 } );
 
 app.get('/messages', ( req, res ) => {

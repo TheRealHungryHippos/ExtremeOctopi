@@ -39,7 +39,7 @@ class App extends React.Component{
           />
           <Route path="/" render={() => (
               this.state.authenticated ? (
-                <Main user={this.state.user}/>
+                <Main />
               ) : (
                 <Login login={this.logIn.bind(this)}/>
               )
