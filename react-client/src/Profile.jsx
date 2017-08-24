@@ -3,25 +3,19 @@ import React from 'react';
 class Profile extends React.Component {
 	constructor( props ) {
   	super( props );
-
-  	console.log(props);
-
   	// var regexp = /^\/Profile\/(.*)\/$/;
     // this.user = props.history.location.pathname.match( regexp )[ 1 ];
 
   	this.state = {
-  		profilePic: 'https://s-media-cache-ak0.pinimg.com/originals/36/43/e7/3643e7e8dab9b88b3972ee1c9f909dea.jpg',
+      profilePic: 'https://s-media-cache-ak0.pinimg.com/originals/36/43/e7/3643e7e8dab9b88b3972ee1c9f909dea.jpg',
       username: '(ノ°Д°）ノ︵ ┻━┻ | Please log in',
   		fullname: 'Not Logged In',
   		location: '(ノ°Д°）ノ︵ ┻━┻ | Please log in',
   		hobbies: '(ノ°Д°）ノ︵ ┻━┻ | Please log in',
   		aboutme: '(ノ°Д°）ノ︵ ┻━┻ | Please log in',
-  	};
+    }
 
   	// this.loadProfile(this.user);
-
-  	this.handleClick = this.handleClick.bind(this);
-
 	}
 
 	loadProfile(user) {
@@ -74,7 +68,7 @@ class Profile extends React.Component {
         <div className="profileRow row">
   		    <div className="col"><img className="profilePic img-fluid img-thumbnail" src={ this.state.profilePic } /></div>
           <div className="col">
-      	    <h1 className="profileInfo">{ this.state.fullname }'s Zone</h1>
+      	    <h1 className="profileInfo">{ this.state.fullname }s Zone</h1>
             <div className="profileInfo">Username:&nbsp;{ this.state.username }</div>
       			<div className="profileInfo">Location:&nbsp;</div>{ this.state.location }
             <div className="profileInfo">Hobbies:&nbsp;</div>{ this.state.hobbies }
