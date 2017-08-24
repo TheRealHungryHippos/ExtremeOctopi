@@ -39,8 +39,8 @@ class Matches extends React.Component {
           name: data.fullname || '~(>_<~)',
           location: data.location || '~(>_<~)',
           hobbies: data.hobbies || '~(>_<~)',
-          aboutme: data.blog || '~(>_<~)',
-          matches: data.matches
+          aboutme: data.blog || '~(>_<~)'
+          // matches: data.matches
         } );
       },
       error: ( error ) => {
@@ -82,7 +82,7 @@ class Matches extends React.Component {
   }
 }
 
-export default Matches
+export default Matches;
 
 
 
