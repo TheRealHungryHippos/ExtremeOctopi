@@ -13,7 +13,7 @@ class App extends React.Component{
     super(props);
     this.state = {
       authenticated: true,
-      user: '599d26cbb66b1cccca186505'
+      user: '599d26cbb66b1cccca186505' //populated by twitter login
     };
   }
 

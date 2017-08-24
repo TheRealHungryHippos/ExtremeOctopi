@@ -53,6 +53,7 @@ module.exports.User = mongoose.model('User', userSchema);
 module.exports.Message = mongoose.model('Message', messageSchema);
 module.exports.Session = mongoose.model('Session', sessionSchema);
 
+//comment out if don't want the database dropped and added again
 module.exports.User.remove({}, () => {
   module.exports.User.collection.insertMany(data.userData, (err, results) => {
     if (err) {
