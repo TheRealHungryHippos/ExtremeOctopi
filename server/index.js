@@ -22,15 +22,15 @@ if (process.env.NODE_ENV === 'production') {
   // session_secret = require('../session.config.js');
 }
 
-passport.use(new TwitterStrategy(
-  twitterOptions,
-  function(token, tokenSecret, profile, done) {
-    User.findOrCreate(..., function(err, user) {
-      if (err) { return done(err); }
-      done(null, user);
-    });
-  }
-));
+// passport.use(new TwitterStrategy(
+//   twitterOptions,
+//   function(token, tokenSecret, profile, done) {
+//     User.findOrCreate(..., function(err, user) {
+//       if (err) { return done(err); }
+//       done(null, user);
+//     });
+//   }
+// ));
 
 app.use( bodyParser.urlencoded( { extended: true } ) );
 app.use( bodyParser.json() );
