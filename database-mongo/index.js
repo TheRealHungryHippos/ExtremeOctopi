@@ -21,7 +21,7 @@ db.once('open', () => {
 });
 
 var userSchema = mongoose.Schema({
-  twitter_id: {type: Number, unique: true},
+  twitter_id: {type: String, unique: true},
   username: {type: String, unique: true},
   twitter_url: String,
   fullname: String,
@@ -29,12 +29,12 @@ var userSchema = mongoose.Schema({
   hobbies: String,
   profile_img: String,
   about_me: String,
-  matches: [Number],
-  following: [Number],
-  friends: [Number],
-  blocked: [Number],
-  pending_approval: [Number],
-  pending_request: [Number]
+  matches: [String],
+  following: [String],
+  friends: [String],
+  blocked: [String],
+  pending_approval: [String],
+  pending_request: [String]
 });
 
 var messageSchema = mongoose.Schema({
@@ -59,21 +59,21 @@ module.exports.User.remove({}, () => {
     if (err) {
       console.log('********* user data insert error ', err);
     } else {
-      console.log('********** user data insert success results ', results);
+      console.log('********** user data insert success results ');
       module.exports.Message.remove({}, () => {
         module.exports.Message.collection.insertMany(data.messageData, (err, results) => {
           if (err) {
             console.log('********* message data insert error ', err);
           }
           else {
-            console.log('********** message data insert success results ', results);
+            console.log('********** message data insert success results ');
             module.exports.Session.remove({}, () => {
               module.exports.Session.collection.insertMany(data.sessionData, (err, results) => {
                 if (err) {
                   console.log('********* session data insert error ', err);
                 }
                 else {
-                  console.log('********** session data insert success results ', results);
+                  console.log('********** session data insert success results ');
                   console.log('*********** db cleared ');
                 }
               });
