@@ -22,6 +22,15 @@
   margin-right: 13vw;
 }
 
+.button {
+  background-color: #FFDC00;
+  color: #001f3f;
+}
+
+.button:hover {
+  background-color: #6D5A7F;
+}
+
 .signUpIn {
   padding-top: 76px;
   display: flex;
@@ -36,14 +45,6 @@
   flex-direction: column;
 }
 
-.test {
-  padding-top: 76px;
-}
-
-.matches {
-  padding-top: 76px;
-}
-
 .profile {
   padding: 76px 13vw 0 13vw;
 }
@@ -56,17 +57,8 @@
   white-space: nowrap;
 }
 
-.matchesList {
-  padding: 0 13vw 0 13vw;
-}
-
-.button {
-  background-color: #FFDC00;
-  color: #001f3f;
-}
-
-.button:hover {
-  background-color: #6D5A7F;
+.matches {
+  padding: 100px 13vw 0 13vw;
 }
 
 /*THE BELOW WILL MOST LIKELY BE DELETED, KEEPING IT HERE UNTIL I AM SURE*/
