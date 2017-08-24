@@ -38,8 +38,19 @@ app.use( cookies.parseCookies );
 app.use( cookies.createSession );
 
 app.use(express.static(path.join(__dirname, '../react-client/dist')));
+//to hardcode to TRUE add 'valid=true' on line 21
+//to hardcode to FALSE remove '=true' on line 21
+app.get('/auth', ( req, res ) => {
+  cookies.verifySession( req, res, ( valid ) => {
+    if ( valid=true ) {
+      res.status( 200 ).send( JSON.stringify( true ) );
+    } else {
+      res.status( 200 ).send( JSON.stringify( false ) );
+    }
+  } );
+} );
 
-app.get('/profile', ( req, res ) => {
+app.get('/user', ( req, res ) => {
   cookies.verifySession( req, res, ( valid ) => {
     if ( valid ) {
       db.getProfile( req.session.username, ( profile ) => {
@@ -86,7 +97,7 @@ app.get('/matches', ( req, res ) => {
       'User-Agent': 'request'
     },
     oauth: {
-      consumer_key: 'ihlnJQ6b0BYrVY2Kk9T89Uq5W', 
+      consumer_key: 'ihlnJQ6b0BYrVY2Kk9T89Uq5W',
       consumer_secret: 'eNQifh5ar7UkOWH34YIiw9c8x7EQuWHWCzPc5iWzip1kH9N7uW',
       token: '893651977338368000-h6GVhlnZyv6XhUH9FBLCntRrDuBEoAv',
       token_secret: 'AjVJvPMmhXVC3do1XznwKdHTKInCTKrxvDKzl1XQe0C8n'
