@@ -1,8 +1,8 @@
 import React from 'react';
 import $ from 'jquery';
 import MessagesList from './MessagesList.jsx';
-import FriendList from './FriendList.jsx';
-import FriendSelected from './FriendSelected.jsx';
+import MessageFriendList from './MessageFriendList.jsx';
+import MessageFriendSelected from './MessageFriendSelected.jsx';
 
 class Messages extends React.Component {
   constructor(props) {
@@ -105,9 +105,13 @@ class Messages extends React.Component {
       <div className="messages container">
         <div className="row justify-content-center">
           <div className="col-4">
-            <h1>Friends</h1>
-            <br/>
-            <FriendList />
+            <div className="card">
+              <h2 className="card-header">Friends</h2>
+              <br/>
+              <div class="card-block">
+                <MessageFriendList />
+              </div>
+            </div>
           </div>
           <div className="col-8">
               <h1>Messages</h1>
@@ -122,7 +126,7 @@ class Messages extends React.Component {
               <div className="col-8">
                 <h1>Friend Selected</h1>
                 <br></br>
-                <FriendSelected />
+                <MessageFriendSelected />
               </div>
             </div>
           </div>

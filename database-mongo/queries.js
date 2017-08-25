@@ -25,6 +25,16 @@ module.exports.getMessages = function (user, friend, callback) {
   });
 };
 
+module.exports.getFriends = function (user, callback) {
+  db.User.findOne({username: user}, (err, user) => {
+    if (err) {callback(err);}
+    db.User.find({twitter_id: {$in: user.friends}}, (err, friends) => {
+      if (err) {callback(err);}
+      callback(null, friends);
+    });
+  });
+};
+
 // userInfo = {username, password, fullname, email, location, cookies},
 // callback = false: user already exists - true: user created successfully
 module.exports.postUser = function (userInfo, cookie, callback) {

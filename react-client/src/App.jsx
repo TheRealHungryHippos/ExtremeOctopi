@@ -23,7 +23,6 @@ class App extends React.Component{
     this.setState({loading: true});
     this.isLoggedIn()
     .then((confirmed) => {
-      console.log('************** after logged in check in component will mount ', this.state.authenticated);
       this.setState({
         authenticated: confirmed,
         loading: false

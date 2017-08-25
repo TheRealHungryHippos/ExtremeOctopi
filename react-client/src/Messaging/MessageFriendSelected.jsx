@@ -1,13 +1,15 @@
 import React from 'react';
 import $ from 'jquery';
 
-class FriendList extends React.Component {
+class MessageFriendSelected extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      friends: [],
-      selectedFriend: ''
+      friend_name: '',
+      friend_about: '',
+      friend_img: '',
+      friend_twitterUrl: ''
     };
 
     // this.updateMessages(this.user);
@@ -18,7 +20,7 @@ class FriendList extends React.Component {
       <div>
       <div className="talk-bubble tri-right left-top">
       <div className="talktext">
-        <strong>Friend List</strong>
+        <strong>Friend Selected</strong>
       </div>
       </div>
       </div>
@@ -26,4 +28,4 @@ class FriendList extends React.Component {
   }
 }
 
-export default FriendList;
+export default MessageFriendSelected;
