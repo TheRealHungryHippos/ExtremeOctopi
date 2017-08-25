@@ -46,23 +46,20 @@
 }
 
 .profile {
-  padding-top: 76px;
-}
-
-.profileRow {
-  padding-top: 76px;
-}
-
-.profileInfo {
-  white-space: nowrap;
+  padding: 152px 13vw 0 13vw;
 }
 
 .messages {
   padding-top: 100px;
 }
 
-.matches {
+.matchesHeading {
   padding: 100px 13vw 0 13vw;
+  background-color: #f6f6f6;
+}
+
+.matchesList {
+  padding: 30px 13vw 0 13vw;
 }
 
 .messageFriendRow {
