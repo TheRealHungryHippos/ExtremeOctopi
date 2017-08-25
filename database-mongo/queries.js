@@ -150,13 +150,15 @@ module.exports.updateFollowing = function(twitter_id, newFollowing, callback) {
   db.User.findOneAndUpdate({twitter_id: twitter_id}, {$set: {following: newFollowing}}, callback);
 };
 
-module.exports.getMatches = function(twitter_id, doc, callback) {
+module.exports.getMatches = function(user, doc, callback) {
+  // console.log('*** DO NOT MATCH ', [user.twitter_id].concat(user.friends, user.blocked, user.pending_approval, user.pending_request));
+
   db.User.aggregate(
     {$unwind: '$following'},
-    {$match: {following: {$in: doc} } },
+    {$match: {$and: [{following: {$in: doc}}, {twitter_id: {$nin: [user.twitter_id].concat(user.friends, user.blocked, user.pending_approval, user.pending_request)}}]}},
     {$group: {_id: {username: '$username', location: '$location', profile_img: '$profile_img', about_me: '$about_me'}, nb: {'$sum': 1} } },
     {$sort: {nb: -1}},
-    {$limit: 11},
+    {$limit: 10},
     callback
   );
 };
@@ -181,7 +183,79 @@ module.exports.findUserById = function(id, callback) {
   });
 };
 
-module.exports.findOneAndUpdate = function(profile, callback) {
+module.exports.addFriend = function(twitter_id, usernameToFriend, callback) {
+  db.User.findOne({username: usernameToFriend}, 'twitter_id', function(err, userToFriend) {
+    if (err) {
+      console.log('********* ERROR finding friend to add\'s id ', err);
+      callback(err);
+    } else if (!userToFriend) {
+      console.log('********* ERROR friend to add\'s username is not valid: ', usernameToFriend);
+      callback(null, false);      
+    }
+    db.User.findOneAndUpdate({twitter_id: twitter_id}, {$push: {friends: userToFriend.twitter_id}}, function(err, user) {
+      if (err) {
+        console.log('********* ERROR adding friend to user\'s friend list ', err);
+        callback(err);
+      }
+      db.User.findOneAndUpdate({twitter_id: userToFriend.twitter_id}, {$push: {friends: twitter_id}}, function(err, user) {
+        if (err) {
+          console.log('********* ERROR adding user to friend\'s friend list ', err);
+          callback(err);
+        }
+        callback(null, user);
+      });
+    });
+  });
+};
+
+module.exports.blockUser = function(twitter_id, usernameToBlock, callback) {
+  db.User.findOne({username: usernameToBlock}, 'twitter_id', function(err, userToBlock) {
+    if (err) {
+      console.log('********* ERROR finding user to block\'s id ', err);
+      callback(err);
+    } else if (!friend) {
+      console.log('********* ERROR user to block\'s username is not valid: ', userToBlock);
+      callback(null, false);      
+    }
+    db.User.findOne({twitter_id: twitter_id}, 'friends', function(err, friendsList) {
+      if (err) {
+        console.log('********* ERROR getting user\'s friends list ', err);
+        callback(err);
+      }
+      if (friendsList.includes(userToBlock.twitter_id)) {
+        db.User.findOneAndUpdate({twitter_id: twitter_id}, {$pull: {friends: userToFriend.twitter_id}}, function(err, user) {
+          if (err) {
+            console.log('********* ERROR removing userToBlock from user\'s friends list ', err);
+            callback(err);
+          }
+          db.User.findOneAndUpdate({twitter_id: userToFriend.twitter_id}, {$pull: {friends: twitter_id}}, function(err, user) {
+            if (err) {
+              console.log('********* ERROR removing user from userToBlock\'s friends list ', err);
+              callback(err);
+            }
+            db.User.findOneAndUpdate({twitter_id: twitter_id}, {$push: {blocked: userToBlock.twitter_id}}, function(err, user) {
+              if (err) {
+                console.log('********* ERROR adding userToBlock to user\'s blocked list ', err);
+                callback(err);
+              }
+              callback(null, user);
+            });    
+          });
+        });
+      } else {
+        db.User.findOneAndUpdate({twitter_id: twitter_id}, {$push: {blocked: userToBlock.twitter_id}}, function(err, user) {
+          if (err) {
+            console.log('********* ERROR adding userToBlock to user\'s blocked list ', err);
+            callback(err);
+          }
+          callback(null, user);
+        });
+      }
+    });
+  });
+};
+
+module.exports.findOneOrCreate = function(profile, callback) {
   var user = profile._json;
 
   var conditions = {
@@ -205,34 +279,4 @@ module.exports.findOneAndUpdate = function(profile, callback) {
   };
 
   db.User.findOneAndUpdate(conditions, update, options, callback);
-
-  // module.exports.findUserById(user.id_str, function(err, results) {
-  //   if (err) {
-  //     console.log('*********** database findOneAndUpdate error ', err);
-  //     callback(err);
-  //   }
-  //   if (results.length > 0) {
-  //     console.log('*********** database findOrCreateUser user already exists ', err);
-  //     callback(err, results[0]);
-  //   } else {
-  //     db.User.create({
-  //       twitter_id: user.id_str,
-  //       username: user.screen_name,
-  //       twitter_url: user.url,
-  //       fullname: user.name,
-  //       location: user.location,
-  //       profile_img: user.profile_image_url.replace(/normal/i, '400x400'),
-  //       about_me: user.description,
-  //       following_count: user.friends_count
-  //     }, function(err, user) {
-  //       if (err) {
-  //         console.log('*********** database findOrCreateUser error in creating User ', err);
-  //         callback(err);
-  //       } else {
-  //         console.log('*********** New user created ');
-  //         callback(null, user);
-  //       }
-  //     });
-  //   }
-  // });
 };
