@@ -66,10 +66,10 @@ class Main extends React.Component {
           <Route path='/profile' render={() => (
               <Profile />
             )}/>
-          <Route path='/matches' render={() => (
+          <Route exact path='/matches' render={() => (
               <Matches matches={this.state.matches} updateMatches={this.updateMatches.bind(this)}/>
             )}/>
-          <Route path='/messages' render={() => (
+          <Route exact path='/messages' render={() => (
                 <Messages />
               )}/>
         </Switch>
