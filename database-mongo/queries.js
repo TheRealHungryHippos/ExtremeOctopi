@@ -213,7 +213,7 @@ module.exports.blockUser = function(twitter_id, usernameToBlock, callback) {
     if (err) {
       console.log('********* ERROR finding user to block\'s id ', err);
       callback(err);
-    } else if (!friend) {
+    } else if (!userToBlock) {
       console.log('********* ERROR user to block\'s username is not valid: ', userToBlock);
       callback(null, false);      
     }
