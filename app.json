@@ -22,6 +22,14 @@
     "TWITTER_CONSUMER_SECRET": {
       "description": "for twitter auth",
       "required": true
+    },
+    "TWITTER_TOKEN": {
+      "description": "for twitter api to pull user info",
+      "required": true
+    },
+    "TWITTER_TOKEN_SECRET": {
+      "description": "for twitter api to pull user info",
+      "required": true
     }
   },
   "formation": {
