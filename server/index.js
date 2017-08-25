@@ -1,4 +1,3 @@
-var authentication = require( './authentication/authentication.js' );
 var cookies = require( './authentication/cookies.js' );
 var bodyParser = require( 'body-parser' );
 var db = require('../database-mongo/queries');
@@ -123,18 +122,16 @@ app.get( '/friends', (req, res) => {
   } );
 } );
 
-app.post('/friends/add', (req, res) => {
-  console.log(req.user.twitter_id);
-  console.log(req.body);
-  var toAdd = req.body.add.username;
+app.post('/matches/friend', (req, res) => {
+  var toAdd = req.body.excludedUsername;
   db.addFriend(req.user.twitter_id, toAdd, (err, result) => {
     (err || !result) && res.sendStatus(500);
     res.sendStatus(201);
   });
 });
 
-app.post('/friends/block', (req, res) => {
-  var toBlock = req.body.block.username;
+app.post('/matches/block', (req, res) => {
+  var toBlock = req.body.excludedUsername;
   db.blockUser(req.user.twitter_id, toBlock, (err, result) => {
     (err || !result) && res.sendStatus(500);
     res.sendStatus(201);
@@ -202,35 +199,6 @@ app.post('/friendMessages', (req, res) => {
   });
 });
 
-app.post('/signup', ( req, res ) => {
-  var newUser = {
-    username: req.body.username,
-    password: authentication.generateHash(req.body.password),
-    fullname: req.body.fullname,
-    email: req.body.email,
-  };
-
-  db.postUser( newUser, req.cookies.takoyaki = cookies.bakeCookies(), ( valid ) => {
-    if ( valid ) {
-      res.cookie( 'takoyaki', req.cookies.takoyaki ).status( 201 ).end( JSON.stringify( true ) );
-    } else {
-      res.status( 201 ).end( JSON.stringify( false ) );
-    }
-  } );
-} );
-
-app.post('/login', ( req, res ) => {
-  db.getHash( req.body.username, ( password ) => {
-    if ( authentication.authenticate( req.body.password, password ) ) {
-      db.getProfile( req.body.username, ( user ) => {
-        res.cookie( 'takoyaki', user.cookies ).status( 201 ).end( JSON.stringify( true ) );
-      } );
-    } else {
-      res.status( 201 ).end( JSON.stringify( false ) );
-    }
-  } );
-} );
-
 app.post('/test', ( req, res ) => {
   db.postTestResults( req.session.username, req.body.testResults, allUsers => {
     var matchesList = [];
@@ -257,24 +225,6 @@ app.post('/test', ( req, res ) => {
 app.post('/matches/users', ( req, res ) => {
   db.postGetMatches( req.session.username, req.body.numberToReturn, req.body.maxFriends, ( results ) => {
     res.status( 201 ).send( results );
-  } );
-} );
-
-app.post('/updateUser', ( req, res ) => {
-  cookies.verifySession( req, res, ( valid ) => {
-    if ( valid ) {
-      db.postUpdateUser( {
-        username: req.session.username,
-        location: req.body.location,
-        fullname: req.body.name,
-        hobbies: req.body.hobbies,
-        blog: req.body.aboutme
-      }, ( matches ) => {
-        res.status( 200 ).end( JSON.stringify( true ) );
-      } );
-    } else {
-      res.status( 200 ).end( JSON.stringify( false ) );
-    }
   } );
 } );
 
