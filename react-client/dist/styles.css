@@ -46,7 +46,7 @@
 }
 
 .profile {
-  padding: 76px 13vw 0 13vw;
+  padding-top: 76px;
 }
 
 .profileRow {
@@ -57,8 +57,22 @@
   white-space: nowrap;
 }
 
+.messages {
+  padding-top: 100px;
+}
+
 .matches {
   padding: 100px 13vw 0 13vw;
+}
+
+.messageFriendRow {
+  display: flex;
+  align-items: center;
+}
+
+.friendPic {
+  width: 60px;
+  height: 60px;
 }
 
 /*THE BELOW WILL MOST LIKELY BE DELETED, KEEPING IT HERE UNTIL I AM SURE*/

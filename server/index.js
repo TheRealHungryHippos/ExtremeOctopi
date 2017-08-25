@@ -73,7 +73,7 @@ app.get('/auth', (req, res) => {
 
 app.get('/auth/twitter', passport.authenticate('twitter'));
 
-app.get('/auth/twitter/callback', passport.authenticate('twitter', 
+app.get('/auth/twitter/callback', passport.authenticate('twitter',
   {
     successRedirect: '/profile',
     failureRedirect: '/login'
@@ -100,17 +100,16 @@ app.post('/friendProfile', ( req, res ) => {
   } );
 });
 
-// app.get( '/friendProfile', ( req, res ) => {
-//   cookies.verifySession( req, res, ( valid ) => {
-//     if ( valid ) {
-//       db.getProfile( req.body.username, ( profile ) => {
-//         res.status( 200 ).end( JSON.stringify( profile ) );
-//       } );
-//     } else {
-//       res.status( 200 ).end( JSON.stringify( false ) );
-//     }
-//   } );
-// } );
+app.get( '/friends', (req, res) => {
+  req.body.username = 'chrisbharrison'; //delete once twitter login working
+  db.getFriends( req.body.username, (err, friends) => {
+    if (err) {
+      res.status(400);
+    } else {
+      res.status(200).end(JSON.stringify(friends));
+    }
+  } );
+} );
 
 app.get('/matches', ( req, res ) => {
   // cookies.verifySession( req, res, ( valid ) => {
