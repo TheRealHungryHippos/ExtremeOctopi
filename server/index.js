@@ -112,15 +112,28 @@ app.post('/friendProfile', ( req, res ) => {
 });
 
 app.get( '/friends', (req, res) => {
-  req.body.username = 'chrisbharrison'; //delete once twitter login working
+  console.log('********** delete hard coded username in /friends on server');
+  req.body.username = 'chrisbharrison'; //delete once add friend functionality working
   db.getFriends( req.body.username, (err, friends) => {
     if (err) {
       res.status(400);
     } else {
       res.status(200).end(JSON.stringify(friends));
     }
-  } );
-} );
+  });
+});
+
+app.post('/friends/mutual', (req, res) => {
+  console.log('********** delete hard coded username in /friends/mutual on server');
+  req.body.username = 'chrisbharrison'; //delete once add friend functionality working
+  db.getMutualFriends(req.body.username, req.body.friend, ( error, friends ) => {
+    if (error) {
+      res.status(400);
+    } else {
+      res.status(200).end(JSON.stringify(friends));
+    }
+  });
+});
 
 app.post('/matches/friend', (req, res) => {
   var toAdd = req.body.excludedUsername;
@@ -179,50 +192,103 @@ app.get('/matches/users', ( req, res ) => {
   });
 } );
 
+// app.get('/messages', ( req, res ) => {
+//   // cookies.verifySession( req, res, ( valid ) => {
+//     // if ( req.body.user ) {
+//     //   db.getMessages( req.session.username, ( messages ) => {
+//     //     res.status( 200 ).send( JSON.stringify( messages ) );
+//     //   } );
+//     // } else {
+//       // res.status( 200 ).end( JSON.stringify( false ) );
+// res.sendFile(path.join(__dirname, '../react-client/dist/index.html'));    // }
+//   // } );
+// } );
 
-app.get('/messages', ( req, res ) => {
-  // cookies.verifySession( req, res, ( valid ) => {
-    // if ( req.body.user ) {
-    //   db.getMessages( req.session.username, ( messages ) => {
-    //     res.status( 200 ).send( JSON.stringify( messages ) );
-    //   } );
-    // } else {
-      // res.status( 200 ).end( JSON.stringify( false ) );
-res.sendFile(path.join(__dirname, '../react-client/dist/index.html'));    // }
-  // } );
-} );
-
-app.post('/friendMessages', (req, res) => {
-  console.log('In friend Messages')
-  db.getMessages( req.body.username, req.body.friend, ( messages ) => {
-    res.status( 200 ).send( JSON.stringify( messages ) );
+app.post('/messages/hist', (req, res) => {
+  console.log('********** delete hard coded username in /messages/hist on server');
+  req.body.username = 'chrisbharrison'; //delete once add friend functionality working
+  db.getMessages( req.body.username, req.body.friend, ( error, messages ) => {
+    if (error) {
+      res.status(400);
+    } else {
+      res.status(200).end(JSON.stringify(messages));
+    }
   });
 });
 
-app.post('/test', ( req, res ) => {
-  db.postTestResults( req.session.username, req.body.testResults, allUsers => {
-    var matchesList = [];
-    allUsers.forEach(user => {
-      if (user.username !== req.session.username && mostCompatible[req.body.testResults].indexOf(user.testResults) !== -1) {
-        var friend = {
-          fusername: user.username,
-          ffullname: user.fullname,
-          femail: user.email,
-          flocation: user.location,
-          fhobbies: user.hobbies,
-          fabout: user.blog,
-          fpic: user.img
-        };
-        matchesList.push(friend);
-      }
-    });
-    db.postMatches(req.session.username, matchesList, (data) => {
-      res.status( 201 ).send(data);
-    })
-  })
-});
+// app.post('/message', ( req, res ) => {
+//   cookies.verifySession( req, res, ( valid ) => {
+//     if ( valid ) {
+//       console.log('valid', req.session.username, req.body.message);
+//       db.postMessage( req.session.username, req.session.username, req.body.message, () => {
+//         res.status( 201 ).end( JSON.stringify( true ) );
+//       } );
+//     }
+//   } )
+// } );
 
-app.post('/matches/users', ( req, res ) => {
+// app.post('/messageFriend', ( req, res ) => {
+//   // cookies.verifySession( req, res, ( valid ) => {
+//
+//     db.postMessage( req.session.username, req.body.username, req.body.message, () => {
+//       res.status( 201 ).end( JSON.stringify( true ) );
+//     });
+//   // })
+// } );
+
+// app.post('/signup', ( req, res ) => {
+//   var newUser = {
+//     username: req.body.username,
+//     password: authentication.generateHash(req.body.password),
+//     fullname: req.body.fullname,
+//     email: req.body.email,
+//   };
+//
+//   db.postUser( newUser, req.cookies.takoyaki = cookies.bakeCookies(), ( valid ) => {
+//     if ( valid ) {
+//       res.cookie( 'takoyaki', req.cookies.takoyaki ).status( 201 ).end( JSON.stringify( true ) );
+//     } else {
+//       res.status( 201 ).end( JSON.stringify( false ) );
+//     }
+//   } );
+// } );
+
+// app.post('/login', ( req, res ) => {
+//   db.getHash( req.body.username, ( password ) => {
+//     if ( authentication.authenticate( req.body.password, password ) ) {
+//       db.getProfile( req.body.username, ( user ) => {
+//         res.cookie( 'takoyaki', user.cookies ).status( 201 ).end( JSON.stringify( true ) );
+//       } );
+//     } else {
+//       res.status( 201 ).end( JSON.stringify( false ) );
+//     }
+//   } );
+// } );
+
+// app.post('/test', ( req, res ) => {
+//   db.postTestResults( req.session.username, req.body.testResults, allUsers => {
+//     var matchesList = [];
+//     allUsers.forEach(user => {
+//       if (user.username !== req.session.username && mostCompatible[req.body.testResults].indexOf(user.testResults) !== -1) {
+//         var friend = {
+//           fusername: user.username,
+//           ffullname: user.fullname,
+//           femail: user.email,
+//           flocation: user.location,
+//           fhobbies: user.hobbies,
+//           fabout: user.blog,
+//           fpic: user.img
+//         };
+//         matchesList.push(friend);
+//       }
+//     });
+//     db.postMatches(req.session.username, matchesList, (data) => {
+//       res.status( 201 ).send(data);
+//     })
+//   })
+// });
+
+app.post('/matches', ( req, res ) => {
   db.postGetMatches( req.session.username, req.body.numberToReturn, req.body.maxFriends, ( results ) => {
     res.status( 201 ).send( results );
   } );

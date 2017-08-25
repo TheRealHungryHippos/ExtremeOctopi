@@ -1,5 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
+var Promise = require('bluebird');
 import MessagesList from './MessagesList.jsx';
 import MessageFriendList from './MessageFriendList.jsx';
 import MessageFriendSelected from './MessageFriendSelected.jsx';
@@ -9,91 +10,92 @@ class Messages extends React.Component {
     super(props);
     this.state = {
       selectedFriend: '',
-      messages: []
+      mutualFriends: [],
+      messages: [],
+      messageText: ''
     };
   }
 
   selectFriend(friend){
-    //get mutual friends, then setstate
-    this.setState({selectedFriend: friend});
-  }
-
-  updateMessages(user, friend) {
-    if(user === 'home') {
-      $.ajax({
-        method: 'GET',
-        url: '/messages',
-        success: (data) => {
-          console.log('updateMessages:', JSON.parse(data).received);
-
-          var data = JSON.parse(data);
-
-          if (data) {
-            this.setState({
-              messages: data.received
-            });
-          }
-        },
-        error: (error) => {
-          console.log('ERROR:', error);
-        }
+    this.getMessageHistory(friend.username);
+    this.getMutualFriends(friend.username) //(or do this on/after friend list load)
+    .then((friends) => {
+      this.setState({
+        mutualFriends: friends,
+        selectedFriend: friend
       });
-    } else {
-      $.post('/friendMessages', {username: user, friend: friend}, (data) => {
-        if(data) {
-          var data = JSON.parse(data);
-          // console.log(data.received);
-          this.setState ({
-            // messages: data.received
-          })
-        }
-      })
-    }
+    });
   }
 
-  changeMessage( event ) {
-    this.setState( { message: event.target.value } );
-  }
-
-  onClick() {
-    if(this.user === 'home') {
+  getMutualFriends(friend) {
+    var promise = new Promise((resolve, reject) => {
       $.ajax({
         method: 'POST',
-        url: '/message',
+        url: '/friends/mutual',
         data: {
-          match: this.user,
-          message: this.state.message
+          friend: friend
         },
-        success: (data) => {
-          console.log('SUCCESS:', data);
-          this.setState({
-            message: ''
-          });
-
-          this.updateMessages(this.user, this.state.friend);
+        success: (friends) => {
+          friends = JSON.parse(friends);
+          console.log('************ getMutualFriends success :', friends);
+          resolve(friends);
         },
         error: (error) => {
-          console.log('ERROR:', error);
+          console.log('************* getMutualFriends ERROR:', error);
+          reject(error);
         }
       });
-    } else {
-      $.ajax({
-        method: 'POST',
-        url: '/messageFriend',
-        data: {
-          username: this.user,
-          message: this.state.message
-        },
-        success: (data) => {
-          console.log('Friend:', data);
+    });
+    return promise;
+  }
 
-          this.updateMessages(this.user);
-        },
-        error: (error) => {
-          console.log('ERROR:', error);
-        }
-      });
-    }
+//research socket io for messaging
+//fix and test this on the server and db side
+  getMessageHistory(friend) {
+    $.ajax({
+      method: 'POST',
+      url: '/messages/hist',
+      data: {
+        friend: friend
+      },
+      success: (messages) => {
+        messages = JSON.parse(messages);
+        console.log('********** success getMessageHistory:', messages);
+        this.setState({
+          messages: messages
+        });
+      },
+      error: (error) => {
+        console.log('********** getMessageHistory ERROR:', error);
+      }
+    });
+  }
+
+//fix / text this on the server & db side
+  addMessage() {
+    $.ajax({
+      method: 'POST',
+      url: '/messages/new',
+      data: {
+        friend: this.state.selectedFriend._id,
+        message: this.state.messageText
+      },
+      success: (data) => {
+        console.log('SUCCESS:', data);
+        this.setState({
+          message: ''
+        });
+
+        this.updateMessages(this.user, this.state.friend);
+      },
+      error: (error) => {
+        console.log('ERROR:', error);
+      }
+    });
+  }
+
+  changeMessage(event) {
+    this.setState({message: event.target.value});
   }
 
   render() {
@@ -114,15 +116,18 @@ class Messages extends React.Component {
               <h2 className="card-header">Messages</h2>
               <br/>
               <div className="card-block">
-              <input onChange={ this.changeMessage.bind( this ) }></input>
-              <button onClick={ this.onClick.bind( this ) }>Submit</button>
+              <input onChange={this.changeMessage.bind(this)}></input>
+              <button onClick={this.addMessage.bind(this)}>Submit</button>
               <br></br>
-              { this.state.messages.map( ( message, index ) => (
-                <MessagesList key={ index } message={message}/>
-              ) ) }
+              {this.state.messages.map((message, index) => (
+                <MessagesList key={index} message={message}/>
+              ))}
+              <br></br>
+              <br></br>
               <div className="row align-self-end">
                 <div className="col-12">
                   <div className="card">
+
                     <MessageFriendSelected friend={this.state.selectedFriend}/>
                   </div>
                 </div>
