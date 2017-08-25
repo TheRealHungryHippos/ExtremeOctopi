@@ -217,12 +217,12 @@ module.exports.blockUser = function(twitter_id, usernameToBlock, callback) {
       console.log('********* ERROR user to block\'s username is not valid: ', userToBlock);
       callback(null, false);      
     }
-    db.User.findOne({twitter_id: twitter_id}, 'friends', function(err, friendsList) {
+    db.User.findOne({twitter_id: twitter_id}, 'friends', function(err, results) {
       if (err) {
         console.log('********* ERROR getting user\'s friends list ', err);
         callback(err);
       }
-      if (friendsList.includes(userToBlock.twitter_id)) {
+      if (results.friends.includes(userToBlock.twitter_id)) {
         db.User.findOneAndUpdate({twitter_id: twitter_id}, {$pull: {friends: userToFriend.twitter_id}}, function(err, user) {
           if (err) {
             console.log('********* ERROR removing userToBlock from user\'s friends list ', err);
