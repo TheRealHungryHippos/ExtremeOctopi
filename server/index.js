@@ -12,16 +12,25 @@ var TwitterStrategy = require('passport-twitter').Strategy;
 
 var twitterOptions;
 var sessionSecret;
+var oauthOptions;
 if (process.env.NODE_ENV === 'production') {
   twitterOptions = {
     consumerKey: process.env.TWITTER_CONSUMER_KEY,
     consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
-    callbackURL: process.env.TWITTER_CALLBACK_URL
+    callbackURL: process.env.TWITTER_CALLBACK_URL,
+    token: process.env.TWITTER_TOKEN,
+    tokenSecret: process.env.TWITTER_TOKEN_SECRET
   };
   sessionSecret = process.env.SESSION_SECRET;
 } else {
   twitterOptions = require('./config/twitter.config.js');
   sessionSecret = require('./config/session.config.js');
+  oauthOptions = {
+    consumer_key: twitterOptions.consumerKey,
+    consumer_secret: twitterOptions.consumerSecret,
+    token: twitterOptions.token,
+    token_secret: twitterOptions.tokenSecret
+  };
 }
 
 passport.use(new TwitterStrategy(
@@ -40,7 +49,9 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
+
   db.findUserById(id, (err, user) => {
+    // console.log('***** DESERIALIZE USER ', user);
     done(err, user[0]);
   });
   // Attaches the loaded user object to the request as req.user
@@ -112,60 +123,53 @@ app.get( '/friends', (req, res) => {
 } );
 
 app.get('/matches', ( req, res ) => {
-  // cookies.verifySession( req, res, ( valid ) => {
-  //   if ( valid ) {
-  //     db.getFriends( req.session.username, ( matches ) => {
-  //       res.status( 200 ).send( JSON.stringify( matches ) );
-  //     } );
-  //   } else {
-  //     res.status( 200 ).end( JSON.stringify( false ) );
-  //   }
-  // } );
-  var twitter_id = 893651977338368000;
-  var followingCount = 24;
   var options = {
-    url: 'https://api.twitter.com/1.1/friends/ids.json?cursor=-1&user_id=' + twitter_id + '&count=5000',
+    url: 'https://api.twitter.com/1.1/friends/ids.json?cursor=-1&user_id=' + req.user.twitter_id + '&count=5000',
     headers: {
       'User-Agent': 'request'
     },
-    oauth: {
-      consumer_key: 'ihlnJQ6b0BYrVY2Kk9T89Uq5W',
-      consumer_secret: 'eNQifh5ar7UkOWH34YIiw9c8x7EQuWHWCzPc5iWzip1kH9N7uW',
-      token: '893651977338368000-h6GVhlnZyv6XhUH9FBLCntRrDuBEoAv',
-      token_secret: 'AjVJvPMmhXVC3do1XznwKdHTKInCTKrxvDKzl1XQe0C8n'
-    }
+    oauth: oauthOptions
   };
   
-  db.getFollowing(twitter_id, (err, doc) => {
-    err && console.log(err);
+  db.getFollowing(req.user.twitter_id, (err, doc) => {
+    err && res.sendStatus(500);
     if (doc) {
-      if (doc.length === followingCount) {
-
-        db.getMatches(twitter_id, doc, (error, matches) => {
-          console.log(matches);
+      if (doc.following.length === doc.following_count) {
+        db.getMatches(req.user.twitter_id, doc.following, (err, matches) => {
+          err && res.sendStatus(500);
+          res.send(JSON.stringify(matches.filter((match) => {
+            return match._id.username !== req.user.username;
+          })));
         });
-
       } else {
-
-        request(options, (error, response) => {
-          error && console.log(error);
+        request(options, (err, response) => {
+          err && res.sendStatus(500);
           if (response) {
             var body = JSON.parse(response.body);
-            db.updateFollowing(twitter_id, body.ids, (err, doc) => {
-              err && console.log(err);
-              console.log(doc);
-              doc && getMatches(twitter_id, doc, (error, matches) => {
-                console.log(matches);
+            console.log('****** BODY ', body);
+            db.updateFollowing(req.user.twitter_id, body.ids || [], (err, doc) => {
+              err && res.sendStatus(500);
+              console.log('****** DOC ', doc);
+              doc && db.getMatches(req.user.twitter_id, body.ids || [], (err, matches) => {
+                err && res.sendStatus(500);
+                console.log('****** MATCHES ', matches);
+                res.send(JSON.stringify(matches.filter((match) => {
+                  return match._id.username !== req.user.username;
+                })));
               });
             });
           }
         });
-
       }
-
     }
   });
 
+  // db.getMatches('13579', ['09876', '12405'], (error, matches) => {
+  //   matches = matches.filter((match) => {
+  //     return match._id.username !== 'chrisbharrison';
+  //   });
+  //   console.log('***** MATCHES ', matches);
+  // });
 } );
 
 app.get('/messages', ( req, res ) => {

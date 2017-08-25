@@ -143,24 +143,22 @@ module.exports.postMatches = function(user, matchesList, callback) {
 };
 
 module.exports.getFollowing = function(twitter_id, callback) {
-  db.User.findOne({twitter_id: twitter_id}, 'following', callback);
+  db.User.findOne({twitter_id: twitter_id}, 'following following_count', callback);
 };
 
 module.exports.updateFollowing = function(twitter_id, newFollowing, callback) {
   db.User.update({twitter_id: twitter_id}, {$set: {following: newFollowing}}, callback);
 };
 
-module.exports.getMatches = function(twitter_id, doc) {
+module.exports.getMatches = function(twitter_id, doc, callback) {
   db.User.aggregate(
-   {$unwind: '$following'},
-   {$match: {following: {$in: doc} } },
-   {$group: {_id: {username: "$username", twitter_url: "$twitter_url", location: "$location", profile_img: "$profile_img", about_me: "$about_me"}, nb: {"$sum":1} } },
-   {$sort: {nb:-1}},
-   {$limit:10},
-   function(err, results) {
-
-   }
- );
+    {$unwind: '$following'},
+    {$match: {following: {$in: doc} } },
+    {$group: {_id: {username: '$username', location: '$location', profile_img: '$profile_img', about_me: '$about_me'}, nb: {'$sum': 1} } },
+    {$sort: {nb: -1}},
+    {$limit: 11},
+    callback
+  );
 };
 
 module.exports.clear = function(callback) {
@@ -186,32 +184,55 @@ module.exports.findUserById = function(id, callback) {
 module.exports.findOneAndUpdate = function(profile, callback) {
   var user = profile._json;
 
-  module.exports.findUserById(user.id_str, function(err, results) {
-    if (err) {
-      console.log('*********** database findOneAndUpdate error ', err);
-      callback(err);
-    }
-    if (results.length > 0) {
-      console.log('*********** database findOrCreateUser user already exists ', err);
-      callback(err, results[0]);
-    } else {
-      db.User.create({
-        twitter_id: user.id_str,
-        username: user.screen_name,
-        twitter_url: user.url,
-        fullname: user.name,
-        location: user.location,
-        profile_img: user.profile_image_url.replace(/normal/i, '400x400'),
-        about_me: user.description
-      }, function(err, user) {
-        if (err) {
-          console.log('*********** database findOrCreateUser error in creating User ', err);
-          callback(err);
-        } else {
-          console.log('*********** New user created ');
-          callback(null, user);
-        }
-      });
-    }
-  });
+  var conditions = {
+    twitter_id: user.id_str
+  };
+
+  var update = {
+    twitter_id: user.id_str,
+    username: user.screen_name,
+    twitter_url: user.url,
+    fullname: user.name,
+    location: user.location,
+    profile_img: user.profile_image_url.replace(/normal/i, '400x400'),
+    about_me: user.description,
+    following_count: user.friends_count
+  };
+
+  options = {
+    new: true,
+    upsert: true
+  };
+
+  db.User.findOneAndUpdate(conditions, update, options, callback);
+
+  // module.exports.findUserById(user.id_str, function(err, results) {
+  //   if (err) {
+  //     console.log('*********** database findOneAndUpdate error ', err);
+  //     callback(err);
+  //   }
+  //   if (results.length > 0) {
+  //     console.log('*********** database findOrCreateUser user already exists ', err);
+  //     callback(err, results[0]);
+  //   } else {
+  //     db.User.create({
+  //       twitter_id: user.id_str,
+  //       username: user.screen_name,
+  //       twitter_url: user.url,
+  //       fullname: user.name,
+  //       location: user.location,
+  //       profile_img: user.profile_image_url.replace(/normal/i, '400x400'),
+  //       about_me: user.description,
+  //       following_count: user.friends_count
+  //     }, function(err, user) {
+  //       if (err) {
+  //         console.log('*********** database findOrCreateUser error in creating User ', err);
+  //         callback(err);
+  //       } else {
+  //         console.log('*********** New user created ');
+  //         callback(null, user);
+  //       }
+  //     });
+  //   }
+  // });
 };

@@ -20,7 +20,7 @@ module.exports.userData = [
     profile_img: 'https://pbs.twimg.com/profile_images/839304322089246721/5qZt4Er1_400x400.jpg',
     about_me: 'Glamorous winemaker producing killer Pinot Noir of all shades in Oregon\'s Willamette Valley. Lots of foot stompin\'. Certified Somm.',
     matches: [],
-    following: ['09876'],
+    following: ['09876', '12405'],
     friends: [],
     blocked: [],
     pending_approval: [],
@@ -59,7 +59,7 @@ module.exports.userData = [
     profile_img: 'https://pbs.twimg.com/profile_images/378800000101833847/1d2b68f0f8149b6bf4023f89aac9e507_400x400.jpeg',
     about_me: 'Host, Bachelor, Miss America, Millionaire and pretty much all things involving cash, crying, roses, crowns & relationships! Author The Perfect Letter',
     matches: [],
-    following: [],
+    following: ['09876', '12405'],
     friends: ['54321', '24680'],
     blocked: [],
     pending_approval: ['12345'],
@@ -95,3 +95,12 @@ module.exports.sessionData = [
   {hash: '2222Session_asdfghtarefsdlkjha8oourqoijefalkm'},
   {hash: '3333Session_asdfghtarefsdlkjha8oourqoijefalkm'}
 ];
+
+// { "_id" : ObjectId("599f85d8686c54f7ea11ee34"), "twitter_id" : "772236185745842176", "username" : "martinkchang", "twitter_url" : null, "fullname" : "Martin Chang", "location" : "", "profile_img" : "http://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png", "about_me" : "", "pending_request" : [ ], "pending_approval" : [ ], "blocked" : [ ], "friends" : [ ], "following" : [ ], "matches" : [ ], "__v" : 0 }
+// { "_id" : ObjectId("599f8c3bd184bff94ede73e2"), "twitter_id" : "900902726355136512", "username" : "80hungryhippos", "twitter_url" : null, "fullname" : "Hungry Hippos", "location" : "", "profile_img" : "http://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png", "about_me" : "", "pending_request" : [ ], "pending_approval" : [ ], "blocked" : [ ], "friends" : [ ], "following" : [ ], "matches" : [ ], "__v" : 0 }
+// { "_id" : ObjectId("599f8d07d184bff94ede73e3"), "twitter_id" : "900906184147845120", "username" : "kettch22", "twitter_url" : null, "fullname" : "k22", "location" : "", "profile_img" : "http://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png", "about_me" : "", "pending_request" : [ ], "pending_approval" : [ ], "blocked" : [ ], "friends" : [ ], "following" : [ ], "matches" : [ ], "__v" : 0 }
+// { "_id" : ObjectId("599f8e18d184bff94ede73e4"), "twitter_id" : "747826521725763584", "username" : "Bird_Mantis", "twitter_url" : "https://t.co/Fx4RsZgeeD", "fullname" : "BIRDMANTIS", "location" : "Los Angeles, CA", "profile_img" : "http://pbs.twimg.com/profile_images/748026330017587200/BKWarxpm_400x400.jpg", "about_me" : "", "pending_request" : [ ], "pending_approval" : [ ], "blocked" : [ ], "friends" : [ ], "following" : [ ], "matches" : [ ], "__v" : 0 }
+// { "_id" : ObjectId("599f8e48d184bff94ede73e5"), "twitter_id" : "893651977338368000", "username" : "realcodebreaker", "twitter_url" : null, "fullname" : "Cody Unger", "location" : "", "profile_img" : "http://pbs.twimg.com/profile_images/900905051996147712/DtgtjN_t_400x400.jpg", "about_me" : "", "pending_request" : [ ], "pending_approval" : [ ], "blocked" : [ ], "friends" : [ ], "following" : [ ], "matches" : [ ], "__v" : 0 }
+// { "_id" : ObjectId("599f8e83d184bff94ede73e6"), "twitter_id" : "900906961348186112", "username" : "jasperthecow", "twitter_url" : null, "fullname" : "Jasper Cow", "location" : "", "profile_img" : "http://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png", "about_me" : "", "pending_request" : [ ], "pending_approval" : [ ], "blocked" : [ ], "friends" : [ ], "following" : [ ], "matches" : [ ], "__v" : 0 }
+// { "_id" : ObjectId("599f8f70d184bff94ede73e7"), "twitter_id" : "231326973", "username" : "whithang", "twitter_url" : "https://t.co/PUFsknDDa3", "fullname" : "Kelly Whiting", "location" : "San Francisco, CA", "profile_img" : "http://pbs.twimg.com/profile_images/669421714204450817/fN8Xte0M_400x400.jpg", "about_me" : "wine tech entrepreneur | check out https://t.co/RCc7KXeXJ8 for a free planning tool if you are going wine tasting in California", "pending_request" : [ ], "pending_approval" : [ ], "blocked" : [ ], "friends" : [ ], "following" : [ ], "matches" : [ ], "__v" : 0 }
+// { "_id" : ObjectId("599f8fb3d184bff94ede73e8"), "twitter_id" : "4221402799", "username" : "oenomad", "twitter_url" : "https://t.co/PUFsknDDa3", "fullname" : "Oenomad", "location" : "San Francisco, CA", "profile_img" : "http://pbs.twimg.com/profile_images/667081548672299008/3VIEIthQ_400x400.png", "about_me" : "Never Wing It In Wine Country Again.", "pending_request" : [ ], "pending_approval" : [ ], "blocked" : [ ], "friends" : [ ], "following" : [ ], "matches" : [ ], "__v" : 0 }
