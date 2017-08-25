@@ -1,8 +1,8 @@
 var db = require('./index.js');
 
 //user = username
-var removeCookie = function (user) {
-};
+// var removeCookie = function (user) {
+// };
 
 // user = username, callback = full User row
 module.exports.getProfile = function (user, callback) {
@@ -16,12 +16,11 @@ module.exports.getProfile = function (user, callback) {
   });
 };
 
-// user = username, callback = {sent: messages sent by user, received: messages received by user}
 module.exports.getMessages = function (user, friend, callback) {
   db.Message.find({$or: [{$and: [{sender: user}, {receiver: friend}]}, {$and: [{sender: friend}, {receiver: user}]}]},
-    (err, results) => {
+    (err, messages) => {
       if (err) {callback(err);}
-      callback(null, results)
+      callback(null, messages)
   });
 };
 
@@ -31,6 +30,22 @@ module.exports.getFriends = function (user, callback) {
     db.User.find({twitter_id: {$in: user.friends}}, (err, friends) => {
       if (err) {callback(err);}
       callback(null, friends);
+    });
+  });
+};
+
+module.exports.getMutualFriends = function (user, friend, callback) {
+  db.User.findOne({username: user}, (err, user) => {
+    if (err) {callback(err);}
+    db.User.findOne({username: friend}, (err, friend) => {
+      if (err) {callback(err);}
+      //confirm how to do a check on the intersection of these arrays
+      db.User.find({$and: [{twitter_id: {$in: user.friends}}, {twitter_id: {$in: friend.friends}}]},
+        (err, mutualFriends) => {
+          if (err) {callback(err);}
+          callback(null, mutualFriends);
+        }
+      );
     });
   });
 };
@@ -94,21 +109,21 @@ module.exports.postUpdateUser = function (userInfo, callback) {
 };
 
 // user = username, results = type
-module.exports.postTestResults = function (user, results, callback) {
-  db.User.findOne({username: user}, function (err, doc) {
-    if (doc) {
-      db.User.update({username: user},
-        {$set: {testResults: results}}, {upsert: true}, () => {
-          db.User.find({}, (err, users) => {
-            callback(users);
-          })
-        })
-    } else {
-      console.log('User not found');
-      callback(null);
-    }
-  })
-};
+// module.exports.postTestResults = function (user, results, callback) {
+//   db.User.findOne({username: user}, function (err, doc) {
+//     if (doc) {
+//       db.User.update({username: user},
+//         {$set: {testResults: results}}, {upsert: true}, () => {
+//           db.User.find({}, (err, users) => {
+//             callback(users);
+//           })
+//         })
+//     } else {
+//       console.log('User not found');
+//       callback(null);
+//     }
+//   })
+// };
 
 // senderName = sender, receiverName = receiver, messageText = message
 module.exports.postMessage = function (senderName, receiverName, messageText, callback){
