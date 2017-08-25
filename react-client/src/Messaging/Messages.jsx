@@ -37,7 +37,6 @@ class Messages extends React.Component {
         },
         success: (friends) => {
           friends = JSON.parse(friends);
-          console.log('************ getMutualFriends success :', friends);
           resolve(friends);
         },
         error: (error) => {
@@ -60,7 +59,6 @@ class Messages extends React.Component {
       },
       success: (messages) => {
         messages = JSON.parse(messages);
-        console.log('********** success getMessageHistory:', messages);
         this.setState({
           messages: messages
         });

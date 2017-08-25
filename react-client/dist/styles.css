@@ -72,6 +72,49 @@
   height: 60px;
 }
 
+.talk-bubble {
+  margin: 20px;
+  display: inline-block;
+  position: relative;
+  width: 200px;
+  height: auto;
+  background-color: #262B53;
+  border-radius: 15px;
+}
+
+.talktext{
+  color: #fff;
+  padding: 1em;
+  text-align: left;
+  line-height: 1.5em;
+}
+
+
+.tri-right.border.left-top:before {
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: -40px;
+  right: auto;
+  top: -8px;
+  bottom: auto;
+  border: 32px solid;
+  border-color: #666 transparent transparent transparent;
+}
+.tri-right.left-top:after{
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: -20px;
+  right: auto;
+  top: 0px;
+  bottom: auto;
+  border: 22px solid;
+  border-color: #262B53 transparent transparent transparent;
+}
+
 /*THE BELOW WILL MOST LIKELY BE DELETED, KEEPING IT HERE UNTIL I AM SURE*/
 
 /*.previewText {
@@ -150,44 +193,4 @@ textarea {
   font-size: 16px;
 }
 
-
-.talk-bubble {
-  margin: 20px;
-  display: inline-block;
-  position: relative;
-  width: 200px;
-  height: auto;
-  background-color: #262B53;
-  border-radius: 15px;
-}
-.tri-right.border.left-top:before {
-  content: ' ';
-  position: absolute;
-  width: 0;
-  height: 0;
-  left: -40px;
-  right: auto;
-  top: -8px;
-  bottom: auto;
-  border: 32px solid;
-  border-color: #666 transparent transparent transparent;
-}
-.tri-right.left-top:after{
-  content: ' ';
-  position: absolute;
-  width: 0;
-  height: 0;
-  left: -20px;
-  right: auto;
-  top: 0px;
-  bottom: auto;
-  border: 22px solid;
-  border-color: #262B53 transparent transparent transparent;
-}
-
-.talktext{
-  color: #fff;
-  padding: 1em;
-  text-align: left;
-  line-height: 1.5em;
-}*/
+*/

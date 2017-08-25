@@ -18,7 +18,7 @@ const MessageFriendSelected = ( props ) => (
         <a href={props.friend.twitter_url}>{props.friend.twitter_url}</a>
       </div>
       <div className="col-4">
-        {friendHeading}
+        <b>{friendHeading}</b>
         <br></br>
         {props.mutualFriends.map(friend => {
           return <img key={friend._id} src={friend.profile_img} height="30" width="30" />
