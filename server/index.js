@@ -37,7 +37,7 @@ var oauthOptions = {
 passport.use(new TwitterStrategy(
   twitterOptions,
   function(token, tokenSecret, profile, done) {
-    db.findOneAndUpdate(profile, function(err, user) {
+    db.findOneOrCreate(profile, function(err, user) {
       if (err) { return done(err); }
       return done(null, user);
     });
@@ -123,7 +123,25 @@ app.get( '/friends', (req, res) => {
   } );
 } );
 
-app.get('/matches', ( req, res ) => {
+app.post('/friends/add', (req, res) => {
+  console.log(req.user.twitter_id);
+  console.log(req.body);
+  var toAdd = req.body.add.username;
+  db.addFriend(req.user.twitter_id, toAdd, (err, result) => {
+    (err || !result) && res.sendStatus(500);
+    res.sendStatus(201);
+  });
+});
+
+app.post('/friends/block', (req, res) => {
+  var toBlock = req.body.block.username;
+  db.blockUser(req.user.twitter_id, toBlock, (err, result) => {
+    (err || !result) && res.sendStatus(500);
+    res.sendStatus(201);
+  });
+});
+
+app.get('/matches/users', ( req, res ) => {
   var options = {
     url: 'https://api.twitter.com/1.1/friends/ids.json?cursor=-1&user_id=' + req.user.twitter_id + '&count=5000',
     headers: {
@@ -137,11 +155,10 @@ app.get('/matches', ( req, res ) => {
     // console.log('****** DOC BEFORE IF STATEMENT ', doc);
     if (doc) {
       if (doc.following.length === doc.following_count) {
-        db.getMatches(req.user.twitter_id, doc.following, (err, matches) => {
+        db.getMatches(req.user, doc.following, (err, matches) => {
           err && res.sendStatus(500);
-          res.send(JSON.stringify(matches.filter((match) => {
-            return match._id.username !== req.user.username;
-          })));
+          // console.log('****** MATCHES ', matches);
+          res.send(JSON.stringify(matches));
         });
       } else {
         request(options, (err, response) => {
@@ -152,12 +169,10 @@ app.get('/matches', ( req, res ) => {
             db.updateFollowing(req.user.twitter_id, body.ids || [], (err, doc) => {
               err && res.sendStatus(500);
               // console.log('****** DOC ', doc);
-              doc && db.getMatches(req.user.twitter_id, doc.following, (err, matches) => {
+              doc && db.getMatches(req.user, doc.following, (err, matches) => {
                 err && res.sendStatus(500);
                 // console.log('****** MATCHES ', matches);
-                res.send(JSON.stringify(matches.filter((match) => {
-                  return match._id.username !== req.user.username;
-                })));
+                res.send(JSON.stringify(matches));
               });
             });
           }
@@ -165,14 +180,8 @@ app.get('/matches', ( req, res ) => {
       }
     }
   });
-
-  // db.getMatches('13579', ['09876', '12405'], (error, matches) => {
-  //   matches = matches.filter((match) => {
-  //     return match._id.username !== 'chrisbharrison';
-  //   });
-  //   console.log('***** MATCHES ', matches);
-  // });
 } );
+
 
 app.get('/messages', ( req, res ) => {
   // cookies.verifySession( req, res, ( valid ) => {
@@ -245,7 +254,7 @@ app.post('/test', ( req, res ) => {
   })
 });
 
-app.post('/matches', ( req, res ) => {
+app.post('/matches/users', ( req, res ) => {
   db.postGetMatches( req.session.username, req.body.numberToReturn, req.body.maxFriends, ( results ) => {
     res.status( 201 ).send( results );
   } );

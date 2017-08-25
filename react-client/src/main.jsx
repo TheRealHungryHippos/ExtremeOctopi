@@ -44,7 +44,7 @@ class Main extends React.Component {
     var context = this;
     $.ajax({
       method: 'GET',
-      url: '/matches',
+      url: '/matches/users',
       success: (matches) => {
         matches = JSON.parse(matches);
         console.log('****** MATCHES ', matches);
