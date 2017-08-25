@@ -147,7 +147,7 @@ module.exports.getFollowing = function(twitter_id, callback) {
 };
 
 module.exports.updateFollowing = function(twitter_id, newFollowing, callback) {
-  db.User.update({twitter_id: twitter_id}, {$set: {following: newFollowing}}, callback);
+  db.User.findOneAndUpdate({twitter_id: twitter_id}, {$set: {following: newFollowing}}, callback);
 };
 
 module.exports.getMatches = function(twitter_id, doc, callback) {

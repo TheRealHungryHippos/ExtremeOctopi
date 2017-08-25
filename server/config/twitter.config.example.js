@@ -7,5 +7,7 @@
 module.exports = {
   consumerKey: TWITTER_CONSUMER_KEY,
   consumerSecret: TWITTER_CONSUMER_SECRET,
-  callbackURL: TWITTER_CALLBACK_URL
+  callbackURL: TWITTER_CALLBACK_URL,
+  token: TWITTER_TOKEN,
+  tokenSecret: TWITTER_TOKEN_SECRET
 };

@@ -47,7 +47,7 @@ class Main extends React.Component {
       url: '/matches',
       success: (matches) => {
         matches = JSON.parse(matches);
-        console.log(matches);
+        console.log('****** MATCHES ', matches);
         // context.updateMatches(matches);
       },
       error: (error) => {

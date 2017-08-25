@@ -12,7 +12,6 @@ var TwitterStrategy = require('passport-twitter').Strategy;
 
 var twitterOptions;
 var sessionSecret;
-var oauthOptions;
 if (process.env.NODE_ENV === 'production') {
   twitterOptions = {
     consumerKey: process.env.TWITTER_CONSUMER_KEY,
@@ -25,13 +24,15 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   twitterOptions = require('./config/twitter.config.js');
   sessionSecret = require('./config/session.config.js');
-  oauthOptions = {
-    consumer_key: twitterOptions.consumerKey,
-    consumer_secret: twitterOptions.consumerSecret,
-    token: twitterOptions.token,
-    token_secret: twitterOptions.tokenSecret
-  };
 }
+// Passport TwitterStrategy expects camelCase properties
+// Twitter API request, expects snake_case properties
+var oauthOptions = {
+  consumer_key: twitterOptions.consumerKey,
+  consumer_secret: twitterOptions.consumerSecret,
+  token: twitterOptions.token,
+  token_secret: twitterOptions.tokenSecret
+};
 
 passport.use(new TwitterStrategy(
   twitterOptions,
@@ -133,6 +134,7 @@ app.get('/matches', ( req, res ) => {
   
   db.getFollowing(req.user.twitter_id, (err, doc) => {
     err && res.sendStatus(500);
+    // console.log('****** DOC BEFORE IF STATEMENT ', doc);
     if (doc) {
       if (doc.following.length === doc.following_count) {
         db.getMatches(req.user.twitter_id, doc.following, (err, matches) => {
@@ -146,13 +148,13 @@ app.get('/matches', ( req, res ) => {
           err && res.sendStatus(500);
           if (response) {
             var body = JSON.parse(response.body);
-            console.log('****** BODY ', body);
+            // console.log('****** BODY ', body);
             db.updateFollowing(req.user.twitter_id, body.ids || [], (err, doc) => {
               err && res.sendStatus(500);
-              console.log('****** DOC ', doc);
-              doc && db.getMatches(req.user.twitter_id, body.ids || [], (err, matches) => {
+              // console.log('****** DOC ', doc);
+              doc && db.getMatches(req.user.twitter_id, doc.following, (err, matches) => {
                 err && res.sendStatus(500);
-                console.log('****** MATCHES ', matches);
+                // console.log('****** MATCHES ', matches);
                 res.send(JSON.stringify(matches.filter((match) => {
                   return match._id.username !== req.user.username;
                 })));
