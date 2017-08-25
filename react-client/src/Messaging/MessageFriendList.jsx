@@ -7,8 +7,7 @@ class MessageFriendList extends React.Component {
     super(props);
 
     this.state = {
-      friends: [],
-      selectedFriend: ''
+      friends: []
     };
   }
 
@@ -33,9 +32,9 @@ class MessageFriendList extends React.Component {
   render () {
     return (
       <div className="card-text">
-        <ul class="messageFriends">
+        <ul className="messageFriends">
           {this.state.friends.map(friend => {
-            return <MessageFriend profile={friend}/>
+            return <MessageFriend key={friend._id} profile={friend} selectFriend={this.props.selectFriend}/>
           })}
         </ul>
       </div>

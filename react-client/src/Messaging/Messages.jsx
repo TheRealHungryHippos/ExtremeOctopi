@@ -7,18 +7,15 @@ import MessageFriendSelected from './MessageFriendSelected.jsx';
 class Messages extends React.Component {
   constructor(props) {
     super(props);
-
-    // var regexp = /^\/Messages\/(.*)\/$/;
-    // this.user = props.history.location.pathname.match( regexp )[ 1 ];
-
     this.state = {
-      match: '',
-      friend: '',
-      message: '',
+      selectedFriend: '',
       messages: []
     };
+  }
 
-    // this.updateMessages(this.user);
+  selectFriend(friend){
+    //get mutual friends, then setstate
+    this.setState({selectedFriend: friend});
   }
 
   updateMessages(user, friend) {
@@ -53,7 +50,6 @@ class Messages extends React.Component {
       })
     }
   }
-
 
   changeMessage( event ) {
     this.setState( { message: event.target.value } );
@@ -108,30 +104,34 @@ class Messages extends React.Component {
             <div className="card">
               <h2 className="card-header">Friends</h2>
               <br/>
-              <div class="card-block">
-                <MessageFriendList />
+              <div className="card-block">
+                <MessageFriendList selectFriend={this.selectFriend.bind(this)}/>
               </div>
             </div>
           </div>
           <div className="col-8">
-              <h1>Messages</h1>
+            <div className="card">
+              <h2 className="card-header">Messages</h2>
               <br/>
+              <div className="card-block">
               <input onChange={ this.changeMessage.bind( this ) }></input>
               <button onClick={ this.onClick.bind( this ) }>Submit</button>
               <br></br>
               { this.state.messages.map( ( message, index ) => (
                 <MessagesList key={ index } message={message}/>
               ) ) }
-            <div className="row align-self-end">
-              <div className="col-8">
-                <h1>Friend Selected</h1>
-                <br></br>
-                <MessageFriendSelected />
+              <div className="row align-self-end">
+                <div className="col-12">
+                  <div className="card">
+                    <MessageFriendSelected friend={this.state.selectedFriend}/>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
     );
   }
 }

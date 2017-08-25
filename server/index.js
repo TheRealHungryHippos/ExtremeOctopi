@@ -146,7 +146,7 @@ app.get('/matches/users', ( req, res ) => {
     },
     oauth: oauthOptions
   };
-  
+
   db.getFollowing(req.user.twitter_id, (err, doc) => {
     err && res.sendStatus(500);
     // console.log('****** DOC BEFORE IF STATEMENT ', doc);
