@@ -29,6 +29,7 @@ var userSchema = mongoose.Schema({
   hobbies: String,
   profile_img: String,
   about_me: String,
+  following_count: Number,
   matches: [String],
   following: [String],
   friends: [String],

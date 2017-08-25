@@ -46,8 +46,9 @@ class Main extends React.Component {
       method: 'GET',
       url: '/matches',
       success: (matches) => {
-        data = JSON.parse(matches);
-        context.updateMatches(matches);
+        matches = JSON.parse(matches);
+        console.log(matches);
+        // context.updateMatches(matches);
       },
       error: (error) => {
         console.log('ERROR:', error);
@@ -57,9 +58,9 @@ class Main extends React.Component {
 
   // UNCOMMENT WHEN YOU WANT TO DO TWITTER API REQUESTS ON LOG IN
 
-  // componentDidMount() {
-  //   this.getMatches();
-  // }
+  componentDidMount() {
+    this.getMatches();
+  }
 
   render() {
     return (
