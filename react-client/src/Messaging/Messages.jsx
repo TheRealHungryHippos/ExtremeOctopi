@@ -128,7 +128,7 @@ class Messages extends React.Component {
                 <div className="col-12">
                   <div className="card">
 
-                    <MessageFriendSelected friend={this.state.selectedFriend}/>
+                    <MessageFriendSelected friend={this.state.selectedFriend} mutualFriends={this.state.mutualFriends}/>
                   </div>
                 </div>
               </div>

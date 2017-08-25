@@ -1,20 +1,28 @@
 import React from 'react';
+var friendHeading;
 
 const MessageFriendSelected = ( props ) => (
+  friendHeading = props.mutualFriends.length > 0 ? 'Mutual Friends' : '',
   props.friend ?
   <div>
-    <h2 className="card-header">{props.friend.username}</h2>
+    <h2 className="card-header">{props.friend.username}
+    </h2>
     <br/>
-    <div className="card-block">
-      <div className="card-text">
-        <img className="friendPic pb-2 pr-2" src={props.friend.profile_img}/>
+    <div className="card-block row">
+      <div className="card-text col-8">
+        <img className="friendPic mr-2" src={props.friend.profile_img}/>
         {props.friend.fullname}
         <br />
         {props.friend.about_me}
         <br />
         <a href={props.friend.twitter_url}>{props.friend.twitter_url}</a>
-        <br />
-        {props.friend.mutual_friends}
+      </div>
+      <div className="col-4">
+        {friendHeading}
+        <br></br>
+        {props.mutualFriends.map(friend => {
+          return <img key={friend._id} src={friend.profile_img} height="30" width="30" />
+        })}
       </div>
     </div>
   </div>
