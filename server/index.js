@@ -110,15 +110,13 @@ app.get('/user', ( req, res ) => {
 });
 
 app.post('/friendProfile', ( req, res ) => {
-  db.getProfile( req.body.username, ( profile ) => {
+  db.getProfile( req.user.username, ( profile ) => {
     res.status( 200 ).send( JSON.stringify( profile ) );
   } );
 });
 
 app.get( '/friends', (req, res) => {
-  console.log('********** delete hard coded username in /friends on server');
-  req.body.username = 'chrisbharrison'; //delete once add friend functionality working
-  db.getFriends( req.body.username, (err, friends) => {
+  db.getFriends( req.user.username, (err, friends) => {
     if (err) {
       res.status(400);
     } else {
@@ -128,9 +126,7 @@ app.get( '/friends', (req, res) => {
 });
 
 app.post('/friends/mutual', (req, res) => {
-  console.log('********** delete hard coded username in /friends/mutual on server');
-  req.body.username = 'chrisbharrison'; //delete once add friend functionality working
-  db.getMutualFriends(req.body.username, req.body.friend, ( error, friends ) => {
+  db.getMutualFriends(req.user.username, req.body.friend, ( error, friends ) => {
     if (error) {
       res.status(400);
     } else {
@@ -215,9 +211,7 @@ app.get('/matches/users', ( req, res ) => {
 // } );
 
 app.post('/messages/hist', (req, res) => {
-  console.log('********** delete hard coded username in /messages/hist on server');
-  req.body.username = 'chrisbharrison'; //delete once add friend functionality working
-  db.getMessages( req.body.username, req.body.friend, ( error, messages ) => {
+  db.getMessages( req.user.username, req.body.friend, ( error, messages ) => {
     if (error) {
       res.status(400);
     } else {
@@ -228,13 +222,10 @@ app.post('/messages/hist', (req, res) => {
 
 //return all messages
 app.post('/messages/new', (req, res) => {
-  console.log('********** delete hard coded username in /messages/hist on server');
-  req.body.username = 'chrisbharrison'; //delete once add friend functionality working
-  db.insertAndGetMessages(req.body.username, req.body.friend, req.body.message, (error, messages) => {
+  db.insertAndGetMessages(req.user.username, req.body.friend, req.body.message, (error, messages) => {
     if (error) {
       res.status(400);
     } else {
-      console.log('********* return messages with new ', messages);
       res.status(200).end(JSON.stringify(messages));
     }
   });
