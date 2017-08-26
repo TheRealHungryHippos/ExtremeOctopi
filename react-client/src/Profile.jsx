@@ -42,11 +42,11 @@ class Profile extends React.Component {
     return (
       <div className="profile">
         <div className="profileRow row">
-  		    <div className="col"><img className="profilePic img-fluid img-thumbnail" src={ this.state.profile_img } /></div>
-          <div className="col">
-            <div className="profileInfo">Twitter Handle:&nbsp;<a href={this.state.twitterUrl} target="_blank">@{ this.state.username }</a></div>
-      			<div className="profileInfo">Location:&nbsp;{ this.state.location }</div>
-            <div className="profileInfo">About Me:&nbsp;{ this.state.about_me }</div>
+  		    <div className="col-sm"><img className="profilePic img-fluid img-thumbnail" src={ this.state.profile_img } /></div>
+          <div className="col-sm">
+            <div className="profileInfo"><b>Twitter Handle:</b>&nbsp;<a href={this.state.twitterUrl} target="_blank">@{ this.state.username }</a></div>
+      			<div className="profileInfo"><b>Location:</b>&nbsp;{ this.state.location }</div>
+            <div className="profileInfo"><b>About Me:</b>&nbsp;{ this.state.about_me }</div>
           </div>
         </div>
       </div>

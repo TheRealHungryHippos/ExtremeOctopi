@@ -164,11 +164,11 @@ app.get('/matches/users', ( req, res ) => {
     err && res.sendStatus(500);
     // console.log('****** DOC BEFORE IF STATEMENT ', doc);
     if (doc) {
-      if (doc.following.length === doc.following_count) {
+      if (doc.following && doc.following.length === doc.following_count) {
         db.getMatches(req.user, doc.following, (err, matches) => {
           err && res.sendStatus(500);
           // console.log('****** MATCHES ', matches);
-          res.send(JSON.stringify(matches));
+          matches && res.send(JSON.stringify(matches));
         });
       } else {
         request(options, (err, response) => {
@@ -176,14 +176,20 @@ app.get('/matches/users', ( req, res ) => {
           if (response) {
             var body = JSON.parse(response.body);
             // console.log('****** BODY ', body);
-            db.updateFollowing(req.user.twitter_id, body.ids || [], (err, doc) => {
+            db.updateFollowing(req.user.twitter_id, body.ids, (err, doc) => {
               err && res.sendStatus(500);
               // console.log('****** DOC ', doc);
-              doc && db.getMatches(req.user, doc.following, (err, matches) => {
-                err && res.sendStatus(500);
-                // console.log('****** MATCHES ', matches);
-                res.send(JSON.stringify(matches));
-              });
+              if (doc) {
+                if (!body.ids) {
+                  res.sendStatus(403);
+                } else {
+                  doc && db.getMatches(req.user, doc.following, (err, matches) => {
+                    err && res.sendStatus(500);
+                    // console.log('****** MATCHES ', matches);
+                    res.send(JSON.stringify(matches));
+                  });
+                }
+              }
             });
           }
         });
