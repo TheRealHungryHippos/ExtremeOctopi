@@ -12,10 +12,10 @@ class Matches extends React.Component {
     return (
       <div className="matches">
         <div className="matchesHeading"><h3 className="matchesHeadingText">Message A Friend <u>or</u> Pass to see New Matches!</h3></div>
-        <MatchesList matches={ this.props.matches } updateMatches={this.props.updateMatches}/>
+        <MatchesList matches={ this.props.matches } updateMatches={this.props.updateMatches} updateSelectedFriend={this.props.updateSelectedFriend} />
       </div>
-    )
+    );
   }
 }
 
-export default Matches
+export default Matches;

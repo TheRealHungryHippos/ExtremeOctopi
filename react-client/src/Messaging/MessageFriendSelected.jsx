@@ -4,47 +4,47 @@ var friendHeading;
 const MessageFriendSelected = ( props ) => (
   friendHeading = props.mutualFriends.length > 0 ? 'Mutual Friends' : '',
   props.friend ?
-  <div className="friendSelected">
-    <br></br>
-    <div>
-      <input id="messageText" className="submitMessageInput" onChange={props.changeMessage}></input>
-      <button onClick={props.addMessage}>Send Message</button>
-    </div>
-    <br></br>
-    <h2 className="card-header friend">{props.friend.username}
-      <button className="blockButton button btn btn-md btn-primary " id={props.friend.username + ',block'} onClick={props.updateMatches}>Block User</button>
-    </h2>
-    <br/>
-    <div className="card-block">
-      <div className="row">
-        <div className="card-text col-8">
-          <img className="friendPic mr-2" src={props.friend.profile_img}/>
-          {props.friend.fullname}
-          <br />
-          {props.friend.about_me}
-          <br />
-          <a href={props.friend.twitter_url}>{props.friend.twitter_url}</a>
-          <br></br>
-        </div>
-        <div className="col-4">
-          <b>{friendHeading}</b>
-          <br/>
-          {props.mutualFriends.map(friend => {
-            return <img key={friend._id} src={friend.profile_img} height="30" width="30" />
-          })}
+    <div className="friendSelected">
+      <br></br>
+      <div>
+        <input id="messageText" className="submitMessageInput" onChange={props.changeMessage}></input>
+        <button onClick={props.addMessage}>Send Message</button>
+      </div>
+      <br></br>
+      <h2 className="card-header friend">{props.friend.username}
+        <button className="blockButton button btn btn-md btn-primary " id={props.friend.username + ',block'} onClick={props.updateMatches}>Block User</button>
+      </h2>
+      <br/>
+      <div className="card-block">
+        <div className="row">
+          <div className="card-text col-8">
+            <img className="friendPic mr-2" src={props.friend.profile_img}/>
+            {props.friend.fullname}
+            <br />
+            {props.friend.about_me}
+            <br />
+            <a href={'https://twitter.com/' + props.friend.username} target="_blank">@{ props.friend.username }</a>
+            <br></br>
+          </div>
+          <div className="col-4">
+            <b>{friendHeading}</b>
+            <br/>
+            {props.mutualFriends.map(friend => {
+              return <img key={friend._id} src={friend.profile_img} height="30" width="30" />
+            })}
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  :
-  <div className="col">
-    <h5 className="card-header">Select a Friend to Start a Chat</h5>
-    <br/>
-    <div className="card-block row">
-      <div className="card-text col">
+    :
+    <div className="col">
+      <h5 className="card-header">Select a Friend to Start a Chat</h5>
+      <br/>
+      <div className="card-block row">
+        <div className="card-text col">
+        </div>
       </div>
     </div>
-  </div>
 
 );
 

@@ -9,7 +9,7 @@ class Messages extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedFriend: '',
+      selectedFriend: this.props.selectedFriend || '',
       mutualFriends: [],
       messages: [],
       messageText: ''
