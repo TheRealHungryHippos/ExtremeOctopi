@@ -125,18 +125,14 @@ module.exports.postUpdateUser = function (userInfo, callback) {
 //   })
 // };
 
-// senderName = sender, receiverName = receiver, messageText = message
-module.exports.postMessage = function (senderName, receiverName, messageText, callback){
-  console.log('db', senderName, receiverName, messageText);
-  var message = new db.Message({
-    sender: senderName,
-    receiver: receiverName,
-    message: messageText
-  });
-
-  message.save(function (err) {
-    if(err) console.log(err);
-    callback();
+//insert and call getMessages(user, friend, callback)
+module.exports.insertAndGetMessages = function (senderName, receiverName, messageText, callback){
+  db.Message.create({sender: senderName, receiver: receiverName, message: messageText}, (err, insertId) => {
+    if (err) {callback(err);}
+    module.exports.getMessages(senderName, receiverName, (err, messages) => {
+      if (err) {callback(err);}
+      callback(null, messages)
+    });
   });
 };
 
@@ -224,7 +220,7 @@ module.exports.addFriend = function(twitter_id, usernameToFriend, callback) {
       callback(err);
     } else if (!userToFriend) {
       console.log('********* ERROR friend to add\'s username is not valid: ', usernameToFriend);
-      callback(null, false);      
+      callback(null, false);
     }
     db.User.findOneAndUpdate({twitter_id: twitter_id}, {$push: {friends: userToFriend.twitter_id}}, function(err, user) {
       if (err) {
@@ -249,7 +245,7 @@ module.exports.blockUser = function(twitter_id, usernameToBlock, callback) {
       callback(err);
     } else if (!userToBlock) {
       console.log('********* ERROR user to block\'s username is not valid: ', userToBlock);
-      callback(null, false);      
+      callback(null, false);
     }
     db.User.findOne({twitter_id: twitter_id}, 'friends', function(err, results) {
       if (err) {
@@ -273,7 +269,7 @@ module.exports.blockUser = function(twitter_id, usernameToBlock, callback) {
                 callback(err);
               }
               callback(null, user);
-            });    
+            });
           });
         });
       } else {

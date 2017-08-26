@@ -17,7 +17,7 @@ class Messages extends React.Component {
   }
 
   selectFriend(friend){
-    this.getMutualFriends(friend.username) //(or do this on/after friend list load)
+    this.getMutualFriends(friend.username)
     .then((friends) => {
       this.setState({
         mutualFriends: friends,
@@ -72,7 +72,6 @@ class Messages extends React.Component {
   }
 
 //research socket io for messaging
-//fix and test this on the server and db side
   getMessageHistory(friend) {
     var promise = new Promise((resolve, reject) => {
       $.ajax({
@@ -100,25 +99,26 @@ class Messages extends React.Component {
       method: 'POST',
       url: '/messages/new',
       data: {
-        friend: this.state.selectedFriend._id,
+        friend: this.state.selectedFriend.username,
         message: this.state.messageText
       },
       success: (data) => {
-        console.log('SUCCESS:', data);
+        console.log('********* add message SUCCESS:', data);
         this.setState({
-          message: ''
+          message: '',
+          messages: data
         });
-
-        this.updateMessages(this.user, this.state.friend);
       },
       error: (error) => {
-        console.log('ERROR:', error);
+        console.log('********* add message ERROR:', error);
       }
     });
   }
 
-  changeMessage(event) {
-    this.setState({message: event.target.value});
+  changeMessage(e) {
+    var stateInput = {};
+    stateInput[e.target.id] = e.target.value;
+    this.setState(stateInput);
   }
 
   render() {
@@ -140,7 +140,7 @@ class Messages extends React.Component {
               <br/>
               <div className="card-block row">
                 <div className="col">
-                  <input className="submitMessageInput" onChange={this.changeMessage.bind(this)}></input>
+                  <input id="messageText" className="submitMessageInput" onChange={this.changeMessage.bind(this)}></input>
                   <button onClick={this.addMessage.bind(this)}>Send Message</button>
                 </div>
                 <br></br>

@@ -226,6 +226,19 @@ app.post('/messages/hist', (req, res) => {
   });
 });
 
+//return all messages
+app.post('/messages/new', (req, res) => {
+  console.log('********** delete hard coded username in /messages/hist on server');
+  req.body.username = 'chrisbharrison'; //delete once add friend functionality working
+  db.insertAndGetMessages(req.body.username, req.body.friend, req.body.message, (error, messages) => {
+    if (error) {
+      res.status(400);
+    } else {
+      res.status(200).end(JSON.stringify(messages));
+    }
+  });
+});
+
 // app.post('/message', ( req, res ) => {
 //   cookies.verifySession( req, res, ( valid ) => {
 //     if ( valid ) {
@@ -235,15 +248,6 @@ app.post('/messages/hist', (req, res) => {
 //       } );
 //     }
 //   } )
-// } );
-
-// app.post('/messageFriend', ( req, res ) => {
-//   // cookies.verifySession( req, res, ( valid ) => {
-//
-//     db.postMessage( req.session.username, req.body.username, req.body.message, () => {
-//       res.status( 201 ).end( JSON.stringify( true ) );
-//     });
-//   // })
 // } );
 
 // app.post('/signup', ( req, res ) => {
@@ -297,32 +301,13 @@ app.post('/messages/hist', (req, res) => {
 //     })
 //   })
 // });
+//
+// app.post('/matches', ( req, res ) => {
+//   db.postGetMatches( req.session.username, req.body.numberToReturn, req.body.maxFriends, ( results ) => {
+//     res.status( 201 ).send( results );
+//   } );
+// } );
 
-app.post('/matches', ( req, res ) => {
-  db.postGetMatches( req.session.username, req.body.numberToReturn, req.body.maxFriends, ( results ) => {
-    res.status( 201 ).send( results );
-  } );
-} );
-
-app.post('/message', ( req, res ) => {
-  cookies.verifySession( req, res, ( valid ) => {
-    if ( valid ) {
-      console.log('valid', req.session.username, req.body.message);
-      db.postMessage( req.session.username, req.session.username, req.body.message, () => {
-        res.status( 201 ).end( JSON.stringify( true ) );
-      } );
-    }
-  } )
-} );
-
-app.post('/messageFriend', ( req, res ) => {
-  // cookies.verifySession( req, res, ( valid ) => {
-
-    db.postMessage( req.session.username, req.body.username, req.body.message, () => {
-      res.status( 201 ).end( JSON.stringify( true ) );
-    });
-  // })
-} );
 
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../react-client/dist/index.html'));
