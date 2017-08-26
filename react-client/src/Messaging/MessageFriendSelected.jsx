@@ -4,7 +4,7 @@ var friendHeading;
 const MessageFriendSelected = ( props ) => (
   friendHeading = props.mutualFriends.length > 0 ? 'Mutual Friends' : '',
   props.friend ?
-  <div>
+  <div className="col">
     <h2 className="card-header">{props.friend.username}
     </h2>
     <br/>
@@ -19,7 +19,7 @@ const MessageFriendSelected = ( props ) => (
       </div>
       <div className="col-4">
         <b>{friendHeading}</b>
-        <br></br>
+        <br/>
         {props.mutualFriends.map(friend => {
           return <img key={friend._id} src={friend.profile_img} height="30" width="30" />
         })}
@@ -27,7 +27,14 @@ const MessageFriendSelected = ( props ) => (
     </div>
   </div>
   :
-  <div>Select a Friend to Start a Chat</div>
+  <div className="col">
+    <h5 className="card-header">Select a Friend to Start a Chat</h5>
+    <br/>
+    <div className="card-block row">
+      <div className="card-text col-8">
+      </div>
+    </div>
+  </div>
 
 );
 

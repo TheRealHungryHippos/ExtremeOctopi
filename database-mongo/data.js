@@ -79,14 +79,14 @@ module.exports.userData = [
 ];
 
 module.exports.messageData = [
-  {sender: 'CorinneOly',
-    receiver: 'chrisbharrison',
-    message: 'Hey Girl! What\'s up?'},
   {sender: 'chrisbharrison',
     receiver: 'CorinneOly',
-    message: 'Yo! Am I getting that rose tonight or what??'},
+    message: 'Hey Girl! What\'s up?'},
   {sender: 'CorinneOly',
     receiver: 'chrisbharrison',
+    message: 'Yo! Am I getting that rose tonight or what??'},
+  {sender: 'chrisbharrison',
+    receiver: 'CorinneOly',
     message: 'Haha...we will see...'},
 ];
 

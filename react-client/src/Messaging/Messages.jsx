@@ -60,7 +60,8 @@ class Messages extends React.Component {
       success: (messages) => {
         messages = JSON.parse(messages);
         this.setState({
-          messages: messages
+          messages: messages,
+          selectedFriend: friend
         });
       },
       error: (error) => {
@@ -110,31 +111,37 @@ class Messages extends React.Component {
             </div>
           </div>
           <div className="col-8">
-            <div className="card">
+            <div className="card ">
               <h2 className="card-header">Messages</h2>
               <br/>
-              <div className="card-block">
-              <input onChange={this.changeMessage.bind(this)}></input>
-              <button onClick={this.addMessage.bind(this)}>Submit</button>
-              <br></br>
-              {this.state.messages.map((message, index) => (
-                <MessagesList key={index} message={message}/>
-              ))}
-              <br></br>
-              <br></br>
-              <div className="row align-self-end">
-                <div className="col-12">
-                  <div className="card">
-
-                    <MessageFriendSelected friend={this.state.selectedFriend} mutualFriends={this.state.mutualFriends}/>
-                  </div>
+              <div className="card-block row">
+                <div className="col">
+                  <input className="submitMessageInput" onChange={this.changeMessage.bind(this)}></input>
+                  <button onClick={this.addMessage.bind(this)}>Send Message</button>
                 </div>
+                <br></br>
+              </div>
+              <div className="row">
+                <div className="col-6">
+                  {this.state.messages.map((message, index) => (
+                    <MessagesList key={index} message={message} friend={this.state.selectedFriend}/>
+                  ))}
+                  <br></br>
+                  <br></br>
+                </div>
+                <div className="col-6">
+                  {this.state.messages.map((message, index) => (
+                    <MessagesList key={index} message={message} friend={this.state.selectedFriend}/>
+                  ))}
+                  <br></br>
+                  <br></br>
+                </div>
+                <MessageFriendSelected friend={this.state.selectedFriend} mutualFriends={this.state.mutualFriends} />
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
     );
   }
 }
