@@ -178,6 +178,10 @@
   border-radius: 30px;
 }
 
+.friendSelected{
+  /*outline: #B4AFAF solid thick;*/
+}
+
 .talktext{
   color: #fff;
   padding: 1em;
@@ -200,7 +204,7 @@
   position: absolute;
   left: -20px;
   right: auto;
-  top: 38px;
+  top: 25%;
   bottom: auto;
   border: 12px solid;
   border-color: #655F5F #655F5F transparent transparent;
@@ -220,7 +224,7 @@
 	position: absolute;
   left: auto;
 	right: -20px;
-  top: 38px;
+  top: 25%;
 	bottom: auto;
 	border: 12px solid;
 	border-color: #B4AFAF transparent transparent #B4AFAF;
