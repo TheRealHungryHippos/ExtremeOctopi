@@ -39,7 +39,7 @@ const MessageFriendSelected = ( props ) => (
     <h5 className="card-header">Select a Friend to Start a Chat</h5>
     <br/>
     <div className="card-block row">
-      <div className="card-text col-8">
+      <div className="card-text col">
       </div>
     </div>
   </div>
