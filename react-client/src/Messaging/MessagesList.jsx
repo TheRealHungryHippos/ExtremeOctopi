@@ -2,23 +2,34 @@ import React from 'react';
 var classNames = require('classnames');
 var date;
 
-const MessagesList = ( props ) => (
-  // date = new Date(props.message.createdAt),
-  // bubbleClass = classNames({
-  //   'talk-bubble': true,
-  //   'tri-right': true,
-  //   'left-in': props.message.sender === props.friend,
-  //   'round': props.message.sender !== props.friend,
-  //   'right-in': props.message.sender !== props.friend
-  // }),
+class MessagesList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      classType: props.message.classType,
+      sender: props.message.sender,
+      message: props.message.message
+    };
+  }
 
-    <div className={props.message.classType}>
-      <div className="talktext card-text">
-        <strong>{props.message.sender}&nbsp;:&nbsp;</strong> {props.message.message}
+  // componentWillReceiveProps(nextProps) {
+  //   this.setState({
+  //     classType: nextProps.message.classType,
+  //     sender: nextProps.message.sender,
+  //     message: nextProps.message.message
+  // })
+  // }
+
+  render() {
+    return (
+      <div className={this.state.classType}>
+        <div className="talktext card-text">
+          <strong>{this.state.sender}&nbsp;:&nbsp;</strong> {this.state.message}
+        </div>
       </div>
-    </div>
-
-);
+    );
+  }
+}
 
 export default MessagesList;
 // ({date.getMonth()+1}/{date.getDate()}/{date.getFullYear()})
