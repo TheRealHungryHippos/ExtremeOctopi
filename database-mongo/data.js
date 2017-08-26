@@ -6,8 +6,8 @@ module.exports.userData = [
     location: '',
     profile_img: 'http://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png',
     about_me: '',
-    'following_count': 9,
-    'following': [
+    following_count: 9,
+    following: [
       '16017753',
       '16242081',
       '22747624',
@@ -28,11 +28,11 @@ module.exports.userData = [
     username: '80hungryhippos',
     twitter_url: null,
     fullname: 'Hungry Hippos',
-    location: '',
-    profile_img: 'http://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png',
-    about_me: '',
-    'following_count': 7,
-    'following': [
+    location: 'Berkeley, CA',
+    profile_img: 'http://pbs.twimg.com/profile_images/901578654072713216/4sUcdmmv_400x400.jpg',
+    about_me: 'Just a hungry hippo. Hungry for knowledge.',
+    following_count: 7,
+    following: [
       '74572689',
       '10716292',
       '22747624',
@@ -79,8 +79,8 @@ module.exports.userData = [
     location: 'Los Angeles, CA',
     profile_img: 'http://pbs.twimg.com/profile_images/748026330017587200/BKWarxpm_400x400.jpg',
     about_me: '',
-    'following_count': 24,
-    'following': [
+    following_count: 24,
+    following: [
       '24957641',
       '25673777',
       '15472892',
@@ -119,8 +119,8 @@ module.exports.userData = [
     location: '',
     profile_img: 'http://pbs.twimg.com/profile_images/900905051996147712/DtgtjN_t_400x400.jpg',
     about_me: '',
-    'following_count': 36,
-    'following': [
+    following_count: 36,
+    following: [
       '17393115',
       '15381688',
       '154953218',
@@ -171,8 +171,8 @@ module.exports.userData = [
     location: '',
     profile_img: 'http://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png',
     about_me: '',
-    'following_count': 95,
-    'following': [
+    following_count: 95,
+    following: [
       '15640533',
       '18132494',
       '36511031',
@@ -282,8 +282,8 @@ module.exports.userData = [
     location: 'San Francisco, CA',
     profile_img: 'http://pbs.twimg.com/profile_images/669421714204450817/fN8Xte0M_400x400.jpg',
     about_me: 'wine tech entrepreneur | check out https://t.co/RCc7KXeXJ8 for a free planning tool if you are going wine tasting in California',
-    'following_count': 65,
-    'following': [
+    following_count: 65,
+    following: [
       '19935055',
       '2705805788',
       '250416435',

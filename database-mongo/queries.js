@@ -183,7 +183,7 @@ module.exports.getMatches = function(user, doc, callback) {
           {twitter_id: {$nin: [user.twitter_id].concat(blockingUserIds, user.friends, user.blocked, user.pending_approval, user.pending_request)}},
           {following: {$in: doc}}
         ]}},
-        {$group: {_id: {username: '$username', location: '$location', profile_img: '$profile_img', about_me: '$about_me'}, nb: {'$sum': 1}}},
+        {$group: {_id: {username: '$username', location: '$location', profile_img: '$profile_img', about_me: '$about_me', fullname: '$fullname'}, nb: {'$sum': 1}}},
         {$sort: {nb: -1}},
         {$limit: 10},
         callback

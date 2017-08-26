@@ -10,7 +10,7 @@ const MatchesList = ( props ) => (
 			    	(
 			    		props.matches.length ? 
 			    			props.matches.map( ( match, index ) => (
-			        		<MatchItem key={ index } match={ match._id } updateMatches={ props.updateMatches }/> )
+			        		<MatchItem key={ index } match={ match._id } updateMatches={ props.updateMatches } updateSelectedFriend={props.updateSelectedFriend}/> )
 			      		) :
 			      		'No matches found'
 			      ) :

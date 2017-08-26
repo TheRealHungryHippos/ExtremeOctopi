@@ -9,8 +9,10 @@ class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      matches: 'loading'
+      matches: 'loading',
+      selectedFriend: ''
     };
+    this.updateSelectedFriend = this.updateSelectedFriend.bind(this);
   }
 
   setMatchesState(matches) {
@@ -56,6 +58,12 @@ class Main extends React.Component {
     });
   }
 
+  updateSelectedFriend(friend) {
+    this.setState({
+      selectedFriend: friend
+    });
+  }
+
   componentDidMount() {
     this.getMatches();
   }
@@ -68,17 +76,17 @@ class Main extends React.Component {
             <Profile />
           )}/>
           <Route path='/profile' render={() => (
-              <Profile />
-            )}/>
+            <Profile />
+          )}/>
           <Route exact path='/matches' render={() => (
-              <Matches matches={this.state.matches} updateMatches={this.updateMatches.bind(this)}/>
-            )}/>
+            <Matches matches={this.state.matches} updateMatches={this.updateMatches.bind(this)} updateSelectedFriend={this.updateSelectedFriend} />
+          )}/>
           <Route exact path='/messages' render={() => (
-                <Messages  updateMatches={this.updateMatches.bind(this)}/>
-              )}/>
+            <Messages selectedFriend={this.state.selectedFriend} updateMatches={this.updateMatches.bind(this)}/>
+          )}/>
         </Switch>
       </main>
-    )
+    );
   }
 }
 

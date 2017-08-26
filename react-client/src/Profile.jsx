@@ -5,7 +5,8 @@ class Profile extends React.Component {
 	constructor( props ) {
   	super( props );
   	this.state = {
-  		profile_img: '',
+      profile_img: '',
+      fullname: '',
       username: '',
       location: '',
       about_me: '',
@@ -22,8 +23,9 @@ class Profile extends React.Component {
           data = JSON.parse(data);
           this.setState ( {
             profile_img: data.profile_img,
+            fullname: data.fullname,
             username: data.username || 'username not found',
-            location: data.location || "You're not sharing your location on Twitter",
+            location: data.location,
             about_me: data.about_me || "Your Twitter account doesn't have a bio",
             twitterUrl: 'https://twitter.com/' + data.username
           } );
@@ -47,6 +49,7 @@ class Profile extends React.Component {
     		    <div className="col-sm-4"><img className="profilePic img-fluid img-thumbnail" src={ this.state.profile_img } /></div>
             <div className="col-sm-8">
               <div className="profileInfo"><b>Twitter Handle:</b>&nbsp;<a href={this.state.twitterUrl} target="_blank">@{ this.state.username }</a></div>
+        			<div className="profileInfo"><b>Full Name:</b>&nbsp;{ this.state.fullname }</div>
         			<div className="profileInfo"><b>Location:</b>&nbsp;{ this.state.location }</div>
               <div className="profileInfo"><b>About Me:</b>&nbsp;{ this.state.about_me }</div>
             </div>

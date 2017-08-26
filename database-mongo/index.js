@@ -54,34 +54,34 @@ module.exports.User = mongoose.model('User', userSchema);
 module.exports.Message = mongoose.model('Message', messageSchema);
 module.exports.Session = mongoose.model('Session', sessionSchema);
 
-//comment out if don't want the database dropped and added again
+// //comment out if don't want the database dropped and added again
 // module.exports.User.remove({}, () => {
 //   module.exports.User.collection.insertMany(data.userData, (err, results) => {
 //     if (err) {
 //       console.log('********* user data insert error ', err);
 //     } else {
 //       console.log('********** user data insert success results ');
-//       // module.exports.Message.remove({}, () => {
-//       //   module.exports.Message.collection.insertMany(data.messageData, (err, results) => {
-//       //     if (err) {
-//       //       console.log('********* message data insert error ', err);
-//       //     }
-//       //     else {
-//       //       console.log('********** message data insert success results ');
-//       //       module.exports.Session.remove({}, () => {
-//       //         module.exports.Session.collection.insertMany(data.sessionData, (err, results) => {
-//       //           if (err) {
-//       //             console.log('********* session data insert error ', err);
-//       //           }
-//       //           else {
-//       //             console.log('********** session data insert success results ');
-//                   console.log('*********** db cleared ');
-//       //           }
-//       //         });
-//       //       });
-//       //     }
-//       //   });
-//       // });
+//       module.exports.Message.remove({}, () => {
+//         // module.exports.Message.collection.insertMany(data.messageData, (err, results) => {
+//         //   if (err) {
+//         //     console.log('********* message data insert error ', err);
+//         //   }
+//         //   else {
+//         //     console.log('********** message data insert success results ');
+//             module.exports.Session.remove({}, () => {
+//               // module.exports.Session.collection.insertMany(data.sessionData, (err, results) => {
+//               //   if (err) {
+//               //     console.log('********* session data insert error ', err);
+//               //   }
+//               //   else {
+//               //     console.log('********** session data insert success results ');
+//               //     console.log('*********** db cleared ');
+//               //   }
+//               // });
+//             });
+//           // }
+//         // });
+//       });
 //     }
 //   });
 // });
