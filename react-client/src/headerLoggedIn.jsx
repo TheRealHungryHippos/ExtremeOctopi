@@ -29,6 +29,7 @@ const HeaderLoggedIn = () => (
         <li className="nav-item"><Link to="/profile" className="nav-link">Profile</Link></li>
         <li className="nav-item"><Link to="/matches" className="nav-link">Matches</Link></li>
         <li className="nav-item"><Link to="/messages" className="nav-link">Messages</Link></li>
+        <li className="nav-item"><a href="/logout" className="nav-link">Logout</a></li>
       </ul>
     </div>
   </nav>

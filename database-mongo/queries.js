@@ -177,6 +177,7 @@ module.exports.getMatches = function(user, doc, callback) {
     {$match: {blocked: {$eq: user.twitter_id}}},
     {$group: {_id: {twitter_id: '$twitter_id'}}},
     (err, blockingMe) => {
+      // TODO add error handler
       var blockingUserIds = blockingMe.map((blockingUser) => {
         return blockingUser._id.twitter_id;
       });
