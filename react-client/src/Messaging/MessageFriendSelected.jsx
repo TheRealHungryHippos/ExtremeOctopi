@@ -16,21 +16,23 @@ const MessageFriendSelected = ( props ) => (
     </h2>
     <br/>
     <div className="card-block">
-      <div className="card-text">
-        <img className="friendPic mr-2" src={props.friend.profile_img}/>
-        {props.friend.fullname}
-        <br />
-        {props.friend.about_me}
-        <br />
-        <a href={props.friend.twitter_url}>{props.friend.twitter_url}</a>
-        <br></br>
-      </div>
-      <div>
-        <b>{friendHeading}</b>
-        <br/>
-        {props.mutualFriends.map(friend => {
-          return <img key={friend._id} src={friend.profile_img} height="30" width="30" />
-        })}
+      <div className="row">
+        <div className="card-text col-8">
+          <img className="friendPic mr-2" src={props.friend.profile_img}/>
+          {props.friend.fullname}
+          <br />
+          {props.friend.about_me}
+          <br />
+          <a href={props.friend.twitter_url}>{props.friend.twitter_url}</a>
+          <br></br>
+        </div>
+        <div className="col-4">
+          <b>{friendHeading}</b>
+          <br/>
+          {props.mutualFriends.map(friend => {
+            return <img key={friend._id} src={friend.profile_img} height="30" width="30" />
+          })}
+        </div>
       </div>
     </div>
   </div>
