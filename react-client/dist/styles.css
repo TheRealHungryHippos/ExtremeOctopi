@@ -31,18 +31,34 @@
   background-color: #6D5A7F;
 }
 
-.signUpIn {
-  padding-top: 76px;
+.signIn {
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 80vh;
 }
 
-.form-signin {
+.catchPhrase {
+  margin-bottom: 2em;
+}
+
+.signInBox {
+  border: thick solid #111111;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2em;
+}
+
+.twitterLogo {
+  max-width: 20em;
+}
+
+.signInButton {
+  width: 10em;
 }
 
 .profile {

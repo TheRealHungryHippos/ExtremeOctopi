@@ -47,34 +47,12 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div className="signUpIn">
-        <a href="/auth/twitter" className="button btn btn-lg btn-primary btn-block">Twitter signin</a>
-        <form className="form-signin" onSubmit={ this.handleSubmit.bind( this ) }>
-          <label>
-            Username:
-            <input
-              size="35"
-              className="form-control"
-              required=""
-              autoFocus=""
-              name="username"
-              type="text"
-              onChange={ this.handleInputChange.bind( this ) }>
-            </input>
-          </label>
-          <label>
-            Password: 
-            <input
-              size="35"
-              className="form-control"
-              required=""
-              name="password"
-              type="password"
-              onChange={ this.handleInputChange.bind( this ) }>
-            </input>
-          </label>
-          <button className="button btn btn-lg btn-primary btn-block" type="submit">Login</button>
-        </form>
+      <div className="signIn">
+        <h1 className="catchPhrase">Your Friends Are Here!</h1>
+        <div className="signInBox">
+          <h3>Sign in with Twitter</h3><img className="twitterLogo"src="https://imageog.flaticon.com/icons/png/512/23/23931.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF"/>
+          <a href="/auth/twitter" className="signInButton button btn btn-lg btn-primary btn-block">Sign In</a>
+        </div>
       </div>
     )
   }
