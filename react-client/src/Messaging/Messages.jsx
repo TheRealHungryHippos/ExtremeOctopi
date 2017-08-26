@@ -40,7 +40,7 @@ class Messages extends React.Component {
     var promise = new Promise((resolve, reject) => {
       for (var i = 0; i < messages.length; i++) {
         if (messages[i].sender === friend.username) {
-          messages[i]['classType'] = 'talk-bubble-left tri-right left-in';
+          messages[i]['classType'] = 'talk-bubble-left tri-right round left-in';
         } else {
           messages[i]['classType'] = 'talk-bubble-right tri-right round right-in';
         }
@@ -148,10 +148,8 @@ class Messages extends React.Component {
               <div className="row">
                 <div className="col">
                   {this.state.messages.map((message, index) => (
-                    <MessagesList key={index} message={message} />
+                      <MessagesList key={index} message={message} />
                   ))}
-                  <br></br>
-                  <br></br>
                 </div>
                 <MessageFriendSelected friend={this.state.selectedFriend} mutualFriends={this.state.mutualFriends} />
               </div>

@@ -86,7 +86,7 @@
 }
 
 .btn-block+.btn-block {
-  margin-top: 0; 
+  margin-top: 0;
 }
 
 .messageFriendRow {
@@ -104,21 +104,21 @@
 }
 
 .talk-bubble-left {
-  margin: 20px;
+  margin: 5px 20px 5px 20px;
   display: inline-block;
   position: relative;
   width: 200px;
   height: auto;
-  background-color: #262B53;
+  background-color: #655F5F;
 }
 
 .talk-bubble-right {
-  margin: 20px;
+  margin: 5px 20px 5px 20px;
   display: inline-block;
   position: relative;
   width: 200px;
   height: auto;
-  background-color: #2865a3;
+  background-color: #B4AFAF;
 }
 
 .border {
@@ -144,7 +144,7 @@
   top: 30px;
   bottom: auto;
   border: 20px solid;
-  border-color: #666 #666 transparent transparent;
+  border-color: #655F5F #655F5F transparent transparent;
 }
 .tri-right.left-in:after{
   content: ' ';
@@ -154,7 +154,7 @@
   top: 38px;
   bottom: auto;
   border: 12px solid;
-  border-color: #262B53 #262B53 transparent transparent;
+  border-color: #655F5F #655F5F transparent transparent;
 }
 .tri-right.border.right-in:before {
 	content: ' ';
@@ -164,7 +164,7 @@
   top: 30px;
 	bottom: auto;
 	border: 20px solid;
-	border-color: #2865a3 transparent transparent #2865a3;
+	border-color: #B4AFAF transparent transparent #B4AFAF;
 }
 .tri-right.right-in:after{
 	content: ' ';
@@ -174,7 +174,7 @@
   top: 38px;
 	bottom: auto;
 	border: 12px solid;
-	border-color: #2865a3 transparent transparent #2865a3;
+	border-color: #B4AFAF transparent transparent #B4AFAF;
 }
 
 .submitMessageInput {
