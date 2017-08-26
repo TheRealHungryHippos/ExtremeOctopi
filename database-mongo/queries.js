@@ -159,9 +159,9 @@ module.exports.getFollowing = function(twitter_id, callback) {
 
 module.exports.updateFollowing = function(twitter_id, newFollowing, callback) {
   db.User.findOneAndUpdate(
-    {twitter_id: twitter_id}, 
-    {$set: {following: newFollowing}}, 
-    {new: true}, 
+    {twitter_id: twitter_id},
+    {$set: {following: newFollowing}},
+    {new: true},
     callback);
 };
 
@@ -253,12 +253,12 @@ module.exports.blockUser = function(twitter_id, usernameToBlock, callback) {
         callback(err);
       }
       if (results.friends.includes(userToBlock.twitter_id)) {
-        db.User.findOneAndUpdate({twitter_id: twitter_id}, {$pull: {friends: userToFriend.twitter_id}}, function(err, user) {
+        db.User.findOneAndUpdate({twitter_id: twitter_id}, {$pull: {friends: userToBlock.twitter_id}}, function(err, user) {
           if (err) {
             console.log('********* ERROR removing userToBlock from user\'s friends list ', err);
             callback(err);
           }
-          db.User.findOneAndUpdate({twitter_id: userToFriend.twitter_id}, {$pull: {friends: twitter_id}}, function(err, user) {
+          db.User.findOneAndUpdate({twitter_id: userToBlock.twitter_id}, {$pull: {friends: twitter_id}}, function(err, user) {
             if (err) {
               console.log('********* ERROR removing user from userToBlock\'s friends list ', err);
               callback(err);

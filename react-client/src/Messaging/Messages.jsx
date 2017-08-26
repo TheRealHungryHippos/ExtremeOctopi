@@ -118,6 +118,30 @@ class Messages extends React.Component {
       }
     });
   }
+  blockFriend() { //update this
+    var context = this;
+    $.ajax({
+      method: 'POST',
+      url: '/messages/new',
+      data: {
+        friend: this.state.selectedFriend.username,
+        message: this.state.messageText
+      },
+      success: (messages) => {
+        messages = JSON.parse(messages);
+        context.addClassType(messages, context.state.selectedFriend.username)
+        .then((messages) => {
+          context.setState({
+            message: '',
+            messages: messages
+          });
+        })
+      },
+      error: (error) => {
+        console.log('********* add message ERROR:', error);
+      }
+    });
+  }
 
   changeMessage(e) {
     var stateInput = {};
@@ -143,19 +167,12 @@ class Messages extends React.Component {
               <h2 className="card-header">Messages</h2>
               <br/>
               <div className="card-block row">
-                <div className="col">
-                  <input id="messageText" className="submitMessageInput" onChange={this.changeMessage.bind(this)}></input>
-                  <button onClick={this.addMessage.bind(this)}>Send Message</button>
-                </div>
-                <br></br>
               </div>
               <div className="row">
-                <div className="col">
                   {this.state.messages.map((message, index) => (
                       <MessagesList key={index} message={message} />
                   ))}
-                </div>
-                <MessageFriendSelected friend={this.state.selectedFriend} mutualFriends={this.state.mutualFriends} />
+                <MessageFriendSelected friend={this.state.selectedFriend} mutualFriends={this.state.mutualFriends} updateMatches={this.props.updateMatches} changeMessage={this.changeMessage.bind(this)} addMessage={this.addMessage.bind(this)}/>
               </div>
             </div>
           </div>

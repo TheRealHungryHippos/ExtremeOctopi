@@ -74,7 +74,7 @@ class Main extends React.Component {
               <Matches matches={this.state.matches} updateMatches={this.updateMatches.bind(this)}/>
             )}/>
           <Route exact path='/messages' render={() => (
-                <Messages />
+                <Messages  updateMatches={this.updateMatches.bind(this)}/>
               )}/>
         </Switch>
       </main>
