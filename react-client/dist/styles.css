@@ -61,12 +61,28 @@
   width: 10em;
 }
 
+.profileContainer {
+  padding-top: 76px;
+}
+
 .profile {
-  padding: 152px 13vw 50px 13vw;
+  padding: 50px 13vw 50px 13vw;
+}
+
+.usernameHeadingContainer {
+  padding-left: 13vw;
+  padding-top: 1em;
+  padding-bottom: .8em;
+  background-color: #f6f6f6;
+}
+
+.usernameHeading {
+  margin-left: .4em;
 }
 
 .profileInfo {
   font-size: 150%;
+  margin-bottom: .5em;
 }
 
 .messages {
@@ -93,12 +109,29 @@
   padding: 1em 0 1em 0;
 }
 
+.matchItemCol {
+  margin-bottom: 1em;
+}
+
+.matchButtonCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .matchItemButton {
   min-width: 130px;
+  margin-bottom: .5em;
+}
+
+.matchProfilePicCol {
+  display: flex;
+  justify-content: center;
 }
 
 .matchProfilePic {
   width: 200px;
+  align-self: center;
 }
 
 .btn-block+.btn-block {
