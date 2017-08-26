@@ -76,7 +76,11 @@ app.use(express.static(path.join(__dirname, '../react-client/dist')));
 
 app.get('/auth', (req, res) => {
   if (req.session.passport) {
-    res.status(200).send(JSON.stringify(true));
+    if (req.session.passport.user) {
+      res.status(200).send(JSON.stringify(true));
+    } else {
+      res.status(200).send(JSON.stringify(false));
+    }
   } else {
     res.status(200).send(JSON.stringify(false));
   }
@@ -94,7 +98,7 @@ app.get('/auth/twitter/callback', passport.authenticate('twitter',
 app.get('/logout', function(req, res) {
   req.logout();
   console.log('****** User logged out');
-  res.redirect('/login');
+  res.redirect('/');
 });
 
 app.get('/user', ( req, res ) => {
