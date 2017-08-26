@@ -84,7 +84,7 @@
   height: auto;
   background-color: #262B53;
 }
-
+/*"talk-bubble-right tri-right left-in" : "talk-bubble-right tri-right round right-in"*/
 .talk-bubble-right {
   margin: 20px;
   display: inline-block;

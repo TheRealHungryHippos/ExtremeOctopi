@@ -12,7 +12,7 @@ const MessagesList = ( props ) => (
   //   'right-in': props.message.sender !== props.friend
   // }),
   <div className="card-text">
-    <div className={props.message.sender === props.friend ? "talk-bubble-left tri-right left-in" : "talk-bubble-right tri-right round right-in"}>
+    <div className="talk-bubble-right tri-right left-in">
       <div className="talktext">
         <strong>{props.message.sender}&nbsp;:&nbsp;</strong> {props.message.message}
       </div>

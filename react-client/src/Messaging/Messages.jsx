@@ -17,7 +17,6 @@ class Messages extends React.Component {
   }
 
   selectFriend(friend){
-    this.getMessageHistory(friend.username);
     this.getMutualFriends(friend.username) //(or do this on/after friend list load)
     .then((friends) => {
       this.setState({
@@ -25,6 +24,30 @@ class Messages extends React.Component {
         selectedFriend: friend
       });
     });
+
+    this.getMessageHistory(friend.username)
+    .then((messages) => {
+      this.addClassType(messages, friend)
+      .then((messages) => {
+        this.setState({
+          messages: messages
+        });
+      })
+    })
+  }
+
+  addClassType(messages, friend){
+    var promise = new Promise((resolve, reject) => {
+      for (var key in messages) {
+        if (messages[key].sender === friend.username) {
+          messages['classType'] = 'not_me';
+        } else {
+          messages['classType'] = 'me';
+        }
+      }
+      resolve(messages);
+    });
+    return promise;
   }
 
   getMutualFriends(friend) {
@@ -51,23 +74,24 @@ class Messages extends React.Component {
 //research socket io for messaging
 //fix and test this on the server and db side
   getMessageHistory(friend) {
-    $.ajax({
-      method: 'POST',
-      url: '/messages/hist',
-      data: {
-        friend: friend
-      },
-      success: (messages) => {
-        messages = JSON.parse(messages);
-        this.setState({
-          messages: messages,
-          selectedFriend: friend
-        });
-      },
-      error: (error) => {
-        console.log('********** getMessageHistory ERROR:', error);
-      }
+    var promise = new Promise((resolve, reject) => {
+      $.ajax({
+        method: 'POST',
+        url: '/messages/hist',
+        data: {
+          friend: friend
+        },
+        success: (messages) => {
+          messages = JSON.parse(messages);
+          resolve(messages);
+        },
+        error: (error) => {
+          console.log('********** getMessageHistory ERROR:', error);
+          reject(error);
+        }
+      });
     });
+    return promise;
   }
 
 //fix / text this on the server & db side
@@ -124,7 +148,7 @@ class Messages extends React.Component {
               <div className="row">
                 <div className="col">
                   {this.state.messages.map((message, index) => (
-                    <MessagesList key={index} message={message} friend={this.state.selectedFriend}/>
+                    <MessagesList key={index} message={message} />
                   ))}
                   <br></br>
                   <br></br>
