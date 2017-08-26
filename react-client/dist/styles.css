@@ -194,6 +194,11 @@
   /*outline: #B4AFAF solid thick;*/
 }
 
+.blockButton {
+  position: absolute;
+  right: 10%;
+}
+
 .talktext{
   color: #fff;
   padding: 1em;
@@ -243,7 +248,9 @@
 }
 
 .submitMessageInput {
-  width: 80%;
+  width: 60%;
+  justify-content: right;
+  /*align-items: center;*/
 }
 
 .message_left {

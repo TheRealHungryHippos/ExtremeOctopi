@@ -4,16 +4,18 @@ var friendHeading;
 const MessageFriendSelected = ( props ) => (
   friendHeading = props.mutualFriends.length > 0 ? 'Mutual Friends' : '',
   props.friend ?
-  <div className="friendSelected row">
+  <div className="friendSelected">
+    <br></br>
     <div>
       <input id="messageText" className="submitMessageInput" onChange={props.changeMessage}></input>
       <button onClick={props.addMessage}>Send Message</button>
     </div>
     <br></br>
-    <h2 className="row card-header friend">{props.friend.username}
+    <h2 className="card-header friend">{props.friend.username}
+      <button className="blockButton button btn btn-md btn-primary " id={props.friend.username + ',block'} onClick={props.updateMatches}>Block User</button>
     </h2>
     <br/>
-    <div className="card-block row">
+    <div className="card-block">
       <div className="card-text">
         <img className="friendPic mr-2" src={props.friend.profile_img}/>
         {props.friend.fullname}
@@ -31,9 +33,6 @@ const MessageFriendSelected = ( props ) => (
         })}
       </div>
     </div>
-    <div className="card-block row">
-        <button className="button btn btn-md btn-primary " id={props.friend.username + ',block'} onClick={props.updateMatches}>Block User</button>
-  </div>
   </div>
   :
   <div className="col">
