@@ -11,11 +11,17 @@
 ## Table of Contents
 
 1. [Usage](#Usage)
+    1. [App](#app)
 1. [Requirements](#requirements)
 1. [Development](#development)
     1. [Installing Dependencies](#installing-dependencies)
+    1. [Obtaining required config information](#Obtaining-required-config-information)
+    1. [Database data](#Database-data)
+    1. [Running a local server](#Running-a-local-server)
+    1. [Testing](#testing)
     1. [Tasks](#tasks)
-1. [Roadmap](#roadmap)
+    1. [Deployment](#deployment)
+    1. [Roadmap](#roadmap)
 1. [Contributing](#contributing)
 
 ## Usage
@@ -25,13 +31,14 @@ https://friendzone-2.herokuapp.com/
 
 ## Requirements
 
-- Node 6.4.x
+- Node 6.11.x
 - Express 4.15.0
-- React 15.4.2
-- ReactDOM 5.4.2
+- React 15.6.x
+- ReactDOM 15.6.x
 - jQuery 3.1.1
 - Mongoose 4.8.6
 - Body parser 1.17.2
+- Passport 0.4.0
 
 ## Development
 
@@ -59,7 +66,9 @@ then comment out the last group of code
 
 1. In one terminal window, run `npm run react-dev` to launch webpack
 1. In a different terminal window, launch your local MongoDB server (usually `mongod`)
-1. In a different terminal window, run `npm run server-dev` to launch the server, go to http://127.0.0.1:8080/ or http://localhost:8080/ to view the app
+1. In a different terminal window, run `npm run server-dev` to launch the server, go to http://127.0.0.1:8080/. Note, this assumes the callback url you set with Twitter in the earlier step [Obtaining required config information](#Obtaining-required-config-information). 
+
+**Note:** Recommended to use `127.0.0.1`, but the alternative is to use `localhost`. Only use one, do not mix and match, or you may run into issues with the auth callback.
 
 ### Testing
 
@@ -76,11 +85,11 @@ Test results will be displayed in a browser at http://127.0.0.1:8081/.
 
 Tests are named as `<module/stack tested>Spec.js`.
 
-## Deployment
+### Deployment
 
 Deployment for this app was done on [Heroku](https://www.heroku.com).
 
-Provision a MongoDB addon for each app in your pipeline (mLab was used for this app).
+Provision a MongoDB addon for each app in your pipeline ([mLab](https://www.mlab.com) was used for this app).
 
 Config variables will have to be set that match the `*.config.js` files listed under [Installing Dependencies](#installing-dependencies).
 
