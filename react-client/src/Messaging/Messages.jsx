@@ -129,7 +129,6 @@ class Messages extends React.Component {
                   <br></br>
                   <br></br>
                 </div>
-                
                 <MessageFriendSelected friend={this.state.selectedFriend} mutualFriends={this.state.mutualFriends} />
               </div>
             </div>
