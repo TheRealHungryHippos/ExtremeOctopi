@@ -21,9 +21,11 @@ class MessagesList extends React.Component {
 
   render() {
     return (
-      <div className={this.state.classType}>
-        <div className="talktext card-text">
-          <strong>{this.state.sender}&nbsp;:&nbsp;</strong> {this.state.message}
+      <div className={this.state.classType.slice(0, 12) + ' row'}>
+        <div className={this.state.classType}>
+          <div className="talktext card-text">
+            <strong>{this.state.sender}&nbsp;:&nbsp;</strong> {this.state.message}
+          </div>
         </div>
       </div>
     );

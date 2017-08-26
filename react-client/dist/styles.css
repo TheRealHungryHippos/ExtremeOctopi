@@ -152,6 +152,18 @@
   background-color: #FFDC00;
 }
 
+.messagesCardBlock {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.messageList {
+  height: 250px;
+  overflow-y: scroll;
+  border: thin solid #111111;
+  padding: 1em 1em 1em 1em;
+}
+
 .talk-bubble-left {
   margin: 5px 20px 5px 20px;
   display: inline-block;
@@ -233,6 +245,17 @@
 .submitMessageInput {
   width: 80%;
 }
+
+.message_left {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.messageRight {
+  display: flex;
+  justify-content: flex-end;
+}
+
 /*THE BELOW WILL MOST LIKELY BE DELETED, KEEPING IT HERE UNTIL I AM SURE*/
 
 /*.previewText {
