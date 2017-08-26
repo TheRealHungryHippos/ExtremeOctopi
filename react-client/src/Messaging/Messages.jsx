@@ -105,7 +105,6 @@ class Messages extends React.Component {
       },
       success: (messages) => {
         messages = JSON.parse(messages);
-        console.log('********* add message SUCCESS:', messages);
         context.addClassType(messages, context.state.selectedFriend.username)
         .then((messages) => {
           context.setState({
