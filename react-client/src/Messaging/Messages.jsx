@@ -167,18 +167,22 @@ class Messages extends React.Component {
               <h2 className="card-header">Messages</h2>
               <br/>
               <div className="card-block messagesCardBlock">
-                { 
+                {
                   typeof this.state.selectedFriend === 'object' &&
-                    <div className="messageList" 
-                         onMouseOver={() => {document.body.style.overflow='hidden'}}           
+                    <div className="messageList"
+                         onMouseOver={() => {document.body.style.overflow='hidden'}}
                          onMouseOut={() => {document.body.style.overflow='auto'}}>
                       {this.state.messages.map((message, index) => (
                           <MessagesList key={index} message={message} />
                       ))}
                     </div>
                 }
-                <div>
-                  <MessageFriendSelected friend={this.state.selectedFriend} mutualFriends={this.state.mutualFriends} updateMatches={this.props.updateMatches} changeMessage={this.changeMessage.bind(this)} addMessage={this.addMessage.bind(this)}/>
+                <div className="row justify-content-center">
+                  <div className="col">
+                    <div className="card ">
+                      <MessageFriendSelected friend={this.state.selectedFriend} mutualFriends={this.state.mutualFriends} updateMatches={this.props.updateMatches} changeMessage={this.changeMessage.bind(this)} addMessage={this.addMessage.bind(this)}/>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
