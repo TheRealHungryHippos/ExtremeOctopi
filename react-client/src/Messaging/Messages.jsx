@@ -122,20 +122,14 @@ class Messages extends React.Component {
                 <br></br>
               </div>
               <div className="row">
-                <div className="col-6">
+                <div className="col">
                   {this.state.messages.map((message, index) => (
                     <MessagesList key={index} message={message} friend={this.state.selectedFriend}/>
                   ))}
                   <br></br>
                   <br></br>
                 </div>
-                <div className="col-6">
-                  {this.state.messages.map((message, index) => (
-                    <MessagesList key={index} message={message} friend={this.state.selectedFriend}/>
-                  ))}
-                  <br></br>
-                  <br></br>
-                </div>
+                
                 <MessageFriendSelected friend={this.state.selectedFriend} mutualFriends={this.state.mutualFriends} />
               </div>
             </div>

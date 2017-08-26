@@ -5,7 +5,7 @@ const MessageFriendSelected = ( props ) => (
   friendHeading = props.mutualFriends.length > 0 ? 'Mutual Friends' : '',
   props.friend ?
   <div className="col">
-    <h2 className="card-header">{props.friend.username}
+    <h2 className="card-header friend">{props.friend.username}
     </h2>
     <br/>
     <div className="card-block row">

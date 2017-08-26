@@ -72,6 +72,10 @@
   height: 60px;
 }
 
+.friend {
+  background-color: #FFDC00;
+}
+
 .talk-bubble {
   margin: 20px;
   display: inline-block;
