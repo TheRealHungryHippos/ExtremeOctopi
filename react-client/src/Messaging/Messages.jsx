@@ -95,6 +95,7 @@ class Messages extends React.Component {
 
 //fix / text this on the server & db side
   addMessage() {
+    var context = this;
     $.ajax({
       method: 'POST',
       url: '/messages/new',
@@ -102,12 +103,16 @@ class Messages extends React.Component {
         friend: this.state.selectedFriend.username,
         message: this.state.messageText
       },
-      success: (data) => {
-        console.log('********* add message SUCCESS:', data);
-        this.setState({
-          message: '',
-          messages: data
-        });
+      success: (messages) => {
+        messages = JSON.parse(messages);
+        console.log('********* add message SUCCESS:', messages);
+        context.addClassType(messages, context.state.selectedFriend.username)
+        .then((messages) => {
+          context.setState({
+            message: '',
+            messages: messages
+          });
+        })
       },
       error: (error) => {
         console.log('********* add message ERROR:', error);
