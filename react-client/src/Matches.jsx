@@ -11,7 +11,7 @@ class Matches extends React.Component {
   render() {
     return (
       <div className="matches">
-        <h3 className="matchesHeading">Send messages, or pass on matches and will give you new ones!</h3>
+        <div className="matchesHeading"><h3 className="matchesHeadingText">Send messages, or pass on matches and we'll give you new ones!</h3></div>
         <MatchesList matches={ this.props.matches } updateMatches={this.props.updateMatches}/>
       </div>
     )

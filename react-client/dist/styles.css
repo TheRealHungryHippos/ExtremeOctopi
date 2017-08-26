@@ -46,20 +46,47 @@
 }
 
 .profile {
-  padding: 152px 13vw 0 13vw;
+  padding: 152px 13vw 50px 13vw;
+}
+
+.profileInfo {
+  font-size: 150%;
 }
 
 .messages {
   padding-top: 100px;
 }
 
+.matches {
+  padding-bottom: 50px;
+}
+
 .matchesHeading {
-  padding: 100px 13vw 0 13vw;
+  padding: 100px 13vw 20px 13vw;
   background-color: #f6f6f6;
+  display: flex;
+  justify-content: center;
 }
 
 .matchesList {
   padding: 30px 13vw 0 13vw;
+}
+
+.matchItem {
+  border-bottom: thin solid #111111;
+  padding: 1em 0 1em 0;
+}
+
+.matchItemButton {
+  min-width: 130px;
+}
+
+.matchProfilePic {
+  width: 200px;
+}
+
+.btn-block+.btn-block {
+  margin-top: 0; 
 }
 
 .messageFriendRow {

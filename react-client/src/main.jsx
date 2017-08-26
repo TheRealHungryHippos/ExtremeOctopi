@@ -9,7 +9,7 @@ class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      matches: []
+      matches: 'loading'
     };
   }
 
@@ -29,7 +29,11 @@ class Main extends React.Component {
         context.setMatchesState(matches);
       },
       error: (error) => {
-        console.log('ERROR:', error);
+        if (error.status === 403) {
+          context.setMatchesState(null);
+        } else {
+          console.log('ERROR:', error);
+        }
       }
     });
   }
