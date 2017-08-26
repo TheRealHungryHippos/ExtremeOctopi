@@ -1,5 +1,4 @@
 import React from 'react';
-var classNames = require('classnames');
 var date;
 
 class MessagesList extends React.Component {
