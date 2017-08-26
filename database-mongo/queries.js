@@ -162,21 +162,31 @@ module.exports.getFollowing = function(twitter_id, callback) {
 };
 
 module.exports.updateFollowing = function(twitter_id, newFollowing, callback) {
-  db.User.findOneAndUpdate({twitter_id: twitter_id}, {$set: {following: newFollowing}}, callback);
+  db.User.findOneAndUpdate(
+    {twitter_id: twitter_id}, 
+    {$set: {following: newFollowing}}, 
+    {new: true}, 
+    callback);
 };
 
 module.exports.getMatches = function(user, doc, callback) {
   // console.log('*** DO NOT MATCH ', [user.twitter_id].concat(user.friends, user.blocked, user.pending_approval, user.pending_request));
 
   db.User.aggregate(
+    {$unwind: '$blocked'},
+    {$match: {$and: [
+      {blocked: {$ne: user.twitter_id}},
+      {twitter_id: {$ne: user.twitter_id}}
+    ]}},
     {$unwind: '$following'},
-    {$match: {$and: [{following: {$in: doc}}, {twitter_id: {$nin: [user.twitter_id].concat(user.friends, user.blocked, user.pending_approval, user.pending_request)}}]}},
-    {$group: {_id: {username: '$username', location: '$location', profile_img: '$profile_img', about_me: '$about_me'}, nb: {'$sum': 1} } },
+    {$match: {following: {$in: [user.twitter_id].concat(user.friends, user.blocked, user.pending_approval, user.pending_request)}}},
+    {$group: {_id: {username: '$username', location: '$location', profile_img: '$profile_img', about_me: '$about_me'}, nb: {'$sum': 1}}},
     {$sort: {nb: -1}},
     {$limit: 10},
     callback
   );
 };
+
 
 module.exports.clear = function(callback) {
   db.User.remove({}, () => {
