@@ -38,11 +38,11 @@ class Messages extends React.Component {
 
   addClassType(messages, friend){
     var promise = new Promise((resolve, reject) => {
-      for (var key in messages) {
-        if (messages[key].sender === friend.username) {
-          messages['classType'] = 'not_me';
+      for (var i = 0; i < messages.length; i++) {
+        if (messages[i].sender === friend.username) {
+          messages[i]['classType'] = 'talk-bubble-left tri-right left-in';
         } else {
-          messages['classType'] = 'me';
+          messages[i]['classType'] = 'talk-bubble-right tri-right round right-in';
         }
       }
       resolve(messages);
