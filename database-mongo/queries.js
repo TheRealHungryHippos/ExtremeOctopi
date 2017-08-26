@@ -174,16 +174,24 @@ module.exports.getMatches = function(user, doc, callback) {
 
   db.User.aggregate(
     {$unwind: '$blocked'},
-    {$match: {$and: [
-      {blocked: {$ne: user.twitter_id}},
-      {twitter_id: {$ne: user.twitter_id}}
-    ]}},
-    {$unwind: '$following'},
-    {$match: {following: {$in: [user.twitter_id].concat(user.friends, user.blocked, user.pending_approval, user.pending_request)}}},
-    {$group: {_id: {username: '$username', location: '$location', profile_img: '$profile_img', about_me: '$about_me'}, nb: {'$sum': 1}}},
-    {$sort: {nb: -1}},
-    {$limit: 10},
-    callback
+    {$match: {blocked: {$eq: user.twitter_id}}},
+    {$group: {_id: {twitter_id: '$twitter_id'}}},
+    (err, blockingMe) => {
+      var blockingUserIds = blockingMe.map((blockingUser) => {
+        return blockingUser._id.twitter_id;
+      });
+      db.User.aggregate(
+        {$unwind: '$following'},
+        {$match: {$and: [
+          {twitter_id: {$nin: [user.twitter_id].concat(blockingUserIds, user.friends, user.blocked, user.pending_approval, user.pending_request)}},
+          {following: {$in: doc}}
+        ]}},
+        {$group: {_id: {username: '$username', location: '$location', profile_img: '$profile_img', about_me: '$about_me'}, nb: {'$sum': 1}}},
+        {$sort: {nb: -1}},
+        {$limit: 10},
+        callback
+      );
+    }
   );
 };
 
