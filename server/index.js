@@ -234,6 +234,7 @@ app.post('/messages/new', (req, res) => {
     if (error) {
       res.status(400);
     } else {
+      console.log('********* return messages with new ', messages);
       res.status(200).end(JSON.stringify(messages));
     }
   });

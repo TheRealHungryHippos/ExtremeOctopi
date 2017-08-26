@@ -11,13 +11,13 @@ const MessagesList = ( props ) => (
   //   'round': props.message.sender !== props.friend,
   //   'right-in': props.message.sender !== props.friend
   // }),
-  <div className="card-text">
+
     <div className={props.message.classType}>
-      <div className="talktext">
+      <div className="talktext card-text">
         <strong>{props.message.sender}&nbsp;:&nbsp;</strong> {props.message.message}
       </div>
     </div>
-  </div>
+
 );
 
 export default MessagesList;
