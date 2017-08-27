@@ -19,18 +19,7 @@ class Messages extends React.Component {
     this.selectFriend = this.selectFriend.bind(this);
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   console.log('nextProps.selectedFriend ', nextProps.selectedFriend);
-  //   console.log('this.state.selectedFriend ', this.state.selectedFriend);
-  //   console.log('this.props.selectedFriend ', this.props.selectedFriend);
-  //   if (nextProps.selectedFriend !== this.state.selectedFriend) {
-  //     this.selectFriend(nextProps.selectedFriend);
-  //   }
-  // }
-
   componentDidMount() {
-    console.log('Did mount this.props.selectedFriend ', this.props.selectedFriend);
-    console.log('Did mount this.state.selectedFriend ', this.state.selectedFriend);
     if (this.state.selectedFriend !== '') {
       this.selectFriend(this.state.selectedFriend);
     }  
@@ -62,8 +51,6 @@ class Messages extends React.Component {
   }
   
   getConversation(friend) {
-    console.log('******** getConversation for ', this.state.selectedFriend.username);
-    console.log('******** this.state.intervalId ', this.state.intervalId);
     this.getMessageHistory(friend.username)
       .then((messages) => {
         this.addClassType(messages, friend)
@@ -75,7 +62,7 @@ class Messages extends React.Component {
       });
   }
 
-  addClassType(messages, friend){
+  addClassType(messages, friend) {
     var promise = new Promise((resolve, reject) => {
       for (var i = 0; i < messages.length; i++) {
         if (messages[i].sender === friend.username) {
@@ -110,7 +97,7 @@ class Messages extends React.Component {
     return promise;
   }
 
-//research socket io for messaging
+  //research socket io for messaging
   getMessageHistory(friend) {
     var promise = new Promise((resolve, reject) => {
       $.ajax({
@@ -132,7 +119,7 @@ class Messages extends React.Component {
     return promise;
   }
 
-//fix / text this on the server & db side
+  //fix / text this on the server & db side
   addMessage() {
     var context = this;
     $.ajax({
@@ -170,12 +157,12 @@ class Messages extends React.Component {
       success: (messages) => {
         messages = JSON.parse(messages);
         context.addClassType(messages, context.state.selectedFriend)
-        .then((messages) => {
-          context.setState({
-            messageText: '',
-            messages: messages
+          .then((messages) => {
+            context.setState({
+              messageText: '',
+              messages: messages
+            });
           });
-        })
       },
       error: (error) => {
         console.log('********* add message ERROR:', error);
@@ -201,8 +188,8 @@ class Messages extends React.Component {
             <h2 className="card-header">Friends</h2>
             <br/>
             <div className="card-block friendsCardBlock"
-                 onMouseOver={() => {document.body.style.overflow='hidden'}}
-                 onMouseOut={() => {document.body.style.overflow='auto'}}>
+              onMouseOver={() => { document.body.style.overflow = 'hidden'; }}
+              onMouseOut={() => { document.body.style.overflow = 'auto'; }}>
               <MessageFriendList selectFriend={this.selectFriend.bind(this)}/>
             </div>
           </div>
@@ -215,11 +202,11 @@ class Messages extends React.Component {
               {
                 typeof this.state.selectedFriend === 'object' &&
                   <div className="messageList"
-                       id="messageList"
-                       onMouseOver={() => {document.body.style.overflow='hidden'}}
-                       onMouseOut={() => {document.body.style.overflow='auto'}}>
+                    id="messageList"
+                    onMouseOver={() => { document.body.style.overflow = 'hidden'; }}
+                    onMouseOut={() => { document.body.style.overflow = 'auto'; }}>
                     {this.state.messages.map((message, index) => (
-                        <MessagesList key={index} message={message} />
+                      <MessagesList key={index} message={message} />
                     ))}
                   </div>
               }
