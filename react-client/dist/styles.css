@@ -4,14 +4,14 @@
 }
 
 .navbar .navbar-brand {
-  color: #001f3f;
+  color: #111111;
   font-weight: bold;
   font-size: 100%;
   margin: 0 1em 0 0;
 }
 
 .navbar .nav-item {
-  color: #001f3f;
+  color: #111111;
 }
 
 .nav-item {
@@ -86,7 +86,8 @@
 }
 
 .messages {
-  padding-top: 100px;
+  margin: 100px 13vw 20px 13vw;
+  width: 74vw;
 }
 
 .matches {
@@ -138,6 +139,32 @@
   margin-top: 0;
 }
 
+.friendsCard {
+  height: 100%;
+}
+
+.friendsCardBlock {
+  overflow-y: scroll;
+}
+
+.messagesCard {
+  height: 100%;
+}
+
+.friendsCol {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.messagesCol {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.messageFriends {
+  padding: 0;
+}
+
 .messageFriendRow {
   display: flex;
   align-items: center;
@@ -145,11 +172,13 @@
 
 .friendPic {
   width: 60px;
-  height: 60px;
+  height: auto;
+  margin-right: 1em;
 }
 
 .friend {
-  background-color: #FFDC00;
+  font-size: 150%;
+  padding: 0;
 }
 
 .messagesCardBlock {
@@ -160,8 +189,18 @@
 .messageList {
   height: 250px;
   overflow-y: scroll;
-  border: thin solid #111111;
+  border-top: thin solid #111111;
+  border-left: thin solid #111111;
+  border-right: thin solid #111111;
   padding: 1em 1em 1em 1em;
+}
+
+textarea:focus {
+  outline: none;
+}
+
+textarea {
+  resize: none;
 }
 
 .talk-bubble-left {
@@ -192,11 +231,6 @@
 
 .friendSelected{
   /*outline: #B4AFAF solid thick;*/
-}
-
-.blockButton {
-  position: absolute;
-  right: 10%;
 }
 
 .talktext{
@@ -247,10 +281,22 @@
 	border-color: #B4AFAF transparent transparent #B4AFAF;
 }
 
+.sendMessage {
+  width: 100%;
+  display: flex;
+}
+
 .submitMessageInput {
-  width: 60%;
+  width: 80%;
   justify-content: right;
-  /*align-items: center;*/
+  border: thin solid #111111;
+}
+
+.submitMessageButton {
+  width: 20%;
+  border-radius: 0;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 .message_left {

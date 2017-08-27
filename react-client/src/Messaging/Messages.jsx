@@ -109,8 +109,9 @@ class Messages extends React.Component {
         .then((messages) => {
           context.setState({
             message: '',
-            messages: messages
-          });
+            messages: messages,
+            messageText: ''
+          }, () => {document.getElementById('messageList').scrollTop = document.getElementById('messageList').scrollHeight});
         })
       },
       error: (error) => {
@@ -149,39 +150,42 @@ class Messages extends React.Component {
     this.setState(stateInput);
   }
 
+  handleEnterMessage(e) {
+    e.key === 'Enter' && this.addMessage();
+  }
+
   render() {
     return (
-      <div className="messages container">
-        <div className="row justify-content-center">
-          <div className="col-4">
-            <div className="card">
-              <h2 className="card-header">Friends</h2>
-              <br/>
-              <div className="card-block">
-                <MessageFriendList selectFriend={this.selectFriend.bind(this)}/>
-              </div>
+      <div className="messages row justify-content-between">
+        <div className="col-sm-3 friendsCol">
+          <div className="card friendsCard">
+            <h2 className="card-header">Friends</h2>
+            <br/>
+            <div className="card-block friendsCardBlock">
+              <MessageFriendList selectFriend={this.selectFriend.bind(this)}/>
             </div>
           </div>
-          <div className="col-8">
-            <div className="card">
-              <h2 className="card-header">Messages</h2>
-              <br/>
-              <div className="card-block messagesCardBlock">
-                {
-                  typeof this.state.selectedFriend === 'object' &&
-                    <div className="messageList"
-                         onMouseOver={() => {document.body.style.overflow='hidden'}}
-                         onMouseOut={() => {document.body.style.overflow='auto'}}>
-                      {this.state.messages.map((message, index) => (
-                          <MessagesList key={index} message={message} />
-                      ))}
-                    </div>
-                }
-                <div className="row justify-content-center">
-                  <div className="col">
-                    <div className="card ">
-                      <MessageFriendSelected friend={this.state.selectedFriend} mutualFriends={this.state.mutualFriends} updateMatches={this.props.updateMatches} changeMessage={this.changeMessage.bind(this)} addMessage={this.addMessage.bind(this)}/>
-                    </div>
+        </div>
+        <div className="col-sm-8 messagesCol">
+          <div className="card messagesCard">
+            <h2 className="card-header">Messages</h2>
+            <br/>
+            <div className="card-block messagesCardBlock">
+              {
+                typeof this.state.selectedFriend === 'object' &&
+                  <div className="messageList"
+                       id="messageList"
+                       onMouseOver={() => {document.body.style.overflow='hidden'}}
+                       onMouseOut={() => {document.body.style.overflow='auto'}}>
+                    {this.state.messages.map((message, index) => (
+                        <MessagesList key={index} message={message} />
+                    ))}
+                  </div>
+              }
+              <div className="row justify-content-center">
+                <div className="col">
+                  <div>
+                    <MessageFriendSelected friend={this.state.selectedFriend} mutualFriends={this.state.mutualFriends} updateMatches={this.props.updateMatches} changeMessage={this.changeMessage.bind(this)} addMessage={this.addMessage.bind(this)} handleEnterMessage={this.handleEnterMessage.bind(this)} messageText={this.state.messageText}/>
                   </div>
                 </div>
               </div>
