@@ -161,7 +161,9 @@ class Messages extends React.Component {
           <div className="card friendsCard">
             <h2 className="card-header">Friends</h2>
             <br/>
-            <div className="card-block friendsCardBlock">
+            <div className="card-block friendsCardBlock"
+                 onMouseOver={() => {document.body.style.overflow='hidden'}}
+                 onMouseOut={() => {document.body.style.overflow='auto'}}>
               <MessageFriendList selectFriend={this.selectFriend.bind(this)}/>
             </div>
           </div>
