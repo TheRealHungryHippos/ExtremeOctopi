@@ -62,22 +62,25 @@
 }
 
 .profileContainer {
-  padding-top: 76px;
+  /*padding-top: 76px;*/
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
 .profile {
   padding: 50px 13vw 50px 13vw;
+  margin: 0;
 }
 
 .usernameHeadingContainer {
-  padding-left: 13vw;
-  padding-top: 1em;
-  padding-bottom: .8em;
+  margin: 0;
+  padding: 90px 13vw .8em 13vw;
   background-color: #f6f6f6;
 }
 
-.usernameHeading {
-  margin-left: .4em;
+.profilePicContainer {
+  padding-left: 0;
 }
 
 .profileInfo {
