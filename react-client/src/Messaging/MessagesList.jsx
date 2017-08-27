@@ -11,23 +11,16 @@ class MessagesList extends React.Component {
     };
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   this.setState({
-  //     classType: nextProps.message.classType,
-  //     sender: nextProps.message.sender,
-  //     message: nextProps.message.message
-  // })
-  // }
   componentDidMount() {
     document.getElementById('messageList').scrollTop = document.getElementById('messageList').scrollHeight;
   }
 
   render() {
     return (
-      <div className={this.state.classType.slice(0, 12) + ' row'}>
-        <div className={this.state.classType}>
+      <div className={this.props.message.classType.slice(0, 12) + ' row'}>
+        <div className={this.props.message.classType}>
           <div className="talktext card-text">
-            <strong>{this.state.sender}&nbsp;:&nbsp;</strong> {this.state.message}
+            <strong>{this.props.message.sender}&nbsp;:&nbsp;</strong> {this.props.message.message}
           </div>
         </div>
       </div>

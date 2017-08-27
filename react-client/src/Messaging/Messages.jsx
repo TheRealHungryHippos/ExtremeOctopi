@@ -12,28 +12,67 @@ class Messages extends React.Component {
       selectedFriend: this.props.selectedFriend || '',
       mutualFriends: [],
       messages: [],
-      messageText: ''
+      messageText: '',
+      intervalId: null
     };
+    this.getConversation = this.getConversation.bind(this);
+    this.selectFriend = this.selectFriend.bind(this);
   }
 
-  selectFriend(friend){
-    this.getMutualFriends(friend.username)
-    .then((friends) => {
-      this.setState({
-        mutualFriends: friends,
-        selectedFriend: friend
-      });
-    });
+  // componentWillReceiveProps(nextProps) {
+  //   console.log('nextProps.selectedFriend ', nextProps.selectedFriend);
+  //   console.log('this.state.selectedFriend ', this.state.selectedFriend);
+  //   console.log('this.props.selectedFriend ', this.props.selectedFriend);
+  //   if (nextProps.selectedFriend !== this.state.selectedFriend) {
+  //     this.selectFriend(nextProps.selectedFriend);
+  //   }
+  // }
 
-    this.getMessageHistory(friend.username)
-    .then((messages) => {
-      this.addClassType(messages, friend)
-      .then((messages) => {
-        this.setState({
-          messages: messages
+  componentDidMount() {
+    console.log('Did mount this.props.selectedFriend ', this.props.selectedFriend);
+    console.log('Did mount this.state.selectedFriend ', this.state.selectedFriend);
+    if (this.state.selectedFriend !== '') {
+      this.selectFriend(this.state.selectedFriend);
+    }  
+  }
+
+  componentWillUnmount() {
+    if (this.state.intervalId) {
+      clearInterval(this.state.intervalId);
+    }
+  }
+
+  selectFriend(friend) {
+    this.setState({selectedFriend: friend}, () => {
+      if (this.state.intervalId) {
+        clearInterval(this.state.intervalId);
+      }
+  
+      this.getMutualFriends(friend.username)
+        .then((friends) => {
+          this.setState({
+            mutualFriends: friends
+          });
         });
-      })
-    })
+  
+      this.getConversation(friend);
+      var intervalId = setInterval(this.getConversation.bind(this, friend), 2000);
+      this.setState({intervalId: intervalId});
+    });
+  }
+  
+  getConversation(friend) {
+    console.log('******** getConversation for ', this.state.selectedFriend.username);
+    console.log('******** this.state.intervalId ', this.state.intervalId);
+    this.getMessageHistory(friend.username)
+      .then((messages) => {
+        this.addClassType(messages, friend)
+          .then((messages) => {
+            this.setState({
+              messages: messages
+            });
+          });
+      });
   }
 
   addClassType(messages, friend){
@@ -130,10 +169,10 @@ class Messages extends React.Component {
       },
       success: (messages) => {
         messages = JSON.parse(messages);
-        context.addClassType(messages, context.state.selectedFriend.username)
+        context.addClassType(messages, context.state.selectedFriend)
         .then((messages) => {
           context.setState({
-            message: '',
+            messageText: '',
             messages: messages
           });
         })
