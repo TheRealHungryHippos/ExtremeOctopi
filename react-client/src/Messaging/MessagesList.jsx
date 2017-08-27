@@ -18,6 +18,9 @@ class MessagesList extends React.Component {
   //     message: nextProps.message.message
   // })
   // }
+  componentDidMount() {
+    document.getElementById('messageList').scrollTop = document.getElementById('messageList').scrollHeight;
+  }
 
   render() {
     return (
