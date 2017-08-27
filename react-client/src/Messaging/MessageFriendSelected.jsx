@@ -1,5 +1,4 @@
 import React from 'react';
-import $ from 'jquery';
 var friendHeading;
 
 const MessageFriendSelected = ( props ) => (
@@ -13,14 +12,22 @@ const MessageFriendSelected = ( props ) => (
       <br></br>
       <div className="container">
         <div className="row chatFriendHeader">
-          <a className="friend col-sm-6" href={'https://twitter.com/' + props.friend.username} target="_blank">@{ props.friend.username }</a>
+          <a className="friend col-sm-9" href={'https://twitter.com/' + props.friend.username} target="_blank">@{ props.friend.username }</a>
           <button className="blockButton button btn btn-md btn-primary col-sm-3" id={props.friend.username + ',block'} onClick={props.updateMatches}>Block User</button>
         </div>
+        <div className="row messageFriendRow">
+          <img className="friendPic" src={props.friend.profile_img} height="60" width="60"/>
+          <div className="col-sm p-0 friendName">{props.friend.fullname}</div>
+        </div>
         <div className="row mutualFriends">
-          <b className="col-sm">{friendHeading}</b>
-          <br/>
+          <b className="col-sm p-0">{friendHeading}</b>
+        </div>
+        <div className="row p-0 mb-3 mutualFriendsImgs">
           {props.mutualFriends.map(friend => {
-            return <img className="col-sm" key={friend._id} src={friend.profile_img} height="30" width="30" />
+            return (
+              <div className="col-xs mr-1">
+                <img key={friend._id} src={friend.profile_img} height="30" width="30" />
+              </div>);
           })}
         </div>
       </div>
