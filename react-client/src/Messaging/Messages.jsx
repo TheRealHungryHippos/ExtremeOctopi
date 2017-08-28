@@ -45,7 +45,7 @@ class Messages extends React.Component {
         });
   
       this.getConversation(friend);
-      var intervalId = setInterval(this.getConversation.bind(this, friend), 2000);
+      var intervalId = setInterval(this.getConversation.bind(this, friend), 1000);
       this.setState({intervalId: intervalId});
     });
   }
@@ -97,7 +97,6 @@ class Messages extends React.Component {
     return promise;
   }
 
-  //research socket io for messaging
   getMessageHistory(friend) {
     var promise = new Promise((resolve, reject) => {
       $.ajax({
@@ -119,33 +118,7 @@ class Messages extends React.Component {
     return promise;
   }
 
-  //fix / text this on the server & db side
   addMessage() {
-    var context = this;
-    $.ajax({
-      method: 'POST',
-      url: '/messages/new',
-      data: {
-        friend: this.state.selectedFriend.username,
-        message: this.state.messageText
-      },
-      success: (messages) => {
-        messages = JSON.parse(messages);
-        context.addClassType(messages, context.state.selectedFriend.username)
-        .then((messages) => {
-          context.setState({
-            message: '',
-            messages: messages,
-            messageText: ''
-          }, () => {document.getElementById('messageList').scrollTop = document.getElementById('messageList').scrollHeight});
-        })
-      },
-      error: (error) => {
-        console.log('********* add message ERROR:', error);
-      }
-    });
-  }
-  blockFriend() { //update this
     var context = this;
     $.ajax({
       method: 'POST',
@@ -159,9 +132,10 @@ class Messages extends React.Component {
         context.addClassType(messages, context.state.selectedFriend)
           .then((messages) => {
             context.setState({
-              messageText: '',
-              messages: messages
-            });
+              message: '',
+              messages: messages,
+              messageText: ''
+            }, () => { document.getElementById('messageList').scrollTop = document.getElementById('messageList').scrollHeight; });
           });
       },
       error: (error) => {
@@ -183,7 +157,7 @@ class Messages extends React.Component {
   render() {
     return (
       <div className="messages row justify-content-between">
-        <div className="col-sm-3 friendsCol">
+        <div className="col-sm-4 friendsCol">
           <div className="card friendsCard">
             <h2 className="card-header">Friends</h2>
             <br/>
