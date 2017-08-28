@@ -57,6 +57,11 @@
   max-width: 20em;
 }
 
+.blockButton {
+position: absolute;
+right: 10%;
+}
+
 .signInButton {
   width: 10em;
 }
@@ -171,6 +176,7 @@
 .messageFriendRow {
   display: flex;
   align-items: center;
+  padding: 0 0 10px 0;
 }
 
 .friendPic {
