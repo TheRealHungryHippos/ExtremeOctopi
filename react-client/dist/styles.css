@@ -43,6 +43,9 @@
   margin-bottom: 2em;
 }
 
+.selectedFriendHeader {
+  border-bottom: thick solid #655F5F
+}
 .signInBox {
   border: thick solid #111111;
   border-radius: 10px;
