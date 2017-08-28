@@ -13,7 +13,6 @@ const MessageFriendSelected = ( props ) => (
       <div className="container">
         <div className="selectedFriendHeader">
           <a className="friend col-sm-9" href={'https://twitter.com/' + props.friend.username} target="_blank">@{props.friend.username}</a>
-          <button className="blockButton button btn btn-md btn-primary " id={props.friend.username + ',block'} onClick={props.updateMatches}>Block User</button>
         </div>
         <div className="card-block">
           <div className="row">
